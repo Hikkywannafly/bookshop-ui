@@ -6,12 +6,11 @@ const HeaderAuth = (props) => {
             <div className=" flex flex-row  w-full h-10 justify-between text-sm font-medium p-5">
                 <div className="hover:translate-x-0 -translate-x-2  h-5 stroke-current ml-1 transition-all ease-in-out duration-200 relative  transform cursor-pointer">
                     <svg
-
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                         <path strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-
                     </svg>
-                    <span className="absolute bottom-[1px] left-7 ">BACK </span>
+
+                    <Link to={`../`}>   <span className="absolute bottom-[1px] left-7 ">BACK </span></Link>
                 </div>
 
                 <div className="text-center mb-5">

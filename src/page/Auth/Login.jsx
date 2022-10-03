@@ -4,51 +4,73 @@ import AuthButton from '~/components/Input/AuthButton';
 import Or from '~/components/Chore/Or';
 import AuthHeader from '~/components/Header/AuthHeader';
 import AuthSocial from '~/components/Input/AuthSocial';
-import PropTypes from 'prop-types';
-
-
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+const inititalState = {
+    emailAddress: '',
+    password: '',
+}
 const Login = () => {
-    const [data, setData] = useState('')
+    const [data, setData] = useState(inititalState)
     const [visible, setVisible] = useState(false)
     const [error, setError] = useState(false)
     const { userName, password } = data;
+
     const handleChange = (e) => {
         setData({ ...data, [e.target.name]: e.target.value })
+    }
+    const handleClick = (e) => {
+        setVisible(!visible);
     }
     return (
         <>
             <AuthHeader content="CREATE ACCOUNT" link="/register" />
-            <div className='p-4 items-center flex flex-col justify-center m-auto w-full '>
+
+            <div className='p-4 items-center flex flex-col justify-center m-auto w-full gap-10'>
                 <div className="my-10">
                     <h1 className='font-bold'>  LOGIN HIKKY BOOKS </h1>
                 </div>
                 <div className="flex flex-col md:flex-row gap-5 min-w-[250px] w-full md:min-w-[400px] md:w-[800px]">
-                    <div className="flex flex-col gap-5 w-full  ">
+
+                    <form className="flex flex-col gap-7 w-full  " autoComplete="off">
                         <AuthInput
                             handleChange={handleChange}
                             type='text'
-                            name='userName'
+                            name='emailAddress'
                             id='floating_email'
                             content='Email Address'
                         // error={error ? error : false}
                         />
                         <AuthInput
                             handleChange={handleChange}
-                            type='text'
-                            name='userName'
-                            id='floating_email'
-                            content='Email Address'
-                        // error={error ? error : false}
-                        />
+                            handleClick={handleClick}
+                            type={visible ? "text" : "password"}
+                            icon={visible ? <MdVisibility /> : <MdVisibilityOff />}
+                            name='password' id='floating_password' content='Password' />
+                        <AuthButton name='Login' />
+                    </form>
 
-                        <AuthButton />
 
-                    </div>
                     <Or />
-                    <div className=" flex flex-col gap-5 w-full">
-                        <AuthSocial color="#4285F4" name="Google" icon="fa-google" />
-                        <AuthSocial color="#3B5998" name="Facebook" icon="fa-facebook" />
-                        <AuthSocial color="#1DA1F2" name="Twitter" icon="fa-twitter" />
+
+                    <div className=" flex flex-col gap-4 w-full">
+                        <AuthSocial color="#4285F4" name="Sign in with  Google" icon="fa-google" />
+                        <AuthSocial color="#3B5998" name="Sign in with  Facebook" icon="fa-facebook" />
+                        <AuthSocial color="#1DA1F2" name="Sign in with  Twitter" icon="fa-twitter" />
+                    </div>
+                </div>
+
+                <div className="">
+                    <div className="flex flex-col justify-center items-center h-full text-sm  ">
+                        <div className="text-center mb-5">
+                            <p href="#" className="group text-black transition duration-300 cursor-pointer">
+                                CAN'T LOG IN?
+                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black"></span>
+                            </p>
+                        </div>
+                        <div className="text-gray-400 flex flex-col justify-center items-center">
+                            <p>Secure Login with reCAPTCHA subject to Google</p>
+                            <p>Terms & Privacy</p>
+                        </div>
                     </div>
                 </div>
             </div>
