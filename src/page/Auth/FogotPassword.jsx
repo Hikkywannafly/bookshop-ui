@@ -2,17 +2,25 @@ import React, { useState } from 'react';
 import AuthInput from '~/components/Input/AuthInput';
 import AuthButton from '~/components/Input/AuthButton';
 import AuthHeader from '~/components/Header/AuthHeader';
-const inititalState = {
-    emailAddress: '',
-    password: '',
-}
+import { registerSchema } from '~/helper/Schema/register';
+import { useFormik } from 'formik';
 const FogotPassword = () => {
-    const [data, setData] = useState(inititalState)
+    const [data, setData] = useState()
     const [visible, setVisible] = useState(false)
 
-    const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value })
-    }
+    const { values, errors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
+        initialValues: {
+            emailAddress: '',
+            phoneNumber: '',
+            fullName: '',
+            password: '',
+            passwordConfirm: '',
+        },
+        validationSchema: registerSchema,
+        onSubmit: (values) => {
+            console.log(values);
+        }
+    })
     return (
         <>
             <AuthHeader content="ALREADY HAVE ACCOUNT ?" link="/login" />
@@ -25,13 +33,16 @@ const FogotPassword = () => {
                 </div>
                 <div className="flex flex-col md:flex-row gap-5 min-w-[125px] w-full md:min-w-[200px] md:w-[400px] md:gap-9">
 
-                    <form className="flex flex-col gap-7 w-full  " autoComplete="off">
+                    <form className="flex flex-col gap-7 w-full  " autoComplete="off" onSubmit={handleSubmit}>
                         <AuthInput
                             handleChange={handleChange}
+                            value={values.emailAddress}
                             type='text'
                             name='emailAddress'
                             id='floating_email'
-                            content='Email Address'
+                            content='Email address'
+                            error={errors.emailAddress && touched.emailAddress ? errors.emailAddress : false}
+                            handleBlur={handleBlur}
                         />
 
                         <AuthButton name='SEND EMAIL' />

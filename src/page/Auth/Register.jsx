@@ -10,8 +10,8 @@ import { registerSchema } from '~/helper/Schema/register'
 import { useFormik } from 'formik';
 function Register() {
     const [visible, setVisible] = useState(false);
-    const [visibleC, setVisibleC] = useState(false)
-    const [error, setError] = useState(false)
+    const [visibleC, setVisibleC] = useState(false);
+    const [error, setError] = useState(false);
     const { values, errors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
         initialValues: {
             emailAddress: '',

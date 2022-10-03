@@ -6,7 +6,6 @@ const AuthInput = (props) => {
                 <div className={`absolute right-2 cursor-pointer ${error ? 'bottom-9 ' : `bottom-3`} `} onClick={handleClick} >
                     {icon}
                 </div>
-
                 <input
                     style={error ? { borderColor: `coral` } : { borderColor: `rgb(209 213 219)` }}
                     onChange={handleChange}
@@ -17,7 +16,7 @@ const AuthInput = (props) => {
                     onBlur={handleBlur}
                     autoComplete="off"
 
-                    className="block py-2.5 px-0 w-full text-sm
+                    className="block py-2.5 px-0 w-full text-base
                   text-gray-900 bg-transparent border-0 
                   border-b-2 border-gray-300 appearance-none dark:text-black 
                    focus:outline-none focus:ring-0 focus:border-black peer" placeholder=" " required />
@@ -26,11 +25,9 @@ const AuthInput = (props) => {
                 duration-300 transform -translate-y-[10px] scale-85 top-[-5px] -z-10 origin-[0] peer-focus:left-0
                 peer-focus:text-black peer-focus:dark:text-black peer-placeholder-shown:scale-100 
                  peer-placeholder-shown:translate-y-0 peer-focus:scale-85 peer-focus:-translate-y-[10px]">{content}</label>
-
                 {
                     error && <span className="italic text-red-500 text-xs">{error}</span>
                 }
-
 
             </div>
         </>
