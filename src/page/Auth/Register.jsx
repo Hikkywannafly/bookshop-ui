@@ -8,21 +8,40 @@ import AuthSocial from '~/components/Input/AuthSocial';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { registerSchema } from '~/helper/Schema/register'
 import { useFormik } from 'formik';
+import { registerUser } from '~/redux/apiRequest'
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import LoadingCicle from '~/components/Loading/LoadingCicle';
+import toast, { Toaster } from 'react-hot-toast';
 function Register() {
     const [visible, setVisible] = useState(false);
     const [visibleC, setVisibleC] = useState(false);
-    const [error, setError] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const loading = useSelector((state) => state.register.isFetching);
     const { values, errors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
         initialValues: {
-            emailAddress: '',
-            phoneNumber: '',
-            fullName: '',
+            email: '',
+            phone: '',
+            name: '',
             password: '',
             passwordConfirm: '',
         },
         validationSchema: registerSchema,
-        onSubmit: (values) => {
-            console.log(values);
+        onSubmit: async (values) => {
+            const result = await registerUser(values, dispatch);
+            if (result.status === `error`) {
+                toast.error(`Register failed`);
+                errors.email = result.email;
+                errors.phone = result.phone;
+            }
+            if (result.status === `success`) {
+                toast.success('Create account success ');
+                setTimeout(() => {
+                    navigate('/login');
+                }, 3000);
+
+            }
         }
     })
     const handleClick = (e) => {
@@ -30,6 +49,8 @@ function Register() {
     }
     return (
         <>
+            <div><Toaster /></div>
+            {loading && <LoadingCicle />}
             <AuthHeader content="ALREADY HAVE ACCOUNT?" link="/login" />
             <div className=' animate-fade-down p-4 items-center flex flex-col justify-center m-auto w-full gap-10 '>
                 <div className="mt-10">
@@ -39,32 +60,32 @@ function Register() {
                     <form className="flex flex-col gap-7 w-full" autoComplete="off" onSubmit={handleSubmit}>
                         <AuthInput
                             handleChange={handleChange}
-                            value={values.emailAddress}
+                            value={values.email}
                             type='text'
-                            name='emailAddress'
+                            name='email'
                             id='floating_email'
                             content='Email address'
-                            error={errors.emailAddress && touched.emailAddress ? errors.emailAddress : false}
+                            error={errors.email && touched.email ? errors.email : false}
                             handleBlur={handleBlur}
                         />
                         <AuthInput
                             handleChange={handleChange}
-                            value={values.phoneNumber}
+                            value={values.phone}
                             type='text'
-                            name='phoneNumber'
+                            name='phone'
                             id='floating_phone'
                             content='Phone number'
-                            error={errors.phoneNumber && touched.phoneNumber ? errors.phoneNumber : false}
+                            error={errors.phone && touched.phone ? errors.phone : false}
                             handleBlur={handleBlur}
                         />
                         <AuthInput
                             handleChange={handleChange}
-                            value={values.fullName}
+                            value={values.name}
                             type='text'
-                            name='fullName'
+                            name='name'
                             id='floating_name'
                             content='Your name'
-                            error={errors.fullName && touched.fullName ? errors.fullName : false}
+                            error={errors.name && touched.name ? errors.name : false}
                             handleBlur={handleBlur}
                         />
                         <AuthInput
@@ -88,7 +109,7 @@ function Register() {
                             error={errors.passwordConfirm && touched.passwordConfirm ? errors.passwordConfirm : false}
                             handleBlur={handleBlur}
                         />
-                        <AuthButton name='Register' />
+                        <AuthButton name='Register' error={errors ? true : false} />
                     </form>
                     <Or />
                     <div className=" flex flex-col gap-5 w-full justify-center">

@@ -36,15 +36,14 @@ const FogotPassword = () => {
                     <form className="flex flex-col gap-7 w-full  " autoComplete="off" onSubmit={handleSubmit}>
                         <AuthInput
                             handleChange={handleChange}
-                            value={values.emailAddress}
+                            value={values.email}
                             type='text'
-                            name='emailAddress'
+                            name='email'
                             id='floating_email'
                             content='Email address'
-                            error={errors.emailAddress && touched.emailAddress ? errors.emailAddress : false}
+                            error={errors.email && touched.email ? errors.email : false}
                             handleBlur={handleBlur}
                         />
-
                         <AuthButton name='SEND EMAIL' />
                     </form>
 

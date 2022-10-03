@@ -1,21 +1,21 @@
 import * as Yub from 'yup';
 
 export const registerSchema = Yub.object().shape({
-    emailAddress: Yub.string()
-        .required('Không được để trống')
-        .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 'Email không hợp lệ'),
-    phoneNumber: Yub.string()
-        .required('Không được để trống')
-        .matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, 'Số điện thoại không hợp lệ'),
-    fullName: Yub.string()
-        .required('Không được để trống')
-        .min(5, 'Tên phải có ít nhất 5 ký tự'),
+    email: Yub.string()
+        .required('Not allow empty')
+        .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 'Invalid email address'),
+    phone: Yub.string()
+        .required('Not allow empty')
+        .matches(/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/, 'Invalid phone number'),
+    name: Yub.string()
+        .required('Not allow empty')
+        .min(5, 'At least 5 characters'),
     password: Yub.string()
-        .required('Không được để trống')
-        .min(8, 'Mật khẩu phải có ít nhất 8 ký tự')
-        .matches(/(?=.*[0-9])/, 'Mật khẩu phải có ít nhất 1 số')
-        .matches(/(?=.*[a-z])/, 'Mật khẩu phải có ít nhất 1 chữ thường'),
+        .required('Not allow empty')
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/(?=.*[0-9])/, 'Password must contain a number')
+        .matches(/(?=.*[a-z])/, 'Password must contain a lowercase letter'),
     passwordConfirm: Yub.string()
-        .required('Không được để trống')
-        .oneOf([Yub.ref('password'), null], 'Mật khẩu không khớp'),
+        .required('Not allow empty')
+        .oneOf([Yub.ref('password'), null], 'Passwords must match'),
 });

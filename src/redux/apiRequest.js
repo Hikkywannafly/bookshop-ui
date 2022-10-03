@@ -21,12 +21,12 @@ export const loginUser = async (user, dispatch, navigate) => {
             return err.response.data;
         });
 }
-export const registerUser = async (user, dispatch, navigate) => {
+export const registerUser = async (user, dispatch) => {
     dispatch(registerStart());
     return await fetchAuthRegister(user)
         .then(res => {
             dispatch(registerSuccess(res.data));
-            navigate("/login");
+            // navigate("/login");
             return res.data;
         })
         .catch(err => {
