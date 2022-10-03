@@ -16,15 +16,17 @@ const AuthInput = (props) => {
                     value={value}
                     onBlur={handleBlur}
                     autoComplete="off"
+
                     className="block py-2.5 px-0 w-full text-sm
                   text-gray-900 bg-transparent border-0 
                   border-b-2 border-gray-300 appearance-none dark:text-black 
                    focus:outline-none focus:ring-0 focus:border-black peer" placeholder=" " required />
 
                 <label htmlFor={id} className="peer-focus:font-medium absolute text-sm dark:text-gray-400
-                duration-300 transform -translate-y-5 scale-85 top-0 -z-10 origin-[0] peer-focus:left-0
+                duration-300 transform -translate-y-[10px] scale-85 top-[-5px] -z-10 origin-[0] peer-focus:left-0
                 peer-focus:text-black peer-focus:dark:text-black peer-placeholder-shown:scale-100 
-                 peer-placeholder-shown:translate-y-0 peer-focus:scale-85 peer-focus:-translate-y-6">{content}</label>
+                 peer-placeholder-shown:translate-y-0 peer-focus:scale-85 peer-focus:-translate-y-[10px]">{content}</label>
+
                 {
                     error && <span className="italic text-red-500 text-xs">{error}</span>
                 }

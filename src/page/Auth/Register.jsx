@@ -6,16 +6,12 @@ import Or from '~/components/Chore/Or';
 import AuthHeader from '~/components/Header/AuthHeader';
 import AuthSocial from '~/components/Input/AuthSocial';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
-import * as Yub from 'yup';
+import { registerSchema } from '~/helper/Schema/register'
 import { useFormik } from 'formik';
-
 function Register() {
     const [visible, setVisible] = useState(false);
     const [visibleC, setVisibleC] = useState(false)
     const [error, setError] = useState(false)
-    // const handleChange = (e) => {
-    //     setData({ ...data, [e.target.name]: e.target.value });
-    // }
     const { values, errors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
         initialValues: {
             emailAddress: '',
@@ -24,25 +20,7 @@ function Register() {
             password: '',
             passwordConfirm: '',
         },
-        validationSchema: Yub.object({
-            emailAddress: Yub.string()
-                .required('Không được để trống')
-                .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 'Email không hợp lệ'),
-            phoneNumber: Yub.string()
-                .required('Không được để trống')
-                .matches(/(84|0[3|5|7|8|9])+([0-9]{8})\b/, 'Số điện thoại không hợp lệ'),
-            fullName: Yub.string()
-                .required('Không được để trống')
-                .min(5, 'Tên phải có ít nhất 5 ký tự'),
-            password: Yub.string()
-                .required('Không được để trống')
-                .min(8, 'Mật khẩu phải có ít nhất 8 ký tự')
-                .matches(/(?=.*[0-9])/, 'Mật khẩu phải có ít nhất 1 số')
-                .matches(/(?=.*[a-z])/, 'Mật khẩu phải có ít nhất 1 chữ thường'),
-            passwordConfirm: Yub.string()
-                .required('Không được để trống')
-                .oneOf([Yub.ref('password'), null], 'Mật khẩu không khớp'),
-        }),
+        validationSchema: registerSchema,
         onSubmit: (values) => {
             console.log(values);
         }
@@ -53,11 +31,11 @@ function Register() {
     return (
         <>
             <AuthHeader content="ALREADY HAVE ACCOUNT?" link="/login" />
-            <div className='p-4 items-center flex flex-col justify-center m-auto w-full '>
-                <div className="my-10">
-                    <h1 className='font-bold'>  REGISTER HIKKY BOOKS </h1>
+            <div className=' animate-fade-down p-4 items-center flex flex-col justify-center m-auto w-full gap-10 '>
+                <div className="mt-10">
+                    <h1 className='font-bold text-xl'> Register Into Hikky Books </h1>
                 </div>
-                <div className="flex flex-col md:flex-row gap-5 min-w-[250px] w-full md:min-w-[400px] md:w-[800px]">
+                <div className="flex flex-col md:flex-row gap-5 min-w-[250px] w-full md:min-w-[400px] md:w-[800px] md:gap-9">
                     <form className="flex flex-col gap-7 w-full" autoComplete="off" onSubmit={handleSubmit}>
                         <AuthInput
                             handleChange={handleChange}
@@ -119,18 +97,16 @@ function Register() {
                         <AuthSocial color="#1DA1F2" name="Sign Up With Twitter" icon="fa-twitter" />
                     </div>
                 </div>
-                <div className="">
-                    <div className="flex flex-col justify-center items-center h-full text-sm  ">
-                        <div className="text-center mb-5">
-                            <p href="#" className="group text-black transition duration-300 cursor-pointer">
-                                CAN'T LOG IN?
-                                <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black"></span>
-                            </p>
-                        </div>
-                        <div className="text-gray-400">
-                            <p>Secure Login with reCAPTCHA subject to Google</p>
-                            <p>Terms & Privacy</p>
-                        </div>
+                <div className="flex flex-col justify-center items-center text-sm  ">
+                    <div className="text-center mb-5">
+                        <p href="#" className="group text-black transition duration-300 cursor-pointer">
+                            Have problems ?
+                            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black"></span>
+                        </p>
+                    </div>
+                    <div className="text-gray-400 flex flex-col justify-center items-center">
+                        <p>Secure Login with reCAPTCHA subject to Google</p>
+                        <p>Terms & Privacy</p>
                     </div>
                 </div>
             </div>
