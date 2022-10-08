@@ -6,44 +6,81 @@ import AuthHeader from '~/components/Header/AuthHeader';
 import AuthSocial from '~/components/Input/AuthSocial';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-const inititalState = {
-    emailAddress: '',
-    password: '',
-}
+import { useFormik } from 'formik';
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import LoadingCicle from '~/components/Loading/LoadingCicle';
+import toast, { Toaster } from 'react-hot-toast';
+import { loginSchema } from '~/helper/Schema/login';
+import { loginUser } from '~/redux/apiRequest'
 const Login = () => {
-    const [data, setData] = useState(inititalState)
-    const [visible, setVisible] = useState(false)
-    const [error, setError] = useState(false)
-    const handleChange = (e) => {
-        setData({ ...data, [e.target.name]: e.target.value })
-    }
+    const [visible, setVisible] = useState(false);
+    const [data, setData] = useState(null)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const loading = useSelector((state) => state.login.isFetching);
+    // const handleChange = (e) => {
+    //     setData({ ...data, [e.target.name]: e.target.value })
+    // }
+    const { values, errors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: loginSchema,
+        onSubmit: async (values) => {
+            const result = await loginUser(values, dispatch);
+            if (result.status === 'success') {
+                toast.success('Login success');
+            }
+            if (result.status === 'error') {
+                toast.error('Login failed');
+                errors.password = result.message;
+            }
+            if (result.status === 'verify') {
+                setData(result.message);
+                // navigate('/verify-email');
+            }
+        }
+    });
     const handleClick = (e) => {
         setVisible(!visible);
     }
     return (
         <>
+            <div><Toaster /></div>
+            {loading && <LoadingCicle />}
             <AuthHeader content="CREATE ACCOUNT" link="/register" />
 
             <div className='animate-fade-down p-4 items-center flex flex-col justify-center m-auto w-full gap-10'>
                 <div className="my-10">
                     <h1 className='font-bold text-xl'> Login Into Hikky Books </h1>
                 </div>
+                {data && <div className="text-center text-red-500">{data}</div>}
+
                 <div className="flex flex-col md:flex-row gap-5 min-w-[250px] w-full md:min-w-[400px] md:w-[800px] md:gap-9">
 
-                    <form className="flex flex-col gap-7 w-full  " autoComplete="off">
+                    <form className="flex flex-col gap-7 w-full" autoComplete="off" onSubmit={handleSubmit}>
                         <AuthInput
                             handleChange={handleChange}
+                            value={values.email}
                             type='text'
-                            name='emailAddress'
+                            name='email'
                             id='floating_email'
-                            content='Email Address'
+                            content='Email address'
+                            error={errors.email && touched.email ? errors.email : false}
+                            handleBlur={handleBlur}
                         />
                         <AuthInput
                             handleChange={handleChange}
+                            value={values.password}
                             handleClick={handleClick}
                             type={visible ? "text" : "password"}
                             icon={visible ? <MdVisibility /> : <MdVisibilityOff />}
-                            name='password' id='floating_password' content='Password' />
+                            name='password' id='floating_password' content='Password'
+                            error={errors.password && touched.password ? errors.password : false}
+                            handleBlur={handleBlur}
+                        />
                         <AuthButton name='Login' />
                     </form>
                     <Or />

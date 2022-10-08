@@ -31,15 +31,16 @@ function Register() {
         onSubmit: async (values) => {
             const result = await registerUser(values, dispatch);
             if (result.status === `error`) {
-                toast.error(`Register failed`);
+                toast.error(`Register failed`, {
+                    duration: 6000,
+                });
                 errors.email = result.email;
                 errors.phone = result.phone;
             }
             if (result.status === `success`) {
                 toast.success('Create account success ');
-                setTimeout(() => {
-                    navigate('/login');
-                }, 3000);
+
+                navigate('/verify-email', { replace: true });
 
             }
         }

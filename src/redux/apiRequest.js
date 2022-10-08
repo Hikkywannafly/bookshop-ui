@@ -7,17 +7,17 @@ const fetchAuthLogin = async (user) => {
 const fetchAuthRegister = async (user) => {
     return await axios.post("http://127.0.0.1:8000/api/auth/register", user)
 }
-export const loginUser = async (user, dispatch, navigate) => {
+export const loginUser = async (user, dispatch) => {
     dispatch(loginStart());
     return await fetchAuthLogin(user)
         .then(res => {
             dispatch(loginSuccess(res.data));
-            navigate("/");
+            // navigate("/");
             return res.data;
         })
         .catch(err => {
             dispatch(loginFailure(err.response.data));
-            // console.log('fetchAuthLogin error', err.response.data);
+
             return err.response.data;
         });
 }
@@ -26,7 +26,7 @@ export const registerUser = async (user, dispatch) => {
     return await fetchAuthRegister(user)
         .then(res => {
             dispatch(registerSuccess(res.data));
-            // navigate("/login");
+            localStorage.setItem("accessToken", res.data.access_token);
             return res.data;
         })
         .catch(err => {
