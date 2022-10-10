@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AuthInput from '~/components/Input/AuthInput';
 import AuthButton from '~/components/Input/AuthButton';
 import Or from '~/components/Chore/Or';
@@ -19,6 +19,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const loading = useSelector((state) => state.login.isFetching);
+    const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
     // const handleChange = (e) => {
     //     setData({ ...data, [e.target.name]: e.target.value })
     // }
@@ -31,11 +32,13 @@ const Login = () => {
         onSubmit: async (values) => {
             const result = await loginUser(values, dispatch);
             if (result.status === 'success') {
-                toast.success('Login success');
+                // toast.success('Login success');
+                navigate('/');
             }
             if (result.status === 'error') {
                 toast.error('Login failed');
                 errors.password = result.message;
+                setData(``);
             }
             if (result.status === 'verify') {
                 setData(result.message);
@@ -46,6 +49,11 @@ const Login = () => {
     const handleClick = (e) => {
         setVisible(!visible);
     }
+    // useEffect(() => {
+    //     if (!isAuthenticated) {
+    //         navigate('/');
+    //     }
+    // }, [isAuthenticated, navigate])
     return (
         <>
             <div><Toaster /></div>

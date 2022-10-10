@@ -21,15 +21,16 @@ const publicRoutes = [
     {
         path: '/forgot-password', component: FogotPassword
     },
-    {
-        path: '/verify-email-url', component: VerifyUrl
-    }
+
 
 
 ]
 const privateRoutes = [
     {
         path: '/verify-email', component: VerifycationEmail
+    },
+    {
+        path: '/verify-email-url', component: VerifyUrl
     }
 
 ]

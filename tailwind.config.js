@@ -1,7 +1,20 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    screen: {
+      sm: "576px",
+      md: "768px",
+      lg: "992px",
+      xl: "1200px",
+    },
+    container: {
+      center: true,
+      padding: "1rem",
+    },
     extend: {
+      colors: {
+        primary: "#fd3d57",
+      },
       keyframes: {
         wiggle: {
           "0%, 100%": { transform: "rotate(-3deg)" },
@@ -27,3 +40,4 @@ module.exports = {
   },
   plugins: [],
 }
+
