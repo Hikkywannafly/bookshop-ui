@@ -40,13 +40,15 @@ const VerifycationEmail = () => {
     return (
         <>
 
-            <div className="flex justify-center items-center h-full w-full">
+            <div className="flex justify-center flex-col items-center h-full w-full">
                 {data != null ? (
                     <>
-                        {data}
-                        < h1 > Return To Login Page in 3s</h1>
+                        <div className="">   {data}</div>
+
+                        <br></br>
+                        <div className="">  < h1 > Return To Login Page in 3s</h1></div>
                     </>
-                ) : (<h1> Waitting for verification yor email</h1>)
+                ) : (<div className=" text"><h1> Waitting for verification yor email</h1> </div>)
                 }
             </div>
         </>

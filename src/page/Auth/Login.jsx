@@ -12,7 +12,8 @@ import { useNavigate } from "react-router-dom";
 import LoadingCicle from '~/components/Loading/LoadingCicle';
 import toast, { Toaster } from 'react-hot-toast';
 import { loginSchema } from '~/helper/Schema/login';
-import { loginUser } from '~/redux/apiRequest'
+import { loginUser } from '~/redux/apiRequest';
+import blockRightClick from '~/helper/blockRightClick';
 const Login = () => {
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null)
@@ -49,11 +50,11 @@ const Login = () => {
     const handleClick = (e) => {
         setVisible(!visible);
     }
-    // useEffect(() => {
-    //     if (!isAuthenticated) {
-    //         navigate('/');
-    //     }
-    // }, [isAuthenticated, navigate])
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/');
+        }
+    }, [])
     return (
         <>
             <div><Toaster /></div>

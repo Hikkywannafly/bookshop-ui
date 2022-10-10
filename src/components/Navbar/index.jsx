@@ -1,6 +1,8 @@
 import Category from './Category';
 import Itembar from './Itembar';
+import { useSelector } from 'react-redux';
 const Navbar = () => {
+    const userData = useSelector((state) => state.login.currentUser);
     return (
         <>
             <nav className=" bg-white bg-opacity-60 backdrop-blur ">
@@ -10,7 +12,10 @@ const Navbar = () => {
                         <Itembar />
                     </div>
 
-                    <a href="pages/login.html" className=" hover:text-white transition">Guest</a>
+                    <a href="pages/login.html" className=" hover:text-white transition capitalize">
+
+                        {userData ? `Hi ${userData.user.name}` : 'Guest'}
+                    </a>
                 </div>
             </nav>
         </>

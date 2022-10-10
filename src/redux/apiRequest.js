@@ -13,6 +13,10 @@ export const loginUser = async (user, dispatch) => {
         .then(res => {
             dispatch(loginSuccess(res.data));
             // navigate("/");
+            localStorage.setItem("accessToken", res.data.access_token);
+            localStorage.setItem("expiresIn", res.data.expires_in);
+            localStorage.setItem('user', JSON.stringify(res.data.user));
+            localStorage.setItem('isAuthenticated', true);
             return res.data;
         })
         .catch(err => {
@@ -27,6 +31,7 @@ export const registerUser = async (user, dispatch) => {
         .then(res => {
             dispatch(registerSuccess(res.data));
             localStorage.setItem("accessToken", res.data.access_token);
+            localStorage.setItem("expiresIn", res.data.expires_in);
             return res.data;
         })
         .catch(err => {
