@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 const VerifycationEmail = () => {
     const check = useSelector((state) => state.register.currentUser);
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = useSelector((state) => state.register.accessToken);
     const navigate = useNavigate();
     const __check = () => {
         if (check === null) {

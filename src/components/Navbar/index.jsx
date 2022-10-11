@@ -14,7 +14,7 @@ const Navbar = () => {
 
                     <a href="pages/login.html" className=" hover:text-white transition capitalize">
 
-                        {userData ? `Hi ${userData.user.name}` : 'Guest'}
+                        {userData ? `Hi ${userData.name}` : 'Guest'}
                     </a>
                 </div>
             </nav>

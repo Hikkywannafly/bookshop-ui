@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     currentUser: null,
+    accessToken: null,
     isFetching: false,
     error: false,
     errorData: null,
@@ -16,6 +17,7 @@ const authRegisterSlice = createSlice({
         registerSuccess: (state, action) => {
             state.isFetching = false;
             state.currentUser = action.payload;
+            state.accessToken = action.payload.access_token;
             state.error = false;
             state.errorData = null;
         },
@@ -24,6 +26,7 @@ const authRegisterSlice = createSlice({
             state.error = true;
             state.errorData = action.payload;
             state.currentUser = null;
+            state.accessToken = null;
         }
     }
 });
