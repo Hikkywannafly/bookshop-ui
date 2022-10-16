@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import axiosInterceptor from '~/utils/axiosInterceptor';
 import { logoutUser } from '~/redux/apiRequest';
 import { useDispatch } from 'react-redux';
+import AuthButton from '~/components/Input/AuthButton';
 const Account = () => {
     const accessToken = useSelector((state => { return state.login.accessToken }));
     const axios = axiosInterceptor(accessToken);
@@ -105,14 +106,14 @@ const Account = () => {
                                         <Menu.Item>
                                             {({ active }) => (
                                                 <div
-
                                                     className={`${active
                                                         ? "bg-gray-100 text-gray-900"
                                                         : "text-gray-700"
-                                                        } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
+                                                        } flex justify-between w-full px-4 py-1 text-sm leading-5 text-left`}
                                                 >
-                                                    Sign out
+                                                    <AuthButton name="Log Out" />
                                                 </div>
+
                                             )}
                                         </Menu.Item>
                                     </div>

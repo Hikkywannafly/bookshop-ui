@@ -1,6 +1,8 @@
 import Category from './Category';
 import Itembar from './Itembar';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import UnderText from '~/components/Animation/UnderText';
 const Navbar = () => {
     const userData = useSelector((state) => state.login.currentUser);
     return (
@@ -12,9 +14,26 @@ const Navbar = () => {
                         <Itembar />
                     </div>
 
-                    <a href="pages/login.html" className=" hover:text-white transition capitalize">
+                    <a href="pages/login.html" className="  transition capitalize">
 
-                        {userData ? `Hi ${userData.name}` : 'Guest'}
+                        {userData ? (<>
+                            Hi, <span className='font-bold'> {userData.name}</span>
+                        </>) :
+                            (<div className='flex flex-row justify-center gap-2.5  '>
+                                <div className=''>
+                                    <Link to='/register'>
+                                        <UnderText text={`Regiter`} />
+                                    </Link>
+                                </div>
+
+                                <div className=''>
+                                    <Link to='/login'>
+                                        <UnderText text={`Login`} />
+                                    </Link>
+                                </div>
+                            </div>
+                            )
+                        }
                     </a>
                 </div>
             </nav>

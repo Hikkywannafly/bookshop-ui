@@ -127,7 +127,7 @@ function Register() {
                         </p>
                     </div>
                     <div className="text-gray-400 flex flex-col justify-center items-center">
-                        <p>Secure Login with reCAPTCHA subject to Google</p>
+                        <p>Secure Login with reCAPTCHA subject to Hikkywannafly</p>
                         <p>Terms & Privacy</p>
                     </div>
                 </div>

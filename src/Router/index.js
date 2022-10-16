@@ -5,9 +5,24 @@ import Test from '../page/Auth/Test';
 import FogotPassword from '../page/Auth/FogotPassword';
 import VerifycationEmail from '~/page/Auth/VerifycationEmail';
 import VerifyUrl from '~/page/Auth/VerifyUrl';
+import Dashboard from '~/page/Dashboard/';
+import Ecommerce from '~/page/Dashboard/Ecommerce';
+import Orders from '~/page/Dashboard/Orders';
 const publicRoutes = [
     {
         path: '/', component: Home
+    },
+
+    {
+        path: '/test', component: Test
+    }
+]
+const privateRoutes = [
+    {
+        path: '/verify-email', component: VerifycationEmail
+    },
+    {
+        path: '/verify-email-url', component: VerifyUrl
     },
     {
         path: '/login', component: Login
@@ -16,23 +31,19 @@ const publicRoutes = [
         path: '/register', component: Register
     },
     {
-        path: '/test', component: Test
-    },
-    {
         path: '/forgot-password', component: FogotPassword
     },
-
-
-
 ]
-const privateRoutes = [
+const dashboardRoutes = [
     {
-        path: '/verify-email', component: VerifycationEmail
+        path: '/dashboard', component: Dashboard
     },
     {
-        path: '/verify-email-url', component: VerifyUrl
+        path: '/ecommerce', component: Ecommerce
+    },
+    {
+        path: '/orders', component: Orders
     }
-
 ]
 
-export { publicRoutes, privateRoutes }
+export { publicRoutes, privateRoutes, dashboardRoutes }
