@@ -1,42 +1,92 @@
 import { BiCategory } from 'react-icons/bi';
+import { FiX } from 'react-icons/fi';
+import { Link, useNavigate } from 'react-router-dom';
+import { useStateContext } from '~/hook/useStateContext';
+import React, { useState, useEffect } from 'react';
+import CategoryList from './CategoryList';
+import { CategoryListData } from '~/dummy';
 const Category = () => {
+    const navigate = useNavigate();
+    const { mobile, screenSize, click, setClick } = useStateContext();
+    const handleCategory = () => {
+        setClick(!click);
+    }
+    useEffect(() => {
+        if (!mobile) {
+            setClick(false);
+        }
+    }, [mobile])
+
     return (
         <>
-            <div className="px-3 py-1 bg-gray-700 flex items-center cursor-pointer relative group rounded-lg">
-                <span className="text-white">
-                    <BiCategory />
-                </span>
-                <span className="capitalize ml-2  text-white">All Categories</span>
-                <div
-                    className="absolute w-full left-0 top-full bg-white shadow-md py-3 divide-y
-                    
-                divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible">
-                    <a href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
 
-                        <span className="ml-6 text-gray-600 text-sm">Sofa</span>
-                    </a>
-                    <a href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
+            <div
+                onClick={mobile ? handleCategory : null}
+                className="px-3 py-1 bg-gray-700 flex items-center  cursor-pointer group rounded-lg" >
 
-                        <span className="ml-6 text-gray-600 text-sm">Terarce</span>
-                    </a>
-                    <a href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
+                <span className="text-white text-lg">
+                    {/* {click ? <FiX className=' animate-fade-rotate ' /> : <BiCategory className=' animate-fade-rotate-right ' />} */}
+                    <div className="flex justify-center">
+                        <button className="relative group">
+                            <div className="relative flex overflow-hidden items-center justify-center  transform transition-all  duration-200 shadow-md">
+                                <div className="flex flex-col  justify-between w-[18px] h-[18px] transform transition-all duration-300 origin-center overflow-hidden">
+                                    {
+                                        !click ? (
+                                            <div className="flex flex-col  justify-between w-[18px] h-[18px] transform transition-all duration-200 origin-center overflow-hidden">
+                                                <div className={`bg-white h-[1.5px] w-5 transform transition-all duration-300 origin-left  ${click ? ' translate-x-10 ' : null}`}></div>
+                                                <div className={`bg-white h-[1.5px] w-1/2 rounded transform transition-all duration-300  delay-75  ${click ? 'translate-x-10' : null}`}></div>
+                                                <div className={`bg-white h-[2px] w-5 transform transition-all duration-300 origin-left delay-150  ${click ? 'translate-x-10 ' : null}`}></div>
+                                            </div>
+                                        ) : (
+                                            <div className={`absolute items-center justify-between transform transition-all duration-500 top-2.5 -translate-x-10
+                                           flex w-0   ${click ? 'w-12 translate-x-0' : null}`}>
+                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-500 rotate-0 delay-300  ${click ? 'rotate-45' : null}`}></div>
+                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-500 -rotate-0 delay-300 ${click ? '-rotate-45' : null}`}></div>
+                                            </div>
+                                        )
+                                    }
 
-                        <span className="ml-6 text-gray-600 text-sm">Bed</span>
-                    </a>
-                    <a href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
+                                </div>
+                            </div>
+                        </button>
+                    </div>
 
-                        <span className="ml-6 text-gray-600 text-sm">office</span>
-                    </a>
-                    <a href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
 
-                        <span className="ml-6 text-gray-600 text-sm">Outdoor</span>
-                    </a>
-                    <a href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
+                </span >
+                <span
+                    className="capitalize ml-2  text-white">All Categories</span>
 
-                        <span className="ml-6 text-gray-600 text-sm">Mattress</span>
-                    </a>
-                </div>
-            </div>
+
+                {
+                    !mobile && (
+
+                        <div
+                            className="absolute w-[100%] left-0 right-0 mx-auto top-full bg-white shadow-md py-3 rounded-xl drop-shadow-lg
+                  transition duration-300 flex flex-row  my-2 visible group-hover:visible opacity-0 group-hover:opacity-100">
+                            <div className=" border-r border-gray-300">
+                                <div className="flex items-center mx-4 my-1 px-1 py-3  ">
+                                    <span className="ml-6 text-gray-500  font-bold uppercase">Danh mục sản phẩm</span>
+                                </div>
+
+                                {
+                                    CategoryListData.map((item, index) => (
+                                        <CategoryList key={item.title} name={item.title} />
+                                    ))
+                                }
+                            </div>
+
+                            <div className="flex ">
+                                <div className="">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    )
+                }
+
+            </div >
+
         </>
     );
 }

@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className="min-h-screen flex flex-col relative">
+        <div className="min-h-screen flex  relative">
           <Routes>
 
             {publicRoutes.map((route, index) => {
@@ -36,9 +36,11 @@ function App() {
               return (
                 <Route key={index} path={route.path} element={
                   <>
-                    <Header />
-                    <Navbar />
-                    <route.component />
+                    <div className="flex flex-col w-full ">
+                      <Header />
+                      <Navbar />
+                      <route.component />
+                    </div>
                   </>
                 } />
               );
@@ -46,18 +48,22 @@ function App() {
             })}
 
             {privateRoutes.map((route, index) => {
-              return <Route key={index} path={route.path} element={< route.component />} />;
+              return <Route key={index} path={route.path} element={
+                <div className="flex flex-col w-full">
+                  < route.component />
+                </div>
+              } />;
             })}
 
             {dashboardRoutes.map((route, index) => {
               return <Route key={index} path={route.path} element={
                 <>
                   {activeMenu ? (
-                    <div className="animate-fade-right w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+                    <div className=" w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
                       <Sidebar />
                     </div>
                   ) : (
-                    <div className="animate-fade-left w-0 fixed sidebar dark:bg-secondary-dark-bg bg-white">
+                    <div className=" w-0 fixed sidebar dark:bg-secondary-dark-bg bg-white">
                       <Sidebar />
                     </div>
                   )}
@@ -65,11 +71,11 @@ function App() {
                   <div
                     className={
                       activeMenu
-                        ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
+                        ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full   '
                         : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
                     }
                   >
-                    <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full ">
+                    <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full   ">
                       <Nav />
                     </div>
                     <div>

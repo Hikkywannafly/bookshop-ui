@@ -44,6 +44,25 @@ module.exports = {
           "0%": { opacity: 0, transform: "translateX(20px)" },
           "100%": { opacity: 1, transform: "translateX(0)" }
         },
+        'fade-rotate': {
+          "0%": { opacity: 0, transform: "rotate(-90deg)" },
+          "100%": { opacity: 1, transform: "rotate(0)" }
+        },
+        'fade-rotate-right': {
+          "0%": { opacity: 0, transform: "rotate(180deg)" },
+          "100%": { opacity: 1, transform: "rotate(0)" }
+        },
+        'fade-scale': {
+          "0%": {
+            visibility: "visible",
+            opacity: 0, transform: "scale(0)"
+          },
+
+          "100%": {
+
+            opacity: 1, transform: "scale(1)"
+          }
+        },
 
       },
       animation: {
@@ -52,6 +71,9 @@ module.exports = {
         "fade-down": "fade-down 200ms ease-in-out",
         "fade-left": "fade-left 200ms ease-in-out",
         "fade-right": "fade-right 200ms ease-in-out",
+        'fade-rotate': 'fade-rotate 200ms ease-in-out',
+        'fade-rotate-right': 'fade-rotate-right 200ms ease-in-out',
+        'fade-scale': 'fade-scale 200ms ease-in-out',
 
       },
       backgroundImage: {

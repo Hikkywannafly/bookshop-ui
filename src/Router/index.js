@@ -8,6 +8,7 @@ import VerifyUrl from '~/page/Auth/VerifyUrl';
 import Dashboard from '~/page/Dashboard/';
 import Ecommerce from '~/page/Dashboard/Ecommerce';
 import Orders from '~/page/Dashboard/Orders';
+import Category from '~/page/Category/';
 const publicRoutes = [
     {
         path: '/', component: Home
@@ -15,6 +16,9 @@ const publicRoutes = [
 
     {
         path: '/test', component: Test
+    },
+    {
+        path: `/:slug`, component: Category
     }
 ]
 const privateRoutes = [
