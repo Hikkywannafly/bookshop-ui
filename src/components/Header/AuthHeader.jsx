@@ -4,7 +4,7 @@ const HeaderAuth = (props) => {
     return (
         <>
             <div className=" flex flex-row w-full h-10 justify-between text-sm font-medium p-5">
-                <div className="text-center mb-5 animate-wiggle ">
+                <div className="text-center mb-5 ">
                     <p href="#" className="group text-black transition duration-300 cursor-pointer hover:animate-wiggle">
                         <Link to={`../`}>   <span className="uppercase"> Hikky Books  </span></Link>
                     </p>

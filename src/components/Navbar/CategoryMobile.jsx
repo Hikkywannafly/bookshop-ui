@@ -1,11 +1,13 @@
 import { CategoryListData } from '~/dummy';
-import CategoryList from './CategoryList';
+
 const CategoryMobile = () => {
     return (<>
 
         <div
             style={{ boxShadow: '0 1px 5px 2px rgb(0 0 0 / 10%)' }}
-            className="mt-[120px] absolute container border-t-2 w-full  bg-white animate-fade-scale left-0 right-0 mx-auto ">
+            className="mt-[120px] absolute container border-t-2 w-full 
+            h-[calc(100vh-120px)] 
+            bg-white animate-fade-scale left-0 right-0 mx-auto ">
             <span
 
                 className="box-triangle animate-fade-scale absolute top-[-20px]">
@@ -19,16 +21,17 @@ const CategoryMobile = () => {
                 </svg>
             </span>
             <div className="">
-                <div className="flex items-center  my-1 px-1 py-3  ">
+                <div className="flex items-center  my-1 px-1 py-1  ">
                     <span className=" text-gray-500  font-bold uppercase">Danh mục sản phẩm</span>
 
                 </div>
+
                 {
                     CategoryListData.map((item, index) => (
                         <div
                             key={item.title}
-                            className="flex items-center  my-1 px-1 py-3">
-                            <span className=" text-gray-900  font-bold uppercase">{item.name} </span>
+                            className="flex items-center my-1 px-1 py-3 border-b ">
+                            <span className=" text-gray-900  font-medium capitalize">{item.title} </span>
                         </div>
                     ))
 
