@@ -20,10 +20,13 @@ const Category = () => {
     return (
         <>
 
+
             <div
                 onClick={mobile ? handleCategory : null}
-                className="px-3 py-1 bg-gray-700 flex items-center  cursor-pointer group rounded-lg" >
+                className="px-3 py-1 bg-gray-700 flex items-center cursor-pointer group rounded-lg" >
+                <div className="bg-transparent group absolute top-3 left-4 h-full px-20 py-1">
 
+                </div>
                 <span className="text-white text-lg">
                     {/* {click ? <FiX className=' animate-fade-rotate ' /> : <BiCategory className=' animate-fade-rotate-right ' />} */}
                     <div className="flex justify-center">
@@ -33,15 +36,15 @@ const Category = () => {
                                     {
                                         !click ? (
                                             <div className="flex flex-col  justify-between w-[18px] h-[18px] transform transition-all duration-200 origin-center overflow-hidden">
-                                                <div className={`bg-white h-[1.5px] w-5 transform transition-all duration-300 origin-left  ${click ? ' translate-x-10 ' : null}`}></div>
-                                                <div className={`bg-white h-[1.5px] w-1/2 rounded transform transition-all duration-300  delay-75  ${click ? 'translate-x-10' : null}`}></div>
+                                                <div className={`bg-white h-[1.5px] w-5 transform transition-all duration-200 origin-left  ${click ? ' translate-x-10 ' : null}`}></div>
+                                                <div className={`bg-white h-[1.5px] w-1/2 rounded transform transition-all duration-200  delay-75  ${click ? 'translate-x-10' : null}`}></div>
                                                 <div className={`bg-white h-[2px] w-5 transform transition-all duration-300 origin-left delay-150  ${click ? 'translate-x-10 ' : null}`}></div>
                                             </div>
                                         ) : (
                                             <div className={`absolute items-center justify-between transform transition-all duration-500 top-2.5 -translate-x-10
                                            flex w-0   ${click ? 'w-12 translate-x-0' : null}`}>
-                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-500 rotate-0 delay-300  ${click ? 'rotate-45' : null}`}></div>
-                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-500 -rotate-0 delay-300 ${click ? '-rotate-45' : null}`}></div>
+                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-300 rotate-0 delay-200  ${click ? 'rotate-45' : null}`}></div>
+                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-300 -rotate-0 delay-200 ${click ? '-rotate-45' : null}`}></div>
                                             </div>
                                         )
                                     }
@@ -61,8 +64,8 @@ const Category = () => {
                     !mobile && (
 
                         <div
-                            className="absolute w-[100%] left-0 right-0 mx-auto top-full bg-white shadow-md py-3 rounded-xl drop-shadow-lg
-                  transition duration-300 flex flex-row  my-2 visible group-hover:visible opacity-0 group-hover:opacity-100">
+                            className="absolute w-[100%] left-0 right-0 mx-auto top-full  bg-white shadow-md py-3  rounded-xl drop-shadow-lg
+                  transition  flex flex-row  my-2 invisible group-hover:visible opacity-0 group-hover:opacity-100">
                             <div className=" border-r border-gray-300">
                                 <div className="flex items-center mx-4 my-1 px-1 py-3  ">
                                     <span className="ml-6 text-gray-500  font-bold uppercase">Danh mục sản phẩm</span>

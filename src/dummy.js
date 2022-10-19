@@ -20,12 +20,12 @@ export const CategoryListData = [
     slug: "sach-thieu-nhi",
   },
   {
-    title: "Sách giáo khoa",
-    slug: "sach-giao-khoa",
+    title: "Giáo khoa - tham khảo",
+    slug: "giao-khoa-tham-khao",
   },
   {
-    title: "Sách ngoại ngữ",
-    slug: "sach-ngoai-ngu",
+    title: "Ngoại ngữ",
+    slug: "ngoai-ngu",
   }
 
 ]

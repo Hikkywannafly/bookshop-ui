@@ -51,6 +51,9 @@ const authSlice = createSlice({
             state.accessToken = null;
             state.error = true;
             state.errorMessage = action.payload;
+        },
+        refreshToken: (state, action) => {
+            state.accessToken = action.payload;
         }
     },
 
@@ -63,5 +66,6 @@ export const {
     logoutStart,
     logoutSuccess,
     logoutFailure,
+    refreshToken,
 } = authSlice.actions;
 export default authSlice.reducer;

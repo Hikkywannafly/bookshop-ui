@@ -19,7 +19,8 @@ const publicRoutes = [
     },
     {
         path: `/:slug`, component: Category
-    }
+    },
+    
 ]
 const privateRoutes = [
     {

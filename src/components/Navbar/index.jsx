@@ -16,9 +16,9 @@ const Navbar = () => {
                         <Category />
                         <Itembar />
                     </div>
-                    {userData ? (<>
+                    {userData ? (<div>
                         Hi, <span className='font-bold'> {userData.name}</span>
-                    </>) :
+                    </div>) :
                         (<div className='flex flex-row justify-center gap-2.5  '>
                             <div className=''>
                                 <Link to='/register'>

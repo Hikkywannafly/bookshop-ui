@@ -3,8 +3,8 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 import AccountBar from './AccountBar';
 const Header = () => {
-    const user = useSelector((state) => state.login.currentUser);
-    console.log(user);
+    // const user = useSelector((state) => state.login.currentUser);
+    // console.log(user);
     return (
         <>
             <header className="py-2 border-b bg-white  flex justify-center">

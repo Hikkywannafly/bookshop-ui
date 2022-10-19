@@ -13,6 +13,7 @@ export const loginUser = async (user, dispatch) => {
     return await fetchAuthLogin(user)
         .then(res => {
             dispatch(loginSuccess(res.data));
+            // console.log('debug', res.data);
             return res.data;
         })
         .catch(err => {

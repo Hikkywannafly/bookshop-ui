@@ -6,16 +6,22 @@ import axiosInterceptor from '~/utils/axiosInterceptor';
 import { logoutUser } from '~/redux/apiRequest';
 import { useDispatch } from 'react-redux';
 import AuthButton from '~/components/Input/AuthButton';
+import { refreshToken, logoutSuccess } from '~/redux/authLoginSlice';
 const Account = () => {
     const accessToken = useSelector((state => { return state.login.accessToken }));
-    const axios = axiosInterceptor(accessToken);
     const dispatch = useDispatch();
+    const axios = axiosInterceptor(accessToken, dispatch, refreshToken, logoutSuccess);
     const handleLogout = async () => {
         const result = await logoutUser(axios, dispatch);
         console.log(result);
         // if (result.status === 'success') {
         //     window.location.reload();
         // }
+    }
+
+    const handleTest = async () => {
+        const res = await axios.get('http://127.0.0.1:8000/api/auth/testapi');
+        console.log(res);
     }
 
     return (
@@ -51,7 +57,10 @@ const Account = () => {
                                         </p>
                                     </div>
 
-                                    <div className="py-1">
+                                    <div
+                                        onClick={handleTest}
+                                        className="py-1">
+
                                         <Menu.Item>
                                             {({ active }) => (
                                                 <a
