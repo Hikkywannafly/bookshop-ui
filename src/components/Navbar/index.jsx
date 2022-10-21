@@ -10,7 +10,9 @@ const Navbar = () => {
     const userData = useSelector((state) => state.login.currentUser);
     return (
         <>
-            <nav className=" bg-slate-300 bg-opacity-60 backdrop-blur ">
+            <nav
+                style={{ zIndex: 10 }}
+                className=" bg-slate-300 bg-opacity-60 backdrop-blur ">
                 <div className="container flex justify-between items-center py-1.5 lg:max-w-[1450px] relative">
                     <div className="flex justify-between ">
                         <Category />

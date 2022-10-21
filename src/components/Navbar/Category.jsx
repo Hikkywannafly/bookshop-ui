@@ -8,6 +8,10 @@ import { CategoryListData } from '~/dummy';
 const Category = () => {
     const navigate = useNavigate();
     const { mobile, screenSize, click, setClick } = useStateContext();
+    const handleCategoryClick = (slug) => {
+        navigate(`/${slug}`);
+        window.scrollTo(0, 0);
+    }
     const handleCategory = () => {
         setClick(!click);
     }
@@ -15,12 +19,13 @@ const Category = () => {
         if (!mobile) {
             setClick(false);
         }
+        return () => {
+
+        }
     }, [mobile])
 
     return (
         <>
-
-
             <div
                 onClick={mobile ? handleCategory : null}
                 className="px-3 py-1 bg-gray-700 flex items-center cursor-pointer group rounded-lg" >
@@ -64,6 +69,7 @@ const Category = () => {
                     !mobile && (
 
                         <div
+
                             className="absolute w-[100%] left-0 right-0 mx-auto top-full  bg-white shadow-md py-3  rounded-xl drop-shadow-lg
                   transition  flex flex-row  my-2 invisible group-hover:visible opacity-0 group-hover:opacity-100">
                             <div className=" border-r border-gray-300">
@@ -73,7 +79,7 @@ const Category = () => {
 
                                 {
                                     CategoryListData.map((item, index) => (
-                                        <CategoryList key={item.title} name={item.title} />
+                                        <CategoryList handleNavigate={() => handleCategoryClick(item.slug)} key={item.title} name={item.title} />
                                     ))
                                 }
                             </div>

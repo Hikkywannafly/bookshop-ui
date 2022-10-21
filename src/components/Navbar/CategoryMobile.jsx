@@ -1,6 +1,10 @@
 import { CategoryListData } from '~/dummy';
-
+import { useNavigate } from 'react-router-dom';
 const CategoryMobile = () => {
+    const navigate = useNavigate();
+    const handleCategoryClick = (slug) => {
+        navigate(`/${slug}`);
+    }
     return (<>
 
         <div
@@ -29,6 +33,7 @@ const CategoryMobile = () => {
                 {
                     CategoryListData.map((item, index) => (
                         <div
+                            onClick={() => handleCategoryClick(item.slug)}
                             key={item.title}
                             className="flex items-center my-1 px-1 py-3 border-b ">
                             <span className=" text-gray-900  font-medium capitalize">{item.title} </span>

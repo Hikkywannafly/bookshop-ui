@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className="min-h-screen flex  relative">
+        <div className="min-h-screen flex  relative ">
           <Routes>
 
             {publicRoutes.map((route, index) => {
@@ -36,7 +36,7 @@ function App() {
               return (
                 <Route key={index} path={route.path} element={
                   <>
-                    <div className="flex flex-col w-full ">
+                    <div className="flex flex-col w-full bg-gray-100 ">
                       <Header />
                       <Navbar />
                       <route.component />

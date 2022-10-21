@@ -1,8 +1,10 @@
 const CategoryList = (props) => {
-    const { name, slug } = props
+    const { name, slug, handleNavigate } = props
     return (
         <>
-            <div className="flex items-center mx-4 my-1 px-1 py-3 hover:bg-gray-100 rounded-xl transition ">
+            <div
+                onClick={handleNavigate}
+                className="flex items-center mx-4 my-1 px-1 py-3 hover:bg-gray-100 rounded-xl transition ">
                 <span className="ml-6 text-gray-900 font-bold capitalize">{name}</span>
             </div>
 

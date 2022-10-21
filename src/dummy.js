@@ -6,6 +6,28 @@ export const CategoryListData = [
   {
     title: "Văn học",
     slug: "van-hoc",
+    subCategory: [
+      {
+        title: "Văn học nước ngoài",
+        slug: "van-hoc-nuoc-ngoai",
+      },
+      {
+        title: "Văn học trong nước",
+        slug: "van-hoc-trong-nuoc",
+      },
+      {
+        title: "Light Novel",
+        slug: "light-novel",
+      },
+      {
+        title: "Ngôn Tình",
+        slug: "ngon-tinh",
+      },
+      {
+        title: "Tiểu thuyết",
+        slug: "tieu-thuyet",
+      }
+    ]
   },
   {
     title: "Kinh tế",
