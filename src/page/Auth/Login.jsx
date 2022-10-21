@@ -3,7 +3,7 @@ import AuthInput from '~/components/Input/AuthInput';
 import AuthButton from '~/components/Input/AuthButton';
 import Or from '~/components/Chore/Or';
 import AuthHeader from '~/components/Header/AuthHeader';
-import AuthSocial from '~/components/Input/AuthSocial';
+import LoginSocial from './LoginSocial';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -14,6 +14,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { loginSchema } from '~/helper/Schema/login';
 import { loginUser } from '~/redux/apiRequest';
 import blockRightClick from '~/helper/blockRightClick';
+
 const Login = () => {
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null)
@@ -31,7 +32,9 @@ const Login = () => {
         },
         validationSchema: loginSchema,
         onSubmit: async (values) => {
+            console.log('test', values)
             const result = await loginUser(values, dispatch);
+            console.log('debug', result);
             if (result.status === 'success') {
                 // toast.success('Login success');
                 navigate('/');
@@ -93,10 +96,10 @@ const Login = () => {
                         <AuthButton name='Login' />
                     </form>
                     <Or />
-                    <div className=" flex flex-col gap-4 w-full">
-                        <AuthSocial color="#4285F4" name="Sign in with  Google" icon="fa-google" />
-                        <AuthSocial color="#3B5998" name="Sign in with  Facebook" icon="fa-facebook" />
-                        <AuthSocial color="#1DA1F2" name="Sign in with  Twitter" icon="fa-twitter" />
+                    <div className=" flex flex-col gap-4 w-full justify-center ">
+
+                        <LoginSocial />
+
                     </div>
                 </div>
                 <div className="flex flex-col justify-center items-center h-full text-sm  ">
@@ -115,7 +118,6 @@ const Login = () => {
                 </div>
             </div>
         </>
-
     );
 };
 

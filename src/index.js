@@ -6,13 +6,16 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from '~/redux/store';
 import { ContextProvider } from './hook/useStateContext';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ContextProvider>
-        <App />
+        <GoogleOAuthProvider clientId="377073857268-0ndokteap2mocdei7ptcc5tj122gp8c8.apps.googleusercontent.com">
+          <App />
+        </GoogleOAuthProvider>
       </ContextProvider>
     </PersistGate>
   </Provider>

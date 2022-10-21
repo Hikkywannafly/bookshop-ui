@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LoadingCicle from '~/components/Loading/LoadingCicle';
 import toast, { Toaster } from 'react-hot-toast';
+import LoginSocial from './LoginSocial'
 function Register() {
     const [visible, setVisible] = useState(false);
     const [visibleC, setVisibleC] = useState(false);
@@ -114,9 +115,7 @@ function Register() {
                     </form>
                     <Or />
                     <div className=" flex flex-col gap-5 w-full justify-center">
-                        <AuthSocial color="#4285F4" name="Sign Up With Google" icon="fa-google" />
-                        <AuthSocial color="#3B5998" name="Sign Up With Facebook" icon="fa-facebook" />
-                        <AuthSocial color="#1DA1F2" name="Sign Up With Twitter" icon="fa-twitter" />
+                        <LoginSocial />
                     </div>
                 </div>
                 <div className="flex flex-col justify-center items-center text-sm  ">

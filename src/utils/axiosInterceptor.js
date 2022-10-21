@@ -9,7 +9,7 @@ const refreshToken = async (accessToken) => {
             }
 
         })
-      
+
         return res.data.access_token;
     }
     catch (error) {
@@ -29,7 +29,7 @@ const axiosInterceptor = (accessToken, dispatch, getState, logoutSuccess) => {
             let date = new Date();
             let currentTime = date.getTime() / 1000;
             let decodedToken = jwt_decode(accessToken);
-            console.log(`accessToken: ${accessToken}`);
+            // console.log(`accessToken: ${accessToken}`);
             // const result = await refreshToken(accessToken);
             // console.log('debug', result);
 

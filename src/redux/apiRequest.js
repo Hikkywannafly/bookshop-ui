@@ -1,13 +1,15 @@
 import axios from 'axios';
 import { loginStart, loginSuccess, loginFailure, logoutSuccess, logoutFailure, logoutStart } from './authLoginSlice';
-import { registerStart, registerSuccess, registerFailure } from './authRegisterSlice';
+import { registerStart, registerSuccess, registerFailure, registerEnd } from './authRegisterSlice';
 const fetchAuthLogin = async (user) => {
     return await axios.post("http://127.0.0.1:8000/api/auth/login", user)
 }
 const fetchAuthRegister = async (user) => {
     return await axios.post("http://127.0.0.1:8000/api/auth/register", user)
 }
-
+const fetchAuthGoogle = async (user) => {
+    return await axios.post("http://127.0.0.1:8000/api/auth/google", user)
+}
 export const loginUser = async (user, dispatch) => {
     dispatch(loginStart());
     return await fetchAuthLogin(user)
@@ -49,4 +51,35 @@ export const logoutUser = async (axiosJWT, dispatch) => {
         dispatch(logoutFailure(err.response.data));
         return err.response.data;
     }
+}
+
+export const LoginWithSocial = async (social, credentialResponse) => {
+    try {
+        const res = await axios.post(`http://127.0.0.1:8000/api/auth/${social}`, {
+            userToken: credentialResponse,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return res.data;
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+export const LoginWithGoogle = async (user, dispatch) => {
+    dispatch(loginStart());
+    dispatch(registerStart());
+    return await fetchAuthGoogle(user)
+        .then(res => {
+            dispatch(registerEnd());
+            dispatch(loginSuccess(res.data));
+            return res.data;
+        })
+        .catch(err => {
+            dispatch(loginFailure(err.response.data));
+            return err.response.data;
+        });
+
 }

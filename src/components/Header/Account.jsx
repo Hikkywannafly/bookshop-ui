@@ -9,21 +9,17 @@ import AuthButton from '~/components/Input/AuthButton';
 import { refreshToken, logoutSuccess } from '~/redux/authLoginSlice';
 const Account = () => {
     const accessToken = useSelector((state => { return state.login.accessToken }));
+    const user = useSelector((state => { return state.login.currentUser }));
     const dispatch = useDispatch();
     const axios = axiosInterceptor(accessToken, dispatch, refreshToken, logoutSuccess);
     const handleLogout = async () => {
         const result = await logoutUser(axios, dispatch);
-        console.log(result);
-        // if (result.status === 'success') {
-        //     window.location.reload();
-        // }
     }
 
-    const handleTest = async () => {
-        const res = await axios.get('http://127.0.0.1:8000/api/auth/testapi');
-        console.log(res);
-    }
-
+    // const handleTest = async () => {
+    //     const res = await axios.get('http://127.0.0.1:8000/api/auth/testapi');
+    //     console.log(res);
+    // }
     return (
         <>
             <div className="relative inline-block text-left z-10">
@@ -50,15 +46,21 @@ const Account = () => {
                                     static
                                     className="absolute right-0 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none"
                                 >
-                                    <div className="px-4 py-3">
-                                        <p className="text-sm leading-5">Signed in as</p>
-                                        <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                                            tom@example.com
-                                        </p>
+                                    <div className="px-4 py-3 flex flex-row gap-3 items-center">
+                                        <img className='w-10 h-10 rounded-full'
+                                            src={user.image_address ? user.image_address : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}
+                                            alt='user' />
+                                        <div className="">
+                                            <p className="text-sm leading-5">Signed in as</p>
+                                            <p className="text-sm font-medium leading-5 text-gray-900 truncate">
+                                                {user.name.length > 17 ? user.name.slice(0, 17) + ' ...' : user.name}
+                                            </p>
+                                        </div>
+
                                     </div>
 
                                     <div
-                                        onClick={handleTest}
+
                                         className="py-1">
 
                                         <Menu.Item>
@@ -118,9 +120,9 @@ const Account = () => {
                                                     className={`${active
                                                         ? "bg-gray-100 text-gray-900"
                                                         : "text-gray-700"
-                                                        } flex justify-between w-full px-4 py-1 text-sm leading-5 text-left`}
+                                                        } flex justify-between w-full px-4 py-1 text-sm leading-5 text-left  `}
                                                 >
-                                                    <AuthButton name="Log Out" />
+                                                    <AuthButton name="Log Out" size='sm' />
                                                 </div>
 
                                             )}

@@ -27,12 +27,17 @@ const authRegisterSlice = createSlice({
             state.errorData = action.payload;
             state.currentUser = null;
             state.accessToken = null;
+        },
+        registerEnd: (state) => {
+            state.isFetching = false;
+
         }
     }
 });
 export const {
     registerStart,
     registerFailure,
-    registerSuccess
+    registerSuccess,
+    registerEnd
 } = authRegisterSlice.actions;
 export default authRegisterSlice.reducer;
