@@ -8,7 +8,8 @@ const CategoryMobile = () => {
     return (<>
 
         <div
-            style={{ boxShadow: '0 1px 5px 2px rgb(0 0 0 / 10%)' }}
+
+            style={{ boxShadow: '0 1px 5px 2px rgb(0 0 0 / 10%)', zIndex: 10 }}
             className="mt-[120px] absolute container border-t-2 w-full 
             h-[calc(100vh-120px)] 
             bg-white animate-fade-scale left-0 right-0 mx-auto ">

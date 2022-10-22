@@ -10,7 +10,7 @@ const Category = () => {
                     <h1 className='  text-xs md:text-base'> {`Home`}</h1>
                 </div>
 
-                <div className="flex flex-row">
+                <div className="flex flex-row h-screen">
                     <Fillterbar />
                 </div>
             </div>

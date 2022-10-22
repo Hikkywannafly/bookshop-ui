@@ -9,7 +9,7 @@ const Category = () => {
     const navigate = useNavigate();
     const { mobile, screenSize, click, setClick } = useStateContext();
     const handleCategoryClick = (slug) => {
-        navigate(`/${slug}`);
+        navigate(`/${slug}.html`);
         window.scrollTo(0, 0);
     }
     const handleCategory = () => {

@@ -18,7 +18,10 @@ const publicRoutes = [
         path: '/test', component: Test
     },
     {
-        path: `/:slug`, component: Category
+        path: `/:slug.html`, component: Category
+    },
+    {
+        path: `/:slug/:subSlug.html`, component: Category
     },
 
 ]
