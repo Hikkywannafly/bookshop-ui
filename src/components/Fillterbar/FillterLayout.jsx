@@ -1,47 +1,56 @@
-import { IoIosArrowUp, IoIosArrowDown, IoMdArrowDropup } from 'react-icons/io';
-const FillterLayout = ({ children }, props) => {
-    const { width, setCategory, category } = props
+import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import React, { useState, useEffect } from 'react';
+import LoadingSkeleton from '~/components/Animation/LoadingSkeleton'
+import { useStateContext } from '~/hook/useStateContext';
+const FillterLayout = (props) => {
+    const { name, children } = props;
+    const { category, setCategory } = useStateContext();
     return (
         <>
-            <div
-                style={{ zIndex: 0 }}
-                className="bg-white w-[300px]  shadow-sm p-3 rounded-lg drop-shadow-sm flex flex-col justify-start">
-                <div className="border-b">
 
-                    <div className="flex justify-between mb-3">
-                        <div className="flex gap-2 items-center">
-                            <span className="w-1 h-3.5 bg-slate-800"></span>
-                            <h1 className='font-bold uppercase'> category</h1>
-                        </div>
-
-                        <div
-                            id="category"
-                            onClick={(e) => {
-                                category === 'category' ?
-                                    setCategory() : setCategory('category')
-                            }}
-                            className=" px-3 cursor-pointer ">
-                            {category === 'category' ? <IoIosArrowUp className="animate-fade-rotate-right " /> : <IoIosArrowDown className="animate-fade-rotate" />}
-                        </div>
+            <div className="border-b pb-3 ">
+                <div className="flex justify-between mb-1.5 ">
+                    <div className="flex gap-1.5 items-center ">
+                        <span className="w-[3px] h-3 bg-slate-800"></span>
+                        <h1 className='font-medium uppercase  '> {name}</h1>
                     </div>
-                    <div className={` animate-fade-down ${category === 'category' ? ` hidden ` : ''}`}>
 
-                        <div className="flex items-center">
-
-                            <h1 className=" ml-3 mb-3 text-sm uppercase font-medium cursor-pointer ">All categories</h1>
-
-                        </div>
-
-                        {
-                            children
-                        }
+                    <div
+                        id="category"
+                        onClick={(e) => {
+                            category === name ?
+                                setCategory() : setCategory(name)
+                        }}
+                        className=" px-3 cursor-pointer ">
+                        {category === name ? <IoIosArrowUp className="animate-fade-rotate-right " /> : <IoIosArrowDown className="animate-fade-rotate" />}
                     </div>
                 </div>
+                <div className={` ml-3 mb-1.5 ${category === name ? ` hidden ` : ' animate-fade-down'}`}>
 
+                    {
+                        children
+                    }
+
+                </div>
             </div>
+
+
 
         </>
     );
 }
+const Loading = () => {
+
+
+    <div className="border-b pb-3 ">
+        <LoadingSkeleton className="h-5 mb-1.5 w-full">
+        </LoadingSkeleton>
+    </div>
+
+
+
+}
+
+FillterLayout.Loading = Loading
 
 export default FillterLayout;

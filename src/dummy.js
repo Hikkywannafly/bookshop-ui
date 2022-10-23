@@ -32,6 +32,17 @@ export const CategoryListData = [
   {
     title: "Kinh tế",
     slug: "kinh-te",
+    subCategory: [
+      {
+        title: "Kinh tế nước ngoài",
+        slug: "kinh-te-nuoc-ngoai",
+      },
+      {
+        title: "Kinh tế trong nước",
+        slug: "kinh-te-trong-nuoc",
+      }
+
+    ]
   },
   {
     title: "Tâm lý - kĩ năng sống",
@@ -105,3 +116,24 @@ export const links = [
   // },
 
 ];
+
+export const price = [
+  {
+    name: 'Dưới 100.000đ',
+  },
+  {
+    name: '100.000đ - 300.000đ',
+  },
+
+  {
+    name: '300.000đ - 500.000đ',
+  },
+
+  {
+    name: '500.000đ - 700.000đ',
+  },
+  {
+    name: '700.000đ - Trở lên',
+  }
+
+]

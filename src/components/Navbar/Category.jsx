@@ -29,7 +29,7 @@ const Category = () => {
             <div
                 onClick={mobile ? handleCategory : null}
                 className="px-3 py-1 bg-gray-700 flex items-center cursor-pointer group rounded-lg" >
-                <div className="bg-transparent group absolute top-3 left-4 h-full px-20 py-1">
+                <div className="bg-transparent group absolute top-[7px] left-4 h-full px-20 py-1">
 
                 </div>
                 <span className="text-white text-lg">

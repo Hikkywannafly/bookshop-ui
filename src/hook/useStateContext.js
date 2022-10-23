@@ -17,6 +17,7 @@ export const ContextProvider = ({ children }) => {
     // resize
     const [mobile, setMobile] = useState(false);
     const [click, setClick] = useState(false);
+    const [category, setCategory] = useState();
     const setMode = (e) => {
 
         setCurrentMode(e.target.value);
@@ -38,7 +39,7 @@ export const ContextProvider = ({ children }) => {
         handleResize();
 
         // unmount
-        return () => {window.removeEventListener('resize', handleResize)};
+        return () => { window.removeEventListener('resize', handleResize) };
     })
 
     useEffect(() => {
@@ -51,7 +52,14 @@ export const ContextProvider = ({ children }) => {
 
     return (
         // eslint-disable-next-line react/jsx-no-constructed-context-values
-        <StateContext.Provider value={{ currentColor, currentMode, activeMenu, screenSize, setScreenSize, handleClick, isClicked, initialState, setIsClicked, setActiveMenu, setCurrentColor, setCurrentMode, setMode, setColor, themeSettings, setThemeSettings, mobile, setMobile, click, setClick }}>
+        <StateContext.Provider value={{
+            currentColor, currentMode, activeMenu, screenSize, setScreenSize,
+            handleClick, isClicked, initialState,
+            setIsClicked, setActiveMenu, setCurrentColor,
+            setCurrentMode, setMode, setColor, themeSettings,
+            setThemeSettings, mobile, setMobile, click, setClick
+            , category, setCategory,
+        }}>
             {children}
         </StateContext.Provider>
     );

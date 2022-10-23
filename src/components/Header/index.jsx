@@ -10,8 +10,8 @@ const Header = () => {
             <header
                 style={{ zIndex: 20 }}
                 className="py-2 border-b bg-white  flex justify-center">
-                <div className="container flex items-center justify-between w-full gap-2 lg:max-w-[1450px]">
-                    
+                <div className="container flex items-center justify-between w-full gap-2 lg:max-w-[1350px]">
+
                     <div className="">
                         <h1 className=' font-bold text-xs md:text-base
                              uppercase rounded-full flex items-center

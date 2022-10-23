@@ -1,87 +1,119 @@
-import { IoIosArrowUp, IoIosArrowDown, IoMdArrowDropup } from 'react-icons/io';
+import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import React, { useState, useEffect } from 'react';
-import { CategoryListData } from '~/dummy';
+import { CategoryListData, price } from '~/dummy';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-
+import FillterLayout from './FillterLayout';
+import CheckBoxGroup from './CheckBoxGroup';
+import { getSuppliers } from '~/redux/Product/ProductRequest';
 const Fillterbar = () => {
-    const [category, setCategory] = useState();
     const [subCategory, setSubCategory] = useState();
+    const [loading, setLoading] = useState(false);
+    const [suppliers, setSuppliers] = useState();
     const location = useLocation();
     const navigate = useNavigate();
     const handleCategoryClick = (slug) => {
         navigate(`/${slug}.html`);
     }
+    const handleGetSupplier = async (params) => {
+        const suppliers = await getSuppliers(params, setLoading);
+        // console.log(`test suppliers`, suppliers.suppliers);
+        console.log(loading)
+        setSuppliers(suppliers.suppliers);
+    }
     useEffect(() => {
+        let params = location.pathname.split('/').at(-1).split('.')[0];
+        setSubCategory(CategoryListData.find((item) => item.slug === location.pathname.split('/')[1])?.slug);
 
-    }, [location])
+        if (params) {
+            handleGetSupplier(params);
+        }
+
+    }, [location.pathname]);
     return (
         <>
             <div
                 style={{ zIndex: 0 }}
-                className="bg-white w-[300px]  shadow-sm p-3 rounded-lg drop-shadow-sm flex flex-col justify-start">
-                <div className="border-b">
+                className="bg-white w-full lg:w-[290px] text-slate-700  shadow-sm p-3 rounded-lg drop-shadow-sm flex flex-col justify-start gap-4">
+                <FillterLayout name='category' >
+                    {
+                        <>
+                            <div className="flex items-center">
 
-                    <div className="flex justify-between mb-3">
-                        <div className="flex gap-2 items-center">
-                            <span className="w-1 h-3.5 bg-slate-800"></span>
-                            <h1 className='font-bold uppercase'> category</h1>
-                        </div>
+                                <h1 className="mb-3 text-sm uppercase  cursor-pointer ">All categories</h1>
 
-                        <div
-                            id="category"
-                            onClick={(e) => {
-                                category === 'category' ?
-                                    setCategory() : setCategory('category')
-                            }}
-                            className=" px-3 cursor-pointer ">
-                            {category === 'category' ? <IoIosArrowUp className="animate-fade-rotate-right " /> : <IoIosArrowDown className="animate-fade-rotate" />}
-                        </div>
-                    </div>
-                    <div className={` animate-fade-down ${category === 'category' ? ` hidden ` : ''}`}>
+                            </div>
 
-                        <div className="flex items-center">
+                            <div className="flex flex-col gap-1.5">
+                                {
+                                    CategoryListData.map((item, index) => (
+                                        <div key={index} className="">
+                                            <div
+                                                className="flex items-center gap-1.5">
 
-                            <h1 className=" ml-3 mb-3 text-sm uppercase font-medium cursor-pointer ">All categories</h1>
+                                                <h1
+                                                    onClick={(e) => handleCategoryClick(item.slug)}
+                                                    className={`text-sm  cursor-pointer  
+                                ${location.pathname === `/` + item.slug + '.html' ? 'text-orange-600 font-medium' : ' '} `} > {item.title}</h1>
+                                                <div
+                                                    onClick={(e) => {
 
-                        </div>
+                                                        subCategory !== item.slug ?
 
-                        {
-                            CategoryListData.map((item, index) => (
-                                <div key={index} className="ml-3">
-                                    <div
-                                        className="flex items-center gap-3">
-
-                                        <h1
-                                            onClick={(e) => handleCategoryClick(item.slug)}
-                                            className={`text-sm uppercase font-medium cursor-pointer 
-                                        ${location.pathname === `/` + item.slug + '.html' ? 'text-yellow-600' : 'font-medium'} `} > {item.title}</h1>
-
-                                        < IoMdArrowDropup className='cursor-pointer' />
-                                    </div>
-                                    <div className="m-2 flex flex-col w-auto ">
-                                        {
-                                            item.subCategory?.map((sub, index) => (
-                                                <div key={index} className="m-1 relative  max-w-sm  cursor-pointer  ">
-                                                    <span
-                                                        onClick={(e) => handleCategoryClick(item.slug + '/' + sub.slug)}
-                                                        className={`py-1 link link-underline link-underline-black
-                                                      ${location.pathname === `/` + item.slug + `/` + sub.slug + '.html' ? 'text-yellow-600' : ''}
-                                                        `}>{sub.title}</span>
+                                                            setSubCategory(item.slug) : setSubCategory()
+                                                    }}
+                                                    className="">
+                                                    {
+                                                        item.title === subCategory ? <RiArrowDropUpLine className='cursor-pointer' /> : <RiArrowDropDownLine className='cursor-pointer' />
+                                                    }
                                                 </div>
+                                            </div>
+                                            <div className={` m-1  w-auto  `}>
+                                                <div className={` flex flex-col animate-fade-down  ${item.slug !== subCategory ? ` hidden ` : ''}`}>
+                                                    {
+                                                        item.subCategory?.map((sub, index) => (
+                                                            <div key={index} className="m-1 relative  max-w-sm  cursor-pointer  ">
+                                                                <span
+                                                                    onClick={(e) => handleCategoryClick(item.slug + '/' + sub.slug)}
+                                                                    className={`py-1 link link-underline link-underline-black
+                                              ${location.pathname === `/` + item.slug + `/` + sub.slug + '.html' ? 'text-orange-600 font-medium' : ''}
+                                                `}>{sub.title}</span>
+                                                            </div>
 
-                                            ))
-                                        }
-                                    </div>
-                                </div>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
 
-                            ))
-                        }
-                    </div>
-                </div>
+                                    ))
+                                }
+                            </div>
+                        </>
 
-            </div>
+                    }
+                </FillterLayout>
 
+                <FillterLayout name='price' >
+                    {
+                        price.map((item, index) => (
+                            <CheckBoxGroup key={index} id={index} value={item.name} />
+                        ))
+                    }
+                </FillterLayout>
+                <FillterLayout name='suppliers ' >
+                    {loading &&
+                        suppliers?.map((item, index) => (
+                            <CheckBoxGroup.Loading key={index} id={index} value={item.name} />
+                        ))
+                    }
+                    {!loading &&
+                         suppliers?.map((item, index) => (
+                            <CheckBoxGroup key={index} id={index} value={item.name} />
+                        ))
+                    }
+                </FillterLayout>
+            </div >
         </>
 
     );
