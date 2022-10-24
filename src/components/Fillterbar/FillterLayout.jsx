@@ -20,12 +20,13 @@ const FillterLayout = (props) => {
                         onClick={(e) => {
                             category === name ?
                                 setCategory() : setCategory(name)
+
                         }}
                         className=" px-3 cursor-pointer ">
                         {category === name ? <IoIosArrowUp className="animate-fade-rotate-right " /> : <IoIosArrowDown className="animate-fade-rotate" />}
                     </div>
                 </div>
-                <div className={` ml-3 mb-1.5 ${category === name ? ` hidden ` : ' animate-fade-down'}`}>
+                <div className={` ml-3 mb-1.5 animate-fade-down ${category === name ? ` hidden ` : null}`}>
 
                     {
                         children

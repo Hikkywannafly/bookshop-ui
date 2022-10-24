@@ -1,16 +1,24 @@
-const Book = () => {
+import LoadingSkeleton from "../Animation/LoadingSkeleton";
+
+const Book = (props) => {
+    const { name, discount, price, img } = props;
+    const price_p = Number(price);
+    const discount_p = Number(discount);
     return (<>
         <div className="w-full   md:max-w-[245px] bg-white rounded-lg hover:shadow-md border  flex-col relative inline-block ">
+            {
+                discount_p !== 0 && (
+                    <div className="absolute font-bold right-3 pt-0.5 top-2 w-8 h-5 rounded-lg flex items-center justify-center bg-primary text-white text-xs">
+                        {discount_p}%
+                    </div>
 
-            <div className="absolute font-bold right-3 top-2 w-8 h-5 rounded-lg flex items-center justify-center bg-primary text-white text-xs">
-                -20%
-            </div>
-
-            <img className="p-3 rounded-t-lg md:max-w-[210px]  2xl:max-w-[235px] inline-block" src="https://cdn0.fahasa.com/media/catalog/product/c/h/chitose-trong-chai-ramune---tap-1---ban-gioi-han.jpg" alt="Product" />
+                )
+            }
+            <img className="p-3 rounded-t-lg  md:max-w-[210px]  2xl:max-w-[235px] inline-block" src={img} alt="Product" />
             <div className="px-4 pb-2">
-                <div className=" max-h-[38px] w-full h-full font-medium tracking-tight text-gray-900 text-ellipsis overflow-hidden">
-                    <h5 className="  ">
-                        Chitose Trong Chai Ramune - Tập 1 - Bản Giới Hạn - Tặng Bìa Áo Limited + 02 Postcard
+                <div className=" max-h-[38px] min-h-[38px] w-full h-full font-medium tracking-tight text-gray-900 text-ellipsis overflow-hidden">
+                    <h5 className="h-full">
+                        {name}
                     </h5>
 
                 </div>
@@ -23,14 +31,49 @@ const Book = () => {
                     <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 items-center">5.0</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-start md:justify-between md:text-base">
-                    <span className=" font-medium text-rose-600 ">145.000 đ</span>
-                    <span className="  text-gray-600 undefined line-through ">155.000 đ</span>
+                    <span className=" font-medium text-rose-600 ">{Math.ceil(price - (price * discount) / 100).toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })}</span>
+                    {discount_p !== 0 && <span className="  text-gray-600 undefined line-through "> {price.toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })} đ</span>}
                 </div>
             </div>
+
         </div>
 
 
     </>);
 }
+const Loading = () => {
+    return (
+        <>
+            {
+                Array(8).fill(0)
+                    .map((item, index) => (
+                        < div className="w-full  md:max-w-[245px] bg-white rounded-lg hover:shadow-md border flex-col flex justify-center relative  " >
 
+                            <div className=" mb-3 min-h-[150px] xl:min-h-[200px] w-[93%] m-2 h-full  items-center  ">
+                                <LoadingSkeleton className=" w-full h-full mb-2 rounded-t-lg  " />
+                            </div>
+
+                            <div className="px-4 pb-2">
+                                <div className=" max-h-[38px] w-full h-full ">
+                                    <LoadingSkeleton className=" p-2 h-[63%] mb-2 rounded-t-lg " />
+                                </div>
+                                <div className="flex items-center mb-2">
+                                    <LoadingSkeleton className=" p-2 w-[70%]  mb-2 rounded-t-lg " />
+
+                                </div>
+                                <div className="flex flex-col md:flex-row justify-start md:justify-between md:text-base mb-1">
+                                    <LoadingSkeleton className=" p-2 w-[40%]  mb-2 rounded-t-lg " />
+                                    <LoadingSkeleton className=" p-2 w-[40%]  mb-2 rounded-t-lg " />
+                                </div>
+                            </div>
+
+                        </div >
+
+                    ))
+            }
+        </>
+    );
+
+}
+Book.Loading = Loading;
 export default Book;

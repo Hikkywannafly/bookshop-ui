@@ -13,7 +13,7 @@ const CheckBoxGroup = (props) => {
 const Loading = () => {
     return (
         <div className="flex items-center mb-1 last:mb-0 ">
-            <LoadingSkeleton className="w-full h-4 mb-2"></LoadingSkeleton>
+            <LoadingSkeleton className="w-full h-4 mb-1"></LoadingSkeleton>
         </div>
     )
 }

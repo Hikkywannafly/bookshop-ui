@@ -21,6 +21,7 @@
       padding: 0;
       margin: 0;
       font-family: 'Fira Sans', sans-serif;
+      scroll-behavior: smooth;
     }
 
     .link-underline {
@@ -41,9 +42,28 @@
       background-position: 0 100%
     }
 
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #ffffff;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #000000;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #000000;
+    }
+
     a {
       text-decoration: none;
       color: rgb(153, 154, 252);
+
     }
   </style>
 

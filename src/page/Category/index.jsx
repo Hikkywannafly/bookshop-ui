@@ -3,6 +3,7 @@ import Fillterbar from "~/components/Fillterbar/Fillterbar";
 import Product from "~/components/Product/Product";
 const Category = () => {
     const [category, setCategory] = useState([]);
+    
     return (
         <>
 

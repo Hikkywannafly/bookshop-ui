@@ -1,6 +1,6 @@
 const LoadingSkeleton = ({ className = '' }) => {
     return (<>
-        <div className={`skeleton ${className}`}>
+        <div className={`skeleton animate-pulse ${className}`}>
 
         </div>
     </>);

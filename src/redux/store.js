@@ -10,10 +10,9 @@ import {
     REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-
 import authReducer from "./authLoginSlice";
 import authRegisterReducer from "./authRegisterSlice";
-
+import bookReducer from './Product/ProductSlice.js'
 const persistConfig = {
     key: 'root',
     version: 1,
@@ -22,7 +21,8 @@ const persistConfig = {
 }
 const rootReducer = combineReducers({
     login: authReducer,
-    register: authRegisterReducer
+    register: authRegisterReducer,
+    bookdata: bookReducer
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

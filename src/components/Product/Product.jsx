@@ -1,5 +1,20 @@
 import Book from './Book';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { getBookData } from '~/redux/Product/ProductRequest';
 const Product = () => {
+    const loading = useSelector((state) => state.bookdata.isFetching);
+    const bookData = useSelector((state) => state.bookdata.data);
+    const location = useLocation();
+    const dispatch = useDispatch();
+    useEffect(() => {
+        let params = location.pathname.split('.html')[0];
+        if (params) {
+            getBookData(params, dispatch)
+        }
+    }, [location.pathname, dispatch]);
     return (<>
         <div
             style={{ zIndex: 0 }}
@@ -23,15 +38,26 @@ const Product = () => {
                                 Giảm giá nhiều nhất
                             </option>
                             <option>
-
+                                Bán chạy
                             </option>
                         </select>
 
                     </div>
                 </div>
 
+
+
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-5 lg:gap-8 w-full">
-                    <Book />
+                    {
+                        loading &&
+                        (<Book.Loading ></Book.Loading>)
+                    }
+                    {
+                        !loading && bookData?.map((book, inddex) => {
+                            return <Book key={book.name} name={book.name} img={book.default_image} price={book.price} discount={book.discount}></Book>
+                        })
+                    }
+
 
                 </div>
             </div>

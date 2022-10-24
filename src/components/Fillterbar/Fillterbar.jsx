@@ -17,15 +17,13 @@ const Fillterbar = () => {
     }
     const handleGetSupplier = async (params) => {
         const suppliers = await getSuppliers(params, setLoading);
-        // console.log(`test suppliers`, suppliers.suppliers);
-        console.log(loading)
         setSuppliers(suppliers.suppliers);
     }
     useEffect(() => {
         let params = location.pathname.split('/').at(-1).split('.')[0];
         setSubCategory(CategoryListData.find((item) => item.slug === location.pathname.split('/')[1])?.slug);
-
         if (params) {
+            console.log(params);
             handleGetSupplier(params);
         }
 
@@ -40,7 +38,9 @@ const Fillterbar = () => {
                         <>
                             <div className="flex items-center">
 
-                                <h1 className="mb-3 text-sm uppercase  cursor-pointer ">All categories</h1>
+                                <h1
+                                    onClick={(e) => handleCategoryClick(`all-category`)}
+                                    className={`mb-3 text-sm uppercase  cursor-pointer   ${location.pathname === `/all-category.html` ? 'text-orange-600 font-medium' : ' '} `}>All categories</h1>
 
                             </div>
 
@@ -108,7 +108,7 @@ const Fillterbar = () => {
                         ))
                     }
                     {!loading &&
-                         suppliers?.map((item, index) => (
+                        suppliers?.map((item, index) => (
                             <CheckBoxGroup key={index} id={index} value={item.name} />
                         ))
                     }
