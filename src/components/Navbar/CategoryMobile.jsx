@@ -27,7 +27,7 @@ const CategoryMobile = () => {
             </span>
             <div className="">
                 <div className="flex items-center  my-1 px-1 py-1  ">
-                    <span className=" text-gray-500  font-bold uppercase">Danh mục sản phẩm</span>
+                    <span className=" text-gray-500  font-bold uppercase ">Danh mục sản phẩm</span>
 
                 </div>
 

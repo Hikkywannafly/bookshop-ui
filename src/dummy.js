@@ -47,6 +47,12 @@ export const CategoryListData = [
   {
     title: "Tâm lý - kĩ năng sống",
     slug: "tam-ly-ki-nang-song",
+    subCategory: [
+      {
+        title: "Tâm lý",
+        slug: "tam-ly",
+      },
+    ]
   },
   {
     title: "Sách thiếu nhi",
@@ -120,20 +126,46 @@ export const links = [
 export const price = [
   {
     name: 'Dưới 100.000đ',
+    value: '0-100000',
   },
   {
     name: '100.000đ - 300.000đ',
+    value: '100000-300000',
   },
 
   {
     name: '300.000đ - 500.000đ',
+    value: '300000-500000',
   },
 
   {
     name: '500.000đ - 700.000đ',
+    value: '500000-700000',
   },
   {
     name: '700.000đ - Trở lên',
+    value: '700000-100000000',
   }
+
+]
+
+export const from = [
+  {
+    name: `Bìa mềm`,
+    value: 1,
+  },
+  {
+    name: `Bìa cứng`,
+    value: 2,
+  },
+  {
+    name: `Full box`,
+    value: 3,
+  },
+  {
+    name: `Bìa bọc`,
+    value: 4,
+  },
+
 
 ]

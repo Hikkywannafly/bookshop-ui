@@ -11,7 +11,7 @@ const FillterLayout = (props) => {
             <div className="border-b pb-3 ">
                 <div className="flex justify-between mb-1.5 ">
                     <div className="flex gap-1.5 items-center ">
-                        <span className="w-[3px] h-3 bg-slate-800"></span>
+                        <span className="w-[2.5px] h-3 bg-slate-800"></span>
                         <h1 className='font-medium uppercase  '> {name}</h1>
                     </div>
 

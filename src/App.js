@@ -8,7 +8,7 @@ import Sidebar from '~/components/Dashboard/Sidebar';
 import { useStateContext } from '~/hook/useStateContext';
 import Nav from '~/components/Dashboard/Nav';
 function App() {
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
+  const { setCurrentColor, setCurrentMode, activeMenu } = useStateContext();
   // window.addEventListener("contextmenu", (e) => e.preventDefault());
 
   // window.addEventListener("keydown", (e) => {
@@ -23,7 +23,7 @@ function App() {
       setCurrentColor(currentThemeColor);
       setCurrentMode(currentThemeMode);
     }
-  }, []);
+  }, [setCurrentColor, setCurrentMode]);
 
   return (
     <>
@@ -36,7 +36,7 @@ function App() {
               return (
                 <Route key={index} path={route.path} element={
                   <>
-                    <div className="flex flex-col w-full bg-gray-100 ">
+                    <div className="flex flex-col w-full bg-gray-100 overflow-hidden ">
                       <Header />
                       <Navbar />
                       <route.component />
@@ -86,11 +86,8 @@ function App() {
 
               } />;
             })}
-
             <Route path="*" element={<NotFound />} />
-
           </Routes>
-
         </div>
       </Router>
     </>

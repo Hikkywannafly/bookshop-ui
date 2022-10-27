@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-    data: null,
+    data: [],
+    pagination: null,
     isFetching: false,
+    suppliers: [],
     error: false,
     errorMessage: null,
 }
@@ -16,14 +18,15 @@ const bookSlice = createSlice({
         },
         getBookSuccess: (state, action) => {
             state.isFetching = false;
-            state.data = action.payload;
+            state.data = action.payload.books.data;
+            state.pagination = action.payload.books.pagination;
+            state.suppliers = action.payload.suppliers;
         },
         getBookFailure: (state, payload) => {
             state.isFetching = false;
             state.error = true;
             state.errorMessage = payload;
-        }
-
+        },
     },
 
 })

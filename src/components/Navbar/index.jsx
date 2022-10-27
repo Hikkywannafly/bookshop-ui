@@ -13,7 +13,7 @@ const Navbar = () => {
             <nav
                 style={{ zIndex: 10 }}
                 className=" bg-slate-300 bg-opacity-60 backdrop-blur ">
-                <div className="container flex justify-between items-center py-1.5 lg:max-w-[1350px] relative">
+                <div className="container flex justify-between items-center py-1.5 lg:max-w-[1300px] relative">
                     <div className="flex justify-between ">
                         <Category />
                         <Itembar />
