@@ -51,7 +51,7 @@ const Book = (props) => {
                 <div className="flex flex-col md:flex-row justify-start md:justify-between md:text-base">
                     <span className=" font-medium text-rose-600 ">{Math.ceil(price - (price * discount) / 100).toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })}</span>
                     {discount !== 0 &&
-                        <span className="  text-gray-600  line-through "> {price.toLocaleString('vi', { style: 'currency', currency: 'VND' })} đ</span>
+                        <span className="  text-gray-600  line-through "> {price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
                     }
                 </div>
             </div>

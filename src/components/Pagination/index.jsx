@@ -1,20 +1,33 @@
-import { getBookData2 } from '~/redux/Product/ProductRequest';
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useSearchParams } from "react-router-dom";
-const Pagination = (props) => {
-    const location = useLocation();
-    const dispatch = useDispatch();
-    const [searchParams, setSearchParams] = useSearchParams({});
-    const { totalPages, currentPage, previous, next } = props;
-    const navigate = useNavigate();
 
+import { usePagination } from '~/hook/usePagination';
+import { v4 as uuidv4 } from 'uuid';
+const Pagination = (props) => {
+    const {
+        handleSelectPage,
+        totalCount,
+        totalPageCount,
+        currentPage,
+        siblingCount = 1,
+        previous,
+        next
+    } = props;
+
+
+    const paginationRange = usePagination({
+        totalCount,
+        totalPageCount,
+        siblingCount,
+        currentPage,
+    })
     const handlePrevious = () => {
-        setSearchParams({ page: previous.split(`?page=`)[1] }, { replace: true });
+        handleSelectPage(currentPage - 1)
     }
+
     const handleNext = () => {
-        // getBookData2(next, dispatch);
-        setSearchParams({ page: next.split(`?page=`)[1] }, { replace: true });
+        handleSelectPage(currentPage + 1)
+    }
+    const handleClick = (page) => {
+        handleSelectPage(page)
     }
     return (
         <>
@@ -29,19 +42,31 @@ const Pagination = (props) => {
                                 <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" ></path></svg></button>
                         </li>
                         )
-
                     }
-                    <li><button className="w-8 h-8 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100">1</button></li>
-                    <li><button className="w-8 h-8  transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100">2</button></li>
+                    {
 
+                        paginationRange.map((pageNumber, index) => {
+                            if (pageNumber === currentPage) {
+                                return (
+                                    <li key={uuidv4()} ><button className="w-8 h-8 text-white transition-colors duration-150 bg-slate-800 border border-r-0 rounded-full focus:shadow-outline">{currentPage}</button></li>
+                                )
+                            }
+                            if (pageNumber === '...') {
+                                return (
+                                    <li key={uuidv4()}><button className="flex items-center justify-center w-8 h-8 transition-colors duration-150 rounded-full focus:shadow-outline">...</button></li>
+                                )
+                            }
+                            return (
+                                <li
+                                    onClick={() => handleClick(pageNumber)}
+                                    key={uuidv4()}><button
 
-                    <li><button className="w-8 h-8  transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100">...</button></li>
-
-
-                    <li><button className="w-8 h-8 text-white transition-colors duration-150 bg-slate-800 border border-r-0 rounded-full focus:shadow-outline">3</button></li>
+                                        className="w-8 h-8 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100">{pageNumber}</button></li>
+                            )
+                        })
+                    }
 
                     {/* next */}
-
                     {
 
                         next && (

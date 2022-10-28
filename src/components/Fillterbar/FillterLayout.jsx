@@ -1,5 +1,5 @@
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import LoadingSkeleton from '~/components/Animation/LoadingSkeleton'
 import { useStateContext } from '~/hook/useStateContext';
 const FillterLayout = (props) => {
@@ -7,14 +7,12 @@ const FillterLayout = (props) => {
     const { category, setCategory } = useStateContext();
     return (
         <>
-
             <div className="border-b pb-3 ">
                 <div className="flex justify-between mb-1.5 ">
                     <div className="flex gap-1.5 items-center ">
                         <span className="w-[2.5px] h-3 bg-slate-800"></span>
                         <h1 className='font-medium uppercase  '> {name}</h1>
                     </div>
-
                     <div
                         id="category"
                         onClick={(e) => {
@@ -42,11 +40,13 @@ const FillterLayout = (props) => {
 }
 const Loading = () => {
 
+    return (
+        <div className="border-b pb-3 ">
+            <LoadingSkeleton className="h-5 mb-1.5 w-full">
+            </LoadingSkeleton >
+        </div>
+    )
 
-    <div className="border-b pb-3 ">
-        <LoadingSkeleton className="h-5 mb-1.5 w-full">
-        </LoadingSkeleton>
-    </div>
 
 
 

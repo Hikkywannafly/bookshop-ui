@@ -18,6 +18,7 @@ export const ContextProvider = ({ children }) => {
     const [mobile, setMobile] = useState(false);
     const [click, setClick] = useState(false);
     const [category, setCategory] = useState();
+    const [fillter, setFillter] = useState([]);
     const setMode = (e) => {
 
         setCurrentMode(e.target.value);
@@ -58,7 +59,7 @@ export const ContextProvider = ({ children }) => {
             setIsClicked, setActiveMenu, setCurrentColor,
             setCurrentMode, setMode, setColor, themeSettings,
             setThemeSettings, mobile, setMobile, click, setClick
-            , category, setCategory,
+            , category, setCategory, fillter, setFillter
         }}>
             {children}
         </StateContext.Provider>

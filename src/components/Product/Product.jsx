@@ -1,34 +1,46 @@
 import Book from './Book';
 import React, { useState, useEffect } from 'react';
+import { AiFillCloseCircle } from 'react-icons/ai';
+import { sort } from '~/dummy';
 import Pagination from '../Pagination';
 const Product = (props) => {
-    const { loading, bookData, pagination, handleSort } = props;
+    const { loading, bookData, pagination, handleSort, handleSelectPage, fillter, handleDeleteFilter } = props;
 
     return (<>
         <div
             style={{ zIndex: 0 }}
             className="bg-white w-full  shadow-sm p-3 rounded-lg drop-shadow-sm flex flex-col justify-start ">
             <div className="m-2">
-                <div className="border-b pb-3 flex flex-col gap-3 mb-4 ">
-                    <div className="">
+                <div className="border-b pb-3 flex flex-col gap-4 mb-4 ">
+                    <div className="flex gap-3 items-center">
                         <h1> Fillter by :</h1>
+
+                        {
+                            Object.entries(fillter).map(([key, value]) => {
+                                return (
+                                    <div
+                                        key={key}
+                                        style={{ backgroundColor: ` rgba(247, 148, 30, 0.1)` }}
+                                        className=" px-4 p-2 rounded-lg text-orange-600 flex items-center gap-2 capitalize">
+                                        {key} : {value}
+                                        <AiFillCloseCircle
+                                            onClick={() => { handleDeleteFilter(key, value) }}
+                                            className='cursor-pointer text-base' />
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 mb-2">
                         <h1> Sort by :</h1>
                         <select
                             onChange={handleSort}
                             style={{ boxShadow: `rgb(0 0 0 / 5%) 0px 0px 1rem 0px` }}
                             className=" bg-white drop-shadow-xl  bg-opacity-60  w-40
                                text-gray-900  rounded-lg   p-1 outline-none">
-                            <option value={1}>
-                                Bán Chạy nhất
-                            </option>
-                            <option value={2}>
-                                Giảm giá nhiều nhất
-                            </option>
-                            <option value={3}>
-                                Sản phẩm mới
-                            </option>
+                            {sort.map((item, index) => {
+                                return <option key={index} value={item.value}>{item.name}</option>
+                            })}
                         </select>
 
                     </div>
@@ -64,7 +76,7 @@ const Product = (props) => {
                 {
                     !loading && bookData?.length !== 0 && bookData?.length > 0 && (
                         <div className="w-full flex items-center justify-center p-3 mt-3">
-                            <Pagination totalPages={pagination.totalPages} currentPage={pagination.currentPage} previous={pagination.links?.previous} next={pagination.links?.next} ></Pagination>
+                            <Pagination handleSelectPage={handleSelectPage} totalCount={pagination.total} totalPageCount={pagination.totalPages} currentPage={pagination.currentPage} previous={pagination.links?.previous} next={pagination.links?.next} ></Pagination>
                         </div>
                     )
                 }

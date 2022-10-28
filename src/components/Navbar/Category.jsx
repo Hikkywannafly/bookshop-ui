@@ -29,7 +29,7 @@ const Category = () => {
             <div
                 onClick={mobile ? handleCategory : null}
                 className="px-3 py-1 bg-gray-700 flex items-center cursor-pointer group rounded-lg" >
-                <div className="bg-transparent group absolute top-[7px] left-4 h-full px-20 py-1">
+                <div className="bg-transparent group absolute top-[3px] left-4 h-full px-20 py-1">
 
                 </div>
                 <span className="text-white text-lg">
@@ -69,7 +69,7 @@ const Category = () => {
                     !mobile && (
 
                         <div
-                            className={`absolute w-[100%] left-0 right-0 mx-auto top-full  bg-white shadow-md py-3  rounded-xl drop-shadow-lg
+                            className={`absolute w-[100%] left-0 right-0 mx-auto top-[86%]  bg-white shadow-md py-3  rounded-xl drop-shadow-lg
                   transition  flex flex-row  my-2 invisible  group-hover:visible  opacity-0 group-hover:opacity-100 `}>
                             <div className=" border-r border-gray-300">
                                 <div className="flex items-center mx-4 my-1 px-1 py-3  ">

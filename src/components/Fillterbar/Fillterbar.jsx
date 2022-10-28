@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import FillterLayout from './FillterLayout';
 import CheckBoxGroup from './CheckBoxGroup';
 const Fillterbar = (props) => {
-    const { loading, suppliers, locationname, handleCategoryToggle, handleSelectPrice, handleSelectFrom, handleSelectSupplier } = props;
+    const { fillter, suppliers, locationname, handleCategoryToggle, handleSelect } = props;
     const [subCategory, setSubCategory] = useState();
     const location = useLocation();
     useEffect(() => {
@@ -17,6 +17,7 @@ const Fillterbar = (props) => {
             <div
                 style={{ zIndex: 0 }}
                 className="bg-white w-full lg:w-[290px] h-screen text-slate-700  shadow-sm p-3 rounded-lg drop-shadow-sm flex flex-col justify-start gap-4">
+
                 <FillterLayout name='category' >
                     {
                         <>
@@ -77,16 +78,10 @@ const Fillterbar = (props) => {
                     }
                 </FillterLayout>
 
-
                 <FillterLayout name='suppliers ' >
-                    {loading &&
-                        (
-                            <CheckBoxGroup.Loading />
-                        )
-                    }
-                    {!loading &&
+                    {
                         suppliers?.map((item, index) => (
-                            <CheckBoxGroup key={index} handleSelectSupplier={handleSelectSupplier} id={`er` + index} value={item.id} name={item.name} />
+                            <CheckBoxGroup title={`supplier`} fillter={fillter} handleSelect={handleSelect} key={index} id={`er` + index} value={item.id} name={item.name} />
                         ))
                     }
                 </FillterLayout>
@@ -95,7 +90,7 @@ const Fillterbar = (props) => {
                         price.map((item, index) => (
                             <CheckBoxGroup
 
-                                key={index} id={`rr` + index} value={item.value} handleSelectPrice={handleSelectPrice} name={item.name}
+                                key={index} id={`rr` + index} fillter={fillter} value={item.value} title={`price`} handleSelect={handleSelect} name={item.name}
                             />
                         ))
                     }
@@ -104,7 +99,7 @@ const Fillterbar = (props) => {
                     {
                         from.map((item, index) => (
                             <CheckBoxGroup
-                                key={index} handleSelectFrom={handleSelectFrom} id={index} value={item.value} name={item.name}
+                                key={index} title={`from`} fillter={fillter} handleSelect={handleSelect} id={index} value={item.value} name={item.name}
                             />
                         ))
                     }

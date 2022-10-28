@@ -144,7 +144,7 @@ export const price = [
   },
   {
     name: '700.000đ - Trở lên',
-    value: '700000-100000000',
+    value: '700000-999999999',
   }
 
 ]
@@ -167,5 +167,30 @@ export const from = [
     value: 4,
   },
 
-
+]
+export const sort = [
+  {
+    name: `Phổ biến`,
+    value: 'popular',
+  },
+  {
+    name: `Bán chạy nhất`,
+    value: 'best',
+  },
+  {
+    name: `Mới nhất`,
+    value: 'newest'
+  },
+  {
+    name: `Giá cao đến thấp`,
+    value: `desc`,
+  },
+  {
+    name: `Giá thấp đến cao`,
+    value: `asc`,
+  },
+  {
+    name: `Giảm giá nhiều nhất`,
+    value: `sale`,
+  }
 ]

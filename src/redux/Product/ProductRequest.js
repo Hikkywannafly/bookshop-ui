@@ -4,7 +4,7 @@ const fetchBookData = async (params) => {
     return await axios.get(`http://127.0.0.1:8000/api/category${params}`)
 }
 const fetchBookData3 = async (params, searchparams) => {
-    console.log('searchparams', searchparams);
+
     return await axios.get(`http://127.0.0.1:8000/api/category${params}${searchparams}`)
 }
 const fetchBookData2 = async (params) => {
@@ -29,7 +29,6 @@ export const getBookData = async (params, dispatch) => {
     return await fetchBookData(params)
         .then(res => {
             dispatch(getBookSuccess(res.data));
-            // console.log('test', res.data.suppliers)
             return res.data;
         })
         .catch(err => {
@@ -43,7 +42,6 @@ export const getBookData3 = async (params, searchparams, dispatch) => {
     return await fetchBookData3(params, searchparams)
         .then(res => {
             dispatch(getBookSuccess(res.data));
-            console.log('test', res.data)
             return res.data;
         })
         .catch(err => {
