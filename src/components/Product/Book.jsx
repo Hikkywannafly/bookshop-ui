@@ -3,9 +3,9 @@ import LoadingSkeleton from "../Animation/LoadingSkeleton";
 
 const Book = (props) => {
     const navigate = useNavigate();
-    const { name, discount, price, img, rating } = props;
+    const { name, discount, price, img, rating, slug } = props;
     const handleClick = () => {
-        navigate(`/`);
+        navigate(`/product/${slug}.html`);
     }
     return (<>
 

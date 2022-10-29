@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NotFound from './page/_404';
-import { publicRoutes, privateRoutes, dashboardRoutes } from '~/Router';
+import { publicRoutes, privateRoutes, dashboardRoutes } from '~/router';
 import Header from '~/components/Header';
 import Navbar from '~/components/Navbar';
 import Sidebar from '~/components/Dashboard/Sidebar';

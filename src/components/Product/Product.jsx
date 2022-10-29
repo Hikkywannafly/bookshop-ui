@@ -1,36 +1,36 @@
 import Book from './Book';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { sort } from '~/dummy';
 import Pagination from '../Pagination';
 const Product = (props) => {
     const { loading, bookData, pagination, handleSort, handleSelectPage, fillter, handleDeleteFilter } = props;
-
     return (<>
         <div
             style={{ zIndex: 0 }}
             className="bg-white w-full  shadow-sm p-3 rounded-lg drop-shadow-sm flex flex-col justify-start ">
             <div className="m-2">
                 <div className="border-b pb-3 flex flex-col gap-4 mb-4 ">
-                    <div className="flex gap-3 items-center">
-                        <h1> Fillter by :</h1>
+                    {Object.keys(fillter).length !== 0 &&
+                        < div className="flex gap-3 items-center">
+                            <h1> Fillter by :</h1>
 
-                        {
-                            Object.entries(fillter).map(([key, value]) => {
-                                return (
-                                    <div
-                                        key={key}
-                                        style={{ backgroundColor: ` rgba(247, 148, 30, 0.1)` }}
-                                        className=" px-4 p-2 rounded-lg text-orange-600 flex items-center gap-2 capitalize">
-                                        {key} : {value}
-                                        <AiFillCloseCircle
-                                            onClick={() => { handleDeleteFilter(key, value) }}
-                                            className='cursor-pointer text-base' />
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                            {
+                                Object.entries(fillter).map(([key, value]) => {
+                                    return (
+                                        <div
+                                            key={key}
+                                            style={{ backgroundColor: ` rgba(247, 148, 30, 0.1)` }}
+                                            className=" px-4 p-2 rounded-lg text-orange-600 flex items-center gap-2 capitalize">
+                                            {key} : {value}
+                                            <AiFillCloseCircle
+                                                onClick={() => { handleDeleteFilter(key, value) }}
+                                                className='cursor-pointer text-base' />
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>}
                     <div className="flex items-center gap-4 mb-2">
                         <h1> Sort by :</h1>
                         <select
@@ -45,7 +45,6 @@ const Product = (props) => {
 
                     </div>
                 </div>
-
                 {
 
                     !loading && (bookData?.length === 0 || bookData === null) && (
@@ -56,10 +55,8 @@ const Product = (props) => {
                             <h1 className="font-medium ">  Không tìm thấy sản phẩm nào cả</h1>
                             <h1 className="text-gray-400 ">  Vui lòng thử lại !!</h1>
                         </div>
-
                     )
                 }
-
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-5  w-full relative">
                     {
                         loading &&
@@ -67,10 +64,9 @@ const Product = (props) => {
                     }
                     {
                         !loading && bookData?.length !== 0 && bookData?.map((book, index) => {
-                            return <Book key={book?.name} name={book?.name} img={book?.default_image} price={book?.price} discount={book?.discount} rating={book?.rating}></Book>
+                            return <Book key={book?.name} name={book?.name} img={book?.default_image} price={book?.price} discount={book?.discount} slug={book?.slug} rating={book?.rating}></Book>
                         })
                     }
-
 
                 </div>
                 {

@@ -6,13 +6,14 @@ import Fillterbar from "~/components/Fillterbar/Fillterbar";
 import Product from "~/components/Product/Product";
 import { useStateContext } from '~/hook/useStateContext';
 import { useSearchParams } from 'react-router-dom';
+import { RiArrowDropRightLine } from 'react-icons/ri';
 const Category = () => {
     const loading = useSelector((state) => state.bookdata.isFetching);
     const pagination = useSelector((state) => state.bookdata.pagination);
     const suppliers = useSelector((state) => state.bookdata.suppliers);
     const bookData = useSelector((state) => state.bookdata.data);
-
-    const { fillter, setFillter } = useStateContext();
+    const { link, setLink } = useStateContext();
+    const [fillter, setFillter] = useState([]);
     let [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
     const dispatch = useDispatch();
@@ -44,8 +45,9 @@ const Category = () => {
         let params = location.pathname.split('.html')[0];
         if (params && !location.search) {
             getBookData(params, dispatch)
-            console.log(`test`, params);
+
         }
+        setLink(params.split('/'))
         if (location.search) {
             getBookData3(params, location.search, dispatch)
             // console.log(`fillter test`, fillter);
@@ -66,13 +68,26 @@ const Category = () => {
                 // console.log(`test`, searchParams.get("price"));
             }
         }
-    }, [location.pathname, dispatch, location, fillter, searchParams]);
+    }, [location.pathname, dispatch, location, searchParams]);
     return (
         <>
 
             <div className="container  items-center  w-full gap-2 lg:max-w-[1300px] text-sm  ">
-                <div className="my-2 w-full ">
-                    <h1 className='text-xs font-medium md:text-base uppercase'> Home </h1>
+                <div className="my-2 w-full flex gap-1.5 items-center ">
+
+                    {
+                        link?.map((item, index) => {
+                            if (index === 0) return <React.Fragment key={index}>
+                                <h1 key={index} className='uppercase'> Home </h1>
+                            </React.Fragment>
+                            return (
+                                <React.Fragment key={index}>
+                                    <RiArrowDropRightLine className='text-lg text-gray-600' />
+                                    <h1 className=' uppercase'> {item} </h1>
+                                </React.Fragment>
+                            )
+                        })
+                    }
                 </div>
 
                 <div className="flex flex-col lg:flex-row md gap-5 ">

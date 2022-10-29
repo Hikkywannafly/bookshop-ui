@@ -1,7 +1,6 @@
 import LoadingSkeleton from "../Animation/LoadingSkeleton";
 const CheckBoxGroup = (props) => {
-    const { value, id, handleSelect, name, title, fillter } = props;
-
+    const { value, handleSelect, name, title, fillter } = props;
     return (<>
         <div
 
@@ -9,7 +8,7 @@ const CheckBoxGroup = (props) => {
             <input
                 name={title}
                 onChange={handleSelect}
-                checked={fillter[title]?.includes(name)}
+                checked={fillter[title]?.includes(name) ? true : false}
                 id={name} type="radio" value={value} className="w-3 h-3 accent-orange-600 text-orange-500 rounded border-gray-300 " />
             <label htmlFor={name} className="ml-2 ">{name}</label>
         </div>

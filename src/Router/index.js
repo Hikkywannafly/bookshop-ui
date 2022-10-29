@@ -1,4 +1,4 @@
-import Home from '../page/Home/';
+import Home from '../page/Home';
 import Login from '../page/Auth/Login';
 import Register from '../page/Auth/Register';
 import Test from '../page/Auth/Test';
@@ -9,11 +9,11 @@ import Dashboard from '~/page/Dashboard/';
 import Ecommerce from '~/page/Dashboard/Ecommerce';
 import Orders from '~/page/Dashboard/Orders';
 import Category from '~/page/Category/';
+import Product from '~/page/Product/';
 const publicRoutes = [
     {
         path: '/', component: Home
     },
-
     {
         path: '/test', component: Test
     },
@@ -23,6 +23,9 @@ const publicRoutes = [
     {
         path: `/:slug/:subSlug.html`, component: Category
     },
+    {
+        path: '/product/:slug.html', component: Product
+    }
 
 ]
 const privateRoutes = [
