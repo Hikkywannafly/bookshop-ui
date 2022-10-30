@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getBookStarting, getBookSuccess, getBookFailure } from "./ProductSlice";
+import { getBookStarting, getBookSuccess, getBookFailure, getBookDetailStarting, getBookDetailSuccess, getBookDetailFailure } from "./ProductSlice";
 const fetchBookData = async (params) => {
     return await axios.get(`http://127.0.0.1:8000/api/category${params}`)
 }
@@ -9,6 +9,9 @@ const fetchBookData3 = async (params, searchparams) => {
 }
 const fetchBookData2 = async (params) => {
     return await axios.get(`${params}`)
+}
+const fechBookDetail = async (params) => {
+    return await axios.get(`http://127.0.0.1:8000/api${params}`)
 }
 export const getSuppliers = async (params, callback) => {
     callback(true);
@@ -60,4 +63,19 @@ export const getBookData2 = async (params, dispatch) => {
             dispatch(getBookFailure(err.response.data));
             return err.response.data;
         });
+}
+
+export const getBookDetail = async (params, dispatch) => {
+    dispatch(getBookDetailStarting());
+    return await fechBookDetail(params)
+        .then(res => {
+            dispatch(getBookDetailSuccess(res.data));
+            console.log(` test bookDeital `, res.data.book);
+            return res.data;
+        })
+        .catch(err => {
+            dispatch(getBookDetailFailure(err.response.data));
+            return err.response.data;
+        });
+
 }
