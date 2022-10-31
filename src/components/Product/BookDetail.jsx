@@ -1,12 +1,11 @@
-import LoadingSkeleton from "../Animation/LoadingSkeleton";
-import AuthButton from "../Input/AuthButton";
+
 import React, { useState } from 'react'
 import FsLightbox from 'fslightbox-react';
 import { useEffect } from "react";
 import Button from "../Input/Button";
 import { FiShoppingCart } from 'react-icons/fi'
+import BookDetailSkeleton from './BookDetailSkeleton';
 const BookDetail = ({ bookdata }) => {
-    const [toggler, setToggler] = useState(false);
     const [images, setImages] = useState([]);
     const [lightboxController, setLightboxController] = useState({
         toggler: false,
@@ -140,7 +139,9 @@ const BookDetail = ({ bookdata }) => {
     );
 }
 const Loading = () => {
-
+    return (
+        <BookDetailSkeleton />
+    );
 }
 BookDetail.Loading = Loading;
 

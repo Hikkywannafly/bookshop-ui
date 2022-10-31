@@ -1,28 +1,34 @@
 
-import React from 'react'
+import React, { useMemo } from 'react'
 import { RiArrowDropRightLine } from 'react-icons/ri';
-
-const Breadcrumb = ({ params = [] }) => {
-    const length = params?.length
-    console.log(`params`, params);
+import LoadingSkeleton from '../Animation/LoadingSkeleton';
+const Loading = () => {
     return (
-        <div className='capitalize my-2 w-full flex gap-1.5 items-center'>
+        <LoadingSkeleton className='w-32 h-4' />
+    );
+}
+
+const Breadcrumb = (props) => {
+    const params = useMemo(() => props.params, [props.params])
+
+    return (
+        <div className='text-xs md:text-sm capitalize my-1 w-full flex md:gap-1 items-center '>
             {
                 params.map((e, i) => (
                     <div
                         key={e.slug}
                         className='inline-block '>
                         <a
-                            href={e.slug}
+                            href={e.slug === '/' ? '/' : `/${e.slug}.html`}
                         >
                             <span
-                                className='text-slate-800 mr-2'
-                            >
-                                {e.name}
+                                className={`text-slate-800 md:mr-1.5  text-ellipsis overflow-hidden 
+                                ${i === params.length - 1 ? 'font-bold' : null}`}>
+                                {e.name.length > 20 ? e.name.slice(0, 20) + '...' : e.name}
                             </span>
                         </a>
                         {
-                            i < length - 1 &&
+                            i < params?.length - 1 &&
                             <span className='mr-2'><RiArrowDropRightLine className={'inline-block filter-[#626262]'} /></span>
                         }
                     </div>
@@ -30,5 +36,7 @@ const Breadcrumb = ({ params = [] }) => {
             }
         </div>
     )
-}
-export default Breadcrumb
+};
+
+Breadcrumb.Loading = Loading;
+export default Breadcrumb;
