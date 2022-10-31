@@ -7,7 +7,8 @@ const initialState = {
     error: false,
     errorMessage: null,
     bookDetail: null,
-    isFetchingBookDetail: false
+    isFetchingBookDetail: false,
+    breadcrumbs: null
 }
 
 const bookSlice = createSlice({
@@ -23,6 +24,7 @@ const bookSlice = createSlice({
             state.data = action.payload.books.data;
             state.pagination = action.payload.books.pagination;
             state.suppliers = action.payload.suppliers;
+            state.breadcrumbs = action.payload.breadcrumbs;
         },
         getBookFailure: (state, payload) => {
             state.isFetching = false;

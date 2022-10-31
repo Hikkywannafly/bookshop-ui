@@ -6,13 +6,13 @@ import Fillterbar from "~/components/Fillterbar/Fillterbar";
 import Product from "~/components/Product/Product";
 import { useStateContext } from '~/hook/useStateContext';
 import { useSearchParams } from 'react-router-dom';
-import { RiArrowDropRightLine } from 'react-icons/ri';
+import Breadcrumb from '~/components/Breadcrumb';
 const Category = () => {
     const loading = useSelector((state) => state.bookdata.isFetching);
     const pagination = useSelector((state) => state.bookdata.pagination);
     const suppliers = useSelector((state) => state.bookdata.suppliers);
     const bookData = useSelector((state) => state.bookdata.data);
-    const { link, setLink } = useStateContext();
+    const breadcrumbs = useSelector((state) => state.bookdata.breadcrumbs);
     const [fillter, setFillter] = useState([]);
     let [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
@@ -41,13 +41,14 @@ const Category = () => {
         delete fillter[key];
         // console.log(value);
     }
+    console.log(breadcrumbs);
+
     useEffect(() => {
         let params = location.pathname.split('.html')[0];
         if (params && !location.search) {
             getBookData(params, dispatch)
 
         }
-        setLink(params.split('/'))
         if (location.search) {
             getBookData3(params, location.search, dispatch)
             // console.log(`fillter test`, fillter);
@@ -73,7 +74,12 @@ const Category = () => {
         <>
 
             <div className="container  items-center  w-full gap-2 lg:max-w-[1300px] text-sm  ">
-                <div className="my-2 w-full flex gap-1.5 items-center ">
+                <Breadcrumb params={[{
+                    name: 'Home',
+                    slug: '/'
+                }, ...breadcrumbs]} />
+
+                {/* <div className="my-2 w-full flex gap-1.5 items-center ">
 
                     {
                         link?.map((item, index) => {
@@ -88,7 +94,7 @@ const Category = () => {
                             )
                         })
                     }
-                </div>
+                </div> */}
 
                 <div className="flex flex-col lg:flex-row md gap-5 ">
                     <Fillterbar fillter={fillter} handleSelect={handleSelect} loading={loading} suppliers={suppliers} handleCategoryToggle={handleCategoryToggle} locationname={location.pathname} />
