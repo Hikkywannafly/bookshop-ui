@@ -48,16 +48,14 @@ const VerifycationEmail = () => {
         <>
 
             <div className="flex justify-center flex-col items-center h-full w-full text-2xl">
-                <div className="m-5 bg-gray-600 p-10 border-3 flex justify-center flex-col items-center ">
-
-
+                <div className="m-5 light-gray  p-10 border-3 flex justify-center flex-col items-center ">
                     {data != null ? (
                         <>
-                            <div className="text-white uppercase">   {data}</div>
+                            <div className=" uppercase">   {data}</div>
                             <br></br>
-                            <div className="text-green-400">  < h1 > Return To Login Page in ...{time}s or <a className='underline text-blue-400' href="/login"> Login</a></h1></div>
+                            <div className="text-slate-800">  < h1 > Return To Login Page in ...{time}s or <a className='underline text-blue-400' href="/login"> Login</a></h1></div>
                         </>
-                    ) : (<div className=" text uppercase text-white"><h1> Waitting for verification yor email</h1> </div>)
+                    ) : (<div className=" text"><h1> Waitting for verification yor email</h1> </div>)
                     }
                 </div>
             </div>

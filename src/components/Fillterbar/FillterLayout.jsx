@@ -1,7 +1,7 @@
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import React from 'react';
 import LoadingSkeleton from '~/components/Animation/LoadingSkeleton'
-import { useStateContext } from '~/hook/useStateContext';
+import { useStateContext } from '~/hooks/useStateContext';
 const FillterLayout = (props) => {
     const { name, children } = props;
     const { category, setCategory } = useStateContext();

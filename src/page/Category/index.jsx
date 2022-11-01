@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getBookData, getBookData3 } from '~/redux/Product/ProductRequest';
 import Fillterbar from "~/components/Fillterbar/Fillterbar";
 import Product from "~/components/Product/Product";
-import { useStateContext } from '~/hook/useStateContext';
+import { useStateContext } from '~/hooks/useStateContext';
 import { useSearchParams } from 'react-router-dom';
 import Breadcrumb from '~/components/Breadcrumb';
 const Category = () => {

@@ -28,13 +28,7 @@ const publicRoutes = [
     }
 
 ]
-const privateRoutes = [
-    {
-        path: '/verify-email', component: VerifycationEmail
-    },
-    {
-        path: '/verify-email-url', component: VerifyUrl
-    },
+const authRoutes = [
     {
         path: '/login', component: Login
     },
@@ -45,6 +39,16 @@ const privateRoutes = [
         path: '/forgot-password', component: FogotPassword
     },
 ]
+
+const sessionRoutes = [
+    {
+        path: '/verify-email', component: VerifycationEmail
+    },
+    {
+        path: '/verify-email-url', component: VerifyUrl
+    },
+]
+
 const dashboardRoutes = [
     {
         path: '/dashboard', component: Dashboard
@@ -57,4 +61,4 @@ const dashboardRoutes = [
     }
 ]
 
-export { publicRoutes, privateRoutes, dashboardRoutes }
+export { publicRoutes, authRoutes, sessionRoutes, dashboardRoutes }

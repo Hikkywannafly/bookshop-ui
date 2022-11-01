@@ -46,7 +46,7 @@ const Book = (props) => {
                     }
 
 
-                    < span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 items-center">{Math.ceil(rating)}.0</span>
+                    < span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2 pt-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 items-center">{Math.ceil(rating)}.0</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-start md:justify-between md:text-base">
                     <span className=" font-medium text-rose-600 ">{Math.ceil(price - (price * discount) / 100).toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })}</span>

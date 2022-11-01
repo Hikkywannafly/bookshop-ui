@@ -10,7 +10,7 @@ const initialState = {
 export const ContextProvider = ({ children }) => {
     const [screenSize, setScreenSize] = useState(undefined);
     const [currentColor, setCurrentColor] = useState('#1e1e30');
-    const [currentMode, setCurrentMode] = useState('Dark');
+    const [currentMode, setCurrentMode] = useState('Light');
     const [themeSettings, setThemeSettings] = useState(false);
     const [activeMenu, setActiveMenu] = useState(true);
     const [isClicked, setIsClicked] = useState(initialState);
@@ -44,11 +44,7 @@ export const ContextProvider = ({ children }) => {
     })
 
     useEffect(() => {
-        if (screenSize <= 900) {
-            setMobile(true);
-        } else {
-            setMobile(false);
-        }
+        screenSize <= 900 ? setMobile(true) : setMobile(false);
     }, [screenSize])
 
     return (

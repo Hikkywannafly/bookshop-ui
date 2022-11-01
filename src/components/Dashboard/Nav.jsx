@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 
-import { useStateContext } from '~/hook/useStateContext';
+import { useStateContext } from '~/hooks/useStateContext';
 
 const NavButton = ({ title, customFunc, icon, dotColor }) => (
     <div content={title} position="BottomCenter">
         <button
             type="button"
             onClick={() => customFunc()}
-            style={{ color: `white` }}
-            className="relative text-xl rounded-full p-3 hover:bg-light-gray hover:text-black"
+            className="relative text-xl rounded-full p-3 hover:bg-gray-400 hover:text-white duration-200"
         >
             <span
                 style={{ background: dotColor }}
@@ -25,7 +24,7 @@ const Nav = () => {
 
     useEffect(() => {
         const handleResize = () => setScreenSize(window.innerWidth);
-        
+
         window.addEventListener('resize', handleResize);
 
         handleResize();
@@ -44,10 +43,9 @@ const Nav = () => {
     const handleActiveMenu = () => setActiveMenu(!activeMenu);
 
     return (
-        <div className="flex justify-between p-2 md:ml-6 md:mr-6 relative ">
+        <div className="flex justify-between p-2 md:ml-6 md:mr-6 relative  ">
 
             <NavButton title="Menu" customFunc={handleActiveMenu} icon={<AiOutlineMenu />} />
-
         </div>
     );
 };

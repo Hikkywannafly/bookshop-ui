@@ -1,4 +1,4 @@
-import { useStateContext } from '~/hook/useStateContext';
+import { useStateContext } from '~/hooks/useStateContext';
 import React, { useState, useEffect } from 'react';
 import Breadcrumb from '~/components/Breadcrumb';
 import BookDetail from '~/components/Product/BookDetail';

@@ -5,7 +5,7 @@ import App from '~/App';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from '~/redux/store';
-import { ContextProvider } from './hook/useStateContext';
+import { ContextProvider } from './hooks/useStateContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

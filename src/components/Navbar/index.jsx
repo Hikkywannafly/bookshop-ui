@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import CategoryMobile from './CategoryMobile';
 import UnderText from '~/components/Animation/UnderText';
-import { useStateContext } from '~/hook/useStateContext';
+import { useStateContext } from '~/hooks/useStateContext';
 const Navbar = () => {
     const { mobile, click } = useStateContext();
     const userData = useSelector((state) => state.login.currentUser);

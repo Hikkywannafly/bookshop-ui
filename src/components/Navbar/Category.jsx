@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useStateContext } from '~/hook/useStateContext';
+import { useStateContext } from '~/hooks/useStateContext';
 import React, { useState, useEffect } from 'react';
 import CategoryList from './CategoryList';
 import { CategoryListData } from '~/dummy';

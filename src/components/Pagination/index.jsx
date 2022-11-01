@@ -1,5 +1,5 @@
 
-import { usePagination } from '~/hook/usePagination';
+import { usePagination } from '~/hooks/usePagination';
 import { v4 as uuidv4 } from 'uuid';
 const Pagination = (props) => {
     const {

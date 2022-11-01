@@ -13,8 +13,6 @@ import LoadingCicle from '~/components/Loading/LoadingCicle';
 import toast, { Toaster } from 'react-hot-toast';
 import { loginSchema } from '~/helper/Schema/login';
 import { loginUser } from '~/redux/apiRequest';
-import blockRightClick from '~/helper/blockRightClick';
-
 const Login = () => {
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null)
@@ -32,12 +30,11 @@ const Login = () => {
         },
         validationSchema: loginSchema,
         onSubmit: async (values) => {
-            console.log('test', values)
             const result = await loginUser(values, dispatch);
             console.log('debug', result);
             if (result.status === 'success') {
                 // toast.success('Login success');
-                navigate('/');
+                result?.user?.role === 'admin' ? navigate('/dashboard') : navigate('/');
             }
             if (result.status === 'error') {
                 toast.error('Login failed');
