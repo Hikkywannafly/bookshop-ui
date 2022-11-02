@@ -5,9 +5,11 @@ import { useSelector } from 'react-redux';
 import CategoryMobile from './CategoryMobile';
 import UnderText from '~/components/Animation/UnderText';
 import { useStateContext } from '~/hooks/useStateContext';
-const Navbar = () => {
+import { memo } from 'react';
+const Navbar = ({ currentUserName }) => {
     const { mobile, click } = useStateContext();
     const userData = useSelector((state) => state.login.currentUser);
+    
     return (
         <>
             <nav
@@ -18,8 +20,8 @@ const Navbar = () => {
                         <Category />
                         <Itembar />
                     </div>
-                    {userData ? (<div>
-                        Hi, <span className='font-bold'> {userData.name}</span>
+                    {currentUserName ? (<div>
+                        Hi, <span className='font-bold'> {currentUserName}</span>
                     </div>) :
                         (<div className='flex flex-row justify-center gap-2.5  '>
                             <div className=''>
@@ -47,4 +49,4 @@ const Navbar = () => {
     );
 }
 
-export default Navbar;
+export default memo(Navbar);

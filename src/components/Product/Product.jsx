@@ -5,6 +5,7 @@ import { sort } from '~/dummy';
 import Pagination from '../Pagination';
 const Product = (props) => {
     const { loading, bookData, pagination, handleSort, handleSelectPage, fillter, handleDeleteFilter, } = props;
+    console.log(`redender`);
     return (<>
         <div
             style={{ zIndex: 0 }}

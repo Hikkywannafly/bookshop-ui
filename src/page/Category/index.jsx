@@ -41,7 +41,6 @@ const Category = () => {
         delete fillter[key];
         // console.log(value);
     }
-    console.log(breadcrumbs);
 
     useEffect(() => {
         let params = location.pathname.split('.html')[0];
@@ -70,32 +69,27 @@ const Category = () => {
             }
         }
     }, [location.pathname, dispatch, location, searchParams]);
+    console.log('test bookdata rerender', breadcrumbs);
     return (
         <>
 
             <div className="container  items-center  w-full gap-2 lg:max-w-[1300px] text-sm  ">
-                <Breadcrumb params={[{
-                    name: 'Home',
-                    slug: '/'
-                }, ...breadcrumbs]} />
-
-                {/* <div className="my-2 w-full flex gap-1.5 items-center ">
+                <div className="my-2 w-full ">
 
                     {
-                        link?.map((item, index) => {
-                            if (index === 0) return <React.Fragment key={index}>
-                                <h1 key={index} className='uppercase'> Home </h1>
-                            </React.Fragment>
-                            return (
-                                <React.Fragment key={index}>
-                                    <RiArrowDropRightLine className='text-lg text-gray-600' />
-                                    <h1 className=' uppercase'> {item} </h1>
-                                </React.Fragment>
-                            )
-                        })
+                        !loading && breadcrumbs !== null ?
+                            <Breadcrumb params={[{
+                                name: 'Home',
+                                slug: '/'
+                            }, ...breadcrumbs]} />
+                            : breadcrumbs === null ?
+                                <Breadcrumb.Loading />
+                                : <Breadcrumb params={[{
+                                    name: 'Home',
+                                    slug: '/'
+                                }, ...breadcrumbs]} />
                     }
-                </div> */}
-
+                </div>
                 <div className="flex flex-col lg:flex-row md gap-5 ">
                     <Fillterbar fillter={fillter} handleSelect={handleSelect} loading={loading} suppliers={suppliers} handleCategoryToggle={handleCategoryToggle} locationname={location.pathname} />
                     <Product handleDeleteFilter={handleDeleteFilter} fillter={fillter} handleSelectPage={handleSelectPage} loading={loading} pagination={pagination} bookData={bookData} handleSort={handleSort} />

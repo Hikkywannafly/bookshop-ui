@@ -1,10 +1,10 @@
 import { useStateContext } from '~/hooks/useStateContext';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Breadcrumb from '~/components/Breadcrumb';
 import BookDetail from '~/components/Product/BookDetail';
 import { useSelector, useDispatch } from "react-redux";
 import { getBookDetail } from '~/redux/Product/ProductRequest';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, } from 'react-router-dom';
 const Product = () => {
     const location = useLocation();
     const dispatch = useDispatch();
@@ -14,33 +14,26 @@ const Product = () => {
     const handleGetbookDetail = async (slug) => {
         const res = await getBookDetail(slug, dispatch);
         if (res.status !== 'success' || res.book === null) {
-            navigate('*');
+            navigate(' ');
         }
 
     }
-    console.log(loading);
+    console.log('test bookdata', bookdata);
     useEffect(() => {
         let params = location.pathname.split('.html')[0];
         if (params && !location.search) {
             handleGetbookDetail(params)
         }
     }, [location.pathname, location.search,]);
+
+
     return (
 
         <>
-            {/* {
-                loading && (
-                    <div className="my-2 w-full ">
-                        <Breadcrumb.Loading />
-                    </div>
-
-                )
-            } */}
-
             <div className="container  items-center  w-full gap-2 lg:max-w-[1300px] text-sm  ">
                 <div className="my-2 w-full ">
 
-                    {!loading ?
+                    {!loading && bookdata ?
                         <Breadcrumb params={[{
                             name: 'Home',
                             slug: '/'

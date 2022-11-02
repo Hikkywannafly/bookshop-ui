@@ -18,7 +18,7 @@ const Sidebar = () => {
     const normalLink = 'flex items-center gap-5 pl-4 pt-2.5 pb-2 rounded-xl hover:bg-light-gray m-2';
 
     return (
-        <div className="p-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 font-medium shadow-lg ">
+        <div className="p-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 font-medium shadow-lg z-[100] ">
             {activeMenu && (
                 <>
                     <div className="flex justify-between items-center">
@@ -29,8 +29,8 @@ const Sidebar = () => {
                             <button
                                 type="button"
                                 onClick={() => setActiveMenu(!activeMenu)}
-                                style={{ color: `gray` }}
-                                className="rounded-full p-2 hover:bg-light-gray mt-4 block md:hidden"
+                                style={{ color: `black` }}
+                                className="rounded-full p-2 hover:bg-light-gray mt-4 md:hidden"
                             >
                                 <MdOutlineCancel />
                             </button>

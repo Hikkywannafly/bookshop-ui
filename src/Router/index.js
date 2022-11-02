@@ -25,7 +25,8 @@ const publicRoutes = [
     },
     {
         path: '/product/:slug.html', component: Product
-    }
+    },
+
 
 ]
 const authRoutes = [

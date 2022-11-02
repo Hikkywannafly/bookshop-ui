@@ -4,7 +4,7 @@ import { RiArrowDropRightLine } from 'react-icons/ri';
 import LoadingSkeleton from '../Animation/LoadingSkeleton';
 const Loading = () => {
     return (
-        <LoadingSkeleton className='w-32 h-4' />
+        <LoadingSkeleton className='w-32 h-[20px]' />
     );
 }
 

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { BiUser } from 'react-icons/bi';
 import { Menu, Transition } from "@headlessui/react";
 import { useSelector } from 'react-redux';
@@ -7,18 +6,14 @@ import { logoutUser } from '~/redux/apiRequest';
 import { useDispatch } from 'react-redux';
 import AuthButton from '~/components/Input/AuthButton';
 import { refreshToken, logoutSuccess } from '~/redux/authLoginSlice';
-const Account = () => {
+import { memo } from 'react';
+const Account = ({ userInfo }) => {
     const accessToken = useSelector((state => { return state.login.accessToken }));
-    const user = useSelector((state => { return state.login.currentUser }));
     const dispatch = useDispatch();
     const axios = axiosInterceptor(accessToken, dispatch, refreshToken, logoutSuccess);
     const handleLogout = async () => {
         const result = await logoutUser(axios, dispatch);
     }
-    // const handleTest = async () => {
-    //     const res = await axios.get('http://127.0.0.1:8000/api/auth/testapi');
-    //     console.log(res);
-    // }
     return (
         <>
             <div className="relative inline-block text-left z-10">
@@ -47,12 +42,12 @@ const Account = () => {
                                 >
                                     <div className="px-4 py-3 flex flex-row gap-3 items-center">
                                         <img className='w-10 h-10 rounded-full'
-                                            src={user.image_address ? user.image_address : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}
+                                            src={userInfo.image_address ? userInfo.image_address : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}
                                             alt='user' />
                                         <div className="">
                                             <p className="text-sm leading-5">Signed in as</p>
                                             <p className="text-sm font-medium leading-5 text-gray-900 truncate">
-                                                {user.name.length > 17 ? user.name.slice(0, 17) + ' ...' : user.name}
+                                                {userInfo.name.length > 17 ? userInfo.name.slice(0, 17) + ' ...' : userInfo.name}
                                             </p>
                                         </div>
 
@@ -137,4 +132,4 @@ const Account = () => {
     );
 }
 
-export default Account; 
+export default memo(Account); 

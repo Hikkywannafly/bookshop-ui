@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     currentUser: null,
+    // currentAdmin: null,
     isAuthenticated: false,
     accessToken: null,
     isFetching: false,
@@ -18,7 +19,10 @@ const authSlice = createSlice({
         },
         loginSuccess: (state, action) => {
             state.isFetching = false;
-            state.isAuthenticated = true;
+            state.isAuthenticated = false;
+            // action.payload.user?.role === 'admin' ?
+            //     state.currentAdmin = action.payload.user
+            //     : state.currentUser = action.payload.user;
             state.currentUser = action.payload.user;
             state.accessToken = action.payload.access_token;
             state.error = false;
@@ -39,6 +43,7 @@ const authSlice = createSlice({
             state.isFetching = false;
             state.isAuthenticated = false;
             state.currentUser = null;
+            // state.currentAdmin = null;
             state.accessToken = null;
             state.error = false;
             state.errorMessage = null;
