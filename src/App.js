@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NotFound from './page/_404';
-import { publicRoutes, dashboardRoutes, sessionRoutes, authRoutes } from '~/router';
+import { publicRoutes, dashboardRoutes, sessionRoutes, authRoutes } from '~/routers';
 import Sidebar from '~/components/Dashboard/Sidebar';
 import { useStateContext } from '~/hooks/useStateContext';
 import Nav from '~/components/Dashboard/Nav';
 import RequireAuth from './page/Auth/RequireAuth';
-import { useSelector } from 'react-redux';
 import HeaderHome from './components/HeaderHome';
 function App() {
   const { activeMenu } = useStateContext();

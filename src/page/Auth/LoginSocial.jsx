@@ -13,7 +13,6 @@ const LoginSocial = () => {
     const navigate = useNavigate();
     const googleLogin = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
-
             const userInfo = await axios.get(
                 'https://www.googleapis.com/oauth2/v3/userinfo',
                 { headers: { Authorization: `Bearer ${tokenResponse.access_token} ` } },
@@ -26,7 +25,6 @@ const LoginSocial = () => {
             if (AuthGoogle.status === 'error') {
                 toast.error('Login failed');
             }
-            console.log(`userInfo`, AuthGoogle);
 
         },
         onError: errorResponse => console.log(errorResponse),
