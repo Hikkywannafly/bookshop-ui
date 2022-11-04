@@ -76,7 +76,7 @@ export const links = [
     links: [
       {
         name: 'ecommerce',
-        icon: <BsShopWindow />,
+        icon: <BsShopWindow className='text-base' />,
       },
     ],
   },
@@ -86,41 +86,19 @@ export const links = [
     links: [
       {
         name: 'orders',
-        icon: <AiOutlineShopping />,
+        icon: <AiOutlineShopping className='text-base' />,
       },
       {
         name: 'user',
-        icon: <AiOutlineUser />,
+        icon: <AiOutlineUser className='text-base' />,
       },
       {
         name: 'product',
-        icon: <AiOutlineGroup />,
+        icon: <AiOutlineGroup className='text-base' />,
 
       }
     ],
   },
-  // {
-  //   title: 'Apps',
-  //   links: [
-  //     {
-  //       name: 'calendar',
-  //       icon: <AiOutlineCalendar />,
-  //     },
-  //     {
-  //       name: 'kanban',
-  //       icon: <BsKanban />,
-  //     },
-  //     {
-  //       name: 'editor',
-  //       icon: <FiEdit />,
-  //     },
-  //     {
-  //       name: 'color-picker',
-  //       icon: <BiColorFill />,
-  //     },
-  //   ],
-  // },
-
 ];
 
 export const price = [

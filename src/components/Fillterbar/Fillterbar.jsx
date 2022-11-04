@@ -22,7 +22,6 @@ const Fillterbar = (props) => {
                     {
                         <>
                             <div className="flex items-center">
-
                                 <h1
                                     onClick={(e) => handleCategoryToggle(`all-category`)}
                                     className={`mb-3 text-sm uppercase  cursor-pointer   ${locationname === `/all-category.html` ? 'text-orange-600 font-medium' : ' '} `}>All categories</h1>
@@ -70,15 +69,13 @@ const Fillterbar = (props) => {
                                                 </div>
                                             </div>
                                         </div>
-
                                     ))
                                 }
                             </div>
                         </>
                     }
                 </FillterLayout>
-
-                <FillterLayout name='suppliers ' >
+                <FillterLayout name='suppliers' >
                     {
                         suppliers?.map((item, index) => (
                             <CheckBoxGroup title={`supplier`} fillter={fillter} handleSelect={handleSelect} key={index} id={`er` + index} value={item.id} name={item.name} />

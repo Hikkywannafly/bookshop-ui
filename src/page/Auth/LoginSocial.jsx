@@ -1,6 +1,6 @@
 import AuthSocial from '~/components/Input/AuthSocial';
 import { useGoogleLogin } from '@react-oauth/google';
-import { LoginWithGoogle } from '~/redux/apiRequest';
+import { LoginWithGoogle } from '~/redux/Auth/apiRequest';
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from 'react-icons/io';
 import { FaFacebookF } from 'react-icons/fa';

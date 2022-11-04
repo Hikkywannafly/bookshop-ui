@@ -52,6 +52,10 @@ module.exports = {
           "0%": { opacity: 0, transform: "rotate(180deg)" },
           "100%": { opacity: 1, transform: "rotate(0)" }
         },
+        "fade-left2": {
+          "0%": { opacity: 0, transform: "translateX(-240px)" },
+          "100%": { opacity: 1, transform: "translateX(0)" }
+        },
         'fade-scale': {
           "0%": {
             visibility: "visible",
@@ -74,6 +78,7 @@ module.exports = {
         'fade-rotate': 'fade-rotate 200ms ease-in-out',
         'fade-rotate-right': 'fade-rotate-right 200ms ease-in-out',
         'fade-scale': 'fade-scale 200ms ease-in-out',
+        'fade-left2': 'fade-left2 300ms ease-in-out',
 
       },
       backgroundImage: {

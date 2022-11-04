@@ -15,10 +15,10 @@ const Sidebar = () => {
     };
 
     const activeLink = 'flex items-center gap-5 pl-4 pt-2.5 pb-2 rounded-3xl m-2 shadow-lg drop-shadow-xl ';
-    const normalLink = 'flex items-center gap-5 pl-4 pt-2.5 pb-2 rounded-xl hover:bg-light-gray m-2';
+    const normalLink = 'flex items-center gap-5 pl-4 pt-2.5 pb-2 rounded-3xl hover:bg-light-gray m-2';
 
     return (
-        <div className="p-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 font-medium shadow-lg z-[100] ">
+        <div className="p-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 font-medium  z-[100] text-sm shadow-lg ">
             {activeMenu && (
                 <>
                     <div className="flex justify-between items-center">
@@ -39,7 +39,7 @@ const Sidebar = () => {
                     <div className="mt-10 ">
                         {links.map((item) => (
                             <div key={item.title}>
-                                <p className=" m-3 mt-4 uppercase">
+                                <p className=" m-3 mt-4 uppercase text-slate-400">
                                     {item.title}
                                 </p>
                                 {item.links.map((link) => (
@@ -53,8 +53,8 @@ const Sidebar = () => {
                                         })}
                                         className={({ isActive }) => (isActive ? activeLink : normalLink)}
                                     >
-                                        {link.icon}
-                                        <span className="capitalize ">{link.name}</span>
+                                        {link.icon }
+                                        <span className="capitalize">{link.name}</span>
                                     </NavLink>
                                 ))}
                             </div>

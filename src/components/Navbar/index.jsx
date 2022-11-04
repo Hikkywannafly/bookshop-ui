@@ -1,15 +1,13 @@
 import Category from './Category';
 import Itembar from './Itembar';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import CategoryMobile from './CategoryMobile';
 import UnderText from '~/components/Animation/UnderText';
 import { useStateContext } from '~/hooks/useStateContext';
 import { memo } from 'react';
 const Navbar = ({ currentUserName }) => {
-    const { mobile, click } = useStateContext();
-    const userData = useSelector((state) => state.login.currentUser);
-    
+    const { mobile, isClicked } = useStateContext();
+
     return (
         <>
             <nav
@@ -42,7 +40,7 @@ const Navbar = ({ currentUserName }) => {
                 </div>
             </nav>
             {
-                mobile && click && (<CategoryMobile />)
+                mobile && isClicked.navCategory && (<CategoryMobile />)
             }
 
         </>

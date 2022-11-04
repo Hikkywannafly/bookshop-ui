@@ -3,7 +3,6 @@ const CheckBoxGroup = (props) => {
     const { value, handleSelect, name, title, fillter } = props;
     return (<>
         <div
-
             className="flex items-center mb-1 last:mb-0 ">
             <input
                 name={title}

@@ -1,10 +1,10 @@
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
-import React from 'react';
+import React, { memo } from 'react';
 import LoadingSkeleton from '~/components/Animation/LoadingSkeleton'
 import { useStateContext } from '~/hooks/useStateContext';
 const FillterLayout = (props) => {
     const { name, children } = props;
-    const { category, setCategory } = useStateContext();
+    const { isClicked, handleClick } = useStateContext();
     return (
         <>
             <div className="border-b pb-3 ">
@@ -15,21 +15,19 @@ const FillterLayout = (props) => {
                     </div>
                     <div
                         id="category"
-                        onClick={(e) => {
-                            category === name ?
-                                setCategory() : setCategory(name)
-
+                        onClick={() => {
+                            // category === name ?
+                            //     setCategory() : setCategory(name)
+                            handleClick(name)
                         }}
                         className=" px-3 cursor-pointer ">
-                        {category === name ? <IoIosArrowUp className="animate-fade-rotate-right " /> : <IoIosArrowDown className="animate-fade-rotate" />}
+                        {isClicked[`${name}`] ? <IoIosArrowUp className="animate-fade-rotate-right " /> : <IoIosArrowDown className="animate-fade-rotate" />}
                     </div>
                 </div>
-                <div className={` ml-3 mb-1.5 animate-fade-down ${category === name ? ` hidden ` : null}`}>
-
+                <div className={` ml-3 mb-1.5 animate-fade-down ${isClicked[`${name}`] ? ` hidden ` : null}`}>
                     {
                         children
                     }
-
                 </div>
             </div>
 
@@ -54,4 +52,4 @@ const Loading = () => {
 
 FillterLayout.Loading = Loading
 
-export default FillterLayout;
+export default memo(FillterLayout);

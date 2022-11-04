@@ -53,8 +53,6 @@ const Header = ({ userInfo }) => {
                                         < Account userInfo={userInfo} />
                                     )
                                 }
-
-
                                 <div className="text-xs leading-3">Account</div>
                             </div>
 

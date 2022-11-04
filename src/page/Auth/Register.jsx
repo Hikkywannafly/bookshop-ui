@@ -8,7 +8,7 @@ import AuthSocial from '~/components/Input/AuthSocial';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { registerSchema } from '~/helper/Schema/register'
 import { useFormik } from 'formik';
-import { registerUser } from '~/redux/apiRequest'
+import { registerUser } from '~/redux/Auth/apiRequest'
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LoadingCicle from '~/components/Loading/LoadingCicle';

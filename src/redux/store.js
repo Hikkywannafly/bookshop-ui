@@ -10,8 +10,8 @@ import {
     REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import authReducer from "./authLoginSlice";
-import authRegisterReducer from "./authRegisterSlice";
+import authReducer from "./Auth/authLoginSlice";
+import authRegisterReducer from "./Auth/authRegisterSlice";
 import bookReducer from './Product/ProductSlice.js'
 const persistConfig = {
     key: 'root',
@@ -35,9 +35,5 @@ export const store = configureStore({
             },
         }),
 })
-// export default configureStore({
-//     reducer: {
-//         register: authRegisterReducer,
-//     }
-// })
+
 export let persistor = persistStore(store)

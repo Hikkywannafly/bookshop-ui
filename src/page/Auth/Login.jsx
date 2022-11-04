@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingCicle from '~/components/Loading/LoadingCicle';
 import toast, { Toaster } from 'react-hot-toast';
 import { loginSchema } from '~/helper/Schema/login';
-import { loginUser } from '~/redux/apiRequest';
+import { loginUser } from '~/redux/Auth/apiRequest';
 const Login = () => {
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null)
@@ -31,7 +31,7 @@ const Login = () => {
         validationSchema: loginSchema,
         onSubmit: async (values) => {
             const result = await loginUser(values, dispatch);
-            console.log('debug', result);
+            // console.log('debug', result?.user?.role === 'admin');
             if (result.status === 'success') {
                 // toast.success('Login success');
                 result?.user?.role === 'admin' ? navigate('/dashboard') : navigate('/');
@@ -60,7 +60,6 @@ const Login = () => {
             <div><Toaster /></div>
             {loading && <LoadingCicle />}
             <AuthHeader content="CREATE ACCOUNT" link="/register" />
-
             <div className='animate-fade-down p-4 items-center flex flex-col justify-center m-auto w-full gap-10'>
                 <div className="my-10">
                     <h1 className='font-bold text-xl'> Login Into Hikky Books </h1>
@@ -68,7 +67,6 @@ const Login = () => {
                 {data && <div className="text-center text-red-500">{data}</div>}
 
                 <div className="flex flex-col md:flex-row gap-5 min-w-[250px] w-full md:min-w-[400px] md:w-[800px] md:gap-9">
-
                     <form className="flex flex-col gap-7 w-full" autoComplete="off" onSubmit={handleSubmit}>
                         <AuthInput
                             handleChange={handleChange}

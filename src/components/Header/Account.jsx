@@ -2,10 +2,10 @@ import { BiUser } from 'react-icons/bi';
 import { Menu, Transition } from "@headlessui/react";
 import { useSelector } from 'react-redux';
 import axiosInterceptor from '~/utils/axiosInterceptor';
-import { logoutUser } from '~/redux/apiRequest';
+import { logoutUser } from '~/redux/Auth/apiRequest';
 import { useDispatch } from 'react-redux';
 import AuthButton from '~/components/Input/AuthButton';
-import { refreshToken, logoutSuccess } from '~/redux/authLoginSlice';
+import { refreshToken, logoutSuccess } from '~/redux/Auth/authLoginSlice';
 import { memo } from 'react';
 const Account = ({ userInfo }) => {
     const accessToken = useSelector((state => { return state.login.accessToken }));
@@ -54,9 +54,7 @@ const Account = ({ userInfo }) => {
                                     </div>
 
                                     <div
-
                                         className="py-1">
-
                                         <Menu.Item>
                                             {({ active }) => (
                                                 <a

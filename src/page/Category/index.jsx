@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getBookData, getBookData3 } from '~/redux/Product/ProductRequest';
+import { getBookData, getBookDataFillter } from '~/redux/Product/ProductRequest';
 import Fillterbar from "~/components/Fillterbar/Fillterbar";
 import Product from "~/components/Product/Product";
-import { useStateContext } from '~/hooks/useStateContext';
 import { useSearchParams } from 'react-router-dom';
 import Breadcrumb from '~/components/Breadcrumb';
 const Category = () => {
@@ -37,45 +36,22 @@ const Category = () => {
     const handleDeleteFilter = (key, value) => {
         searchParams.delete(key);
         setSearchParams(searchParams);
-        // setFillter({ ...fillter, [value]: "" });
         delete fillter[key];
-        // console.log(value);
     }
 
     useEffect(() => {
         let params = location.pathname.split('.html')[0];
         if (params && !location.search) {
             getBookData(params, dispatch)
-
         }
         if (location.search) {
-            getBookData3(params, location.search, dispatch)
-            // console.log(`fillter test`, fillter);
-            // setFillter({
-            //     ...fillter,
-            //     price: searchParams.get("price"),
-            //     from: searchParams.get("from"),
-            //     supplier: searchParams.get("supplier")
-            // });
-            // console.log(`test`, fillter);
-            if (fillter.length === 0) {
-                // setFillter({
-                //     ...fillter,
-                //     price: searchParams.get("price"),
-                //     from: searchParams.get("from"),
-                //     supplier: searchParams.get("supplier")
-                // });
-                // console.log(`test`, searchParams.get("price"));
-            }
+            getBookDataFillter(params, location.search, dispatch)
         }
     }, [location.pathname, dispatch, location, searchParams]);
-    console.log('test bookdata rerender', breadcrumbs);
     return (
         <>
-
             <div className="container  items-center  w-full gap-2 lg:max-w-[1300px] text-sm  ">
                 <div className="my-2 w-full ">
-
                     {
                         !loading && breadcrumbs !== null ?
                             <Breadcrumb params={[{
@@ -90,12 +66,11 @@ const Category = () => {
                                 }, ...breadcrumbs]} />
                     }
                 </div>
-                <div className="flex flex-col lg:flex-row md gap-5 ">
+                <section className="flex flex-col lg:flex-row md gap-5 ">
                     <Fillterbar fillter={fillter} handleSelect={handleSelect} loading={loading} suppliers={suppliers} handleCategoryToggle={handleCategoryToggle} locationname={location.pathname} />
                     <Product handleDeleteFilter={handleDeleteFilter} fillter={fillter} handleSelectPage={handleSelectPage} loading={loading} pagination={pagination} bookData={bookData} handleSort={handleSort} />
-                </div>
+                </section >
             </div>
-
         </>
     );
 }

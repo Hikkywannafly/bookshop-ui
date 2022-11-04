@@ -5,29 +5,15 @@ import CategoryList from './CategoryList';
 import { CategoryListData } from '~/dummy';
 const Category = () => {
     const navigate = useNavigate();
-    const [show, setShow] = useState(true);
-    const { mobile, screenSize, click, setClick } = useStateContext();
+    const { mobile, handleClick, isClicked } = useStateContext();
     const handleCategoryClick = (slug) => {
-        setShow(false);
         navigate(`/${slug}.html`);
         window.scrollTo(0, 0);
     }
-    const handleCategory = () => {
-        setClick(!click);
-    }
-    useEffect(() => {
-        if (!mobile) {
-            setClick(false);
-        }
-        return () => {
-
-        }
-    }, [mobile])
-
     return (
         <>
             <div
-                onClick={mobile ? handleCategory : null}
+                onClick={mobile ? () => handleClick(`navCategory`) : null}
                 className="px-3 py-1 bg-gray-700 flex items-center cursor-pointer group rounded-lg" >
                 <div className="bg-transparent group absolute top-[3px] left-4 h-full px-20 py-1">
 
@@ -39,17 +25,17 @@ const Category = () => {
                             <div className="relative flex overflow-hidden items-center justify-center  transform transition-all  duration-200 shadow-md">
                                 <div className="flex flex-col  justify-between w-[18px] h-[18px] transform transition-all duration-300 origin-center overflow-hidden">
                                     {
-                                        !click ? (
+                                        !isClicked.navCategory ? (
                                             <div className="flex flex-col  justify-between w-[18px] h-[18px] transform transition-all duration-200 origin-center overflow-hidden">
-                                                <div className={`bg-white h-[1.5px] w-5 transform transition-all duration-200 origin-left  ${click ? ' translate-x-10 ' : null}`}></div>
-                                                <div className={`bg-white h-[1.5px] w-1/2 rounded transform transition-all duration-200  delay-75  ${click ? 'translate-x-10' : null}`}></div>
-                                                <div className={`bg-white h-[2px] w-5 transform transition-all duration-300 origin-left delay-150  ${click ? 'translate-x-10 ' : null}`}></div>
+                                                <div className={`bg-white h-[1.5px] w-5 transform transition-all duration-200 origin-left  ${isClicked.navCategory ? ' translate-x-10 ' : null}`}></div>
+                                                <div className={`bg-white h-[1.5px] w-1/2 rounded transform transition-all duration-200  delay-75  ${isClicked.navCategory ? 'translate-x-10' : null}`}></div>
+                                                <div className={`bg-white h-[2px] w-5 transform transition-all duration-300 origin-left delay-150  ${isClicked.navCategory ? 'translate-x-10 ' : null}`}></div>
                                             </div>
                                         ) : (
                                             <div className={`absolute items-center justify-between transform transition-all duration-500 top-2.5 -translate-x-10
-                                           flex w-0   ${click ? 'w-12 translate-x-0' : null}`}>
-                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-300 rotate-0 delay-200  ${click ? 'rotate-45' : null}`}></div>
-                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-300 -rotate-0 delay-200 ${click ? '-rotate-45' : null}`}></div>
+                                           flex w-0   ${isClicked.navCategory ? 'w-12 translate-x-0' : null}`}>
+                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-300 rotate-0 delay-200  ${isClicked.navCategory ? 'rotate-45' : null}`}></div>
+                                                <div className={`absolute bg-white h-[2px] w-5 transform transition-all duration-300 -rotate-0 delay-200 ${isClicked.navCategory ? '-rotate-45' : null}`}></div>
                                             </div>
                                         )
                                     }

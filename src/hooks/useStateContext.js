@@ -1,23 +1,26 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 const StateContext = createContext();
 
 const initialState = {
     chat: false,
     userProfile: false,
     notification: false,
+    category: false,
+    suppliers: false,
+    price: false,
+    from: false,
+    navCategory: false,
 };
 
 export const ContextProvider = ({ children }) => {
     const [screenSize, setScreenSize] = useState(undefined);
     const [currentColor, setCurrentColor] = useState('#1e1e30');
-    // const [currentMode, setCurrentMode] = useState('Light');
-    // const [themeSettings, setThemeSettings] = useState(false);
     const [activeMenu, setActiveMenu] = useState(true);
     const [isClicked, setIsClicked] = useState(initialState);
+
     // resize
     const [mobile, setMobile] = useState(false);
     const [click, setClick] = useState(false);
-    const [category, setCategory] = useState();
     const [link, setLink] = useState([]);
     // const setMode = (e) => {
 
@@ -30,7 +33,9 @@ export const ContextProvider = ({ children }) => {
     //     localStorage.setItem('colorMode', color);
     // };
 
-    const handleClick = (clicked) => setIsClicked({ ...initialState, [clicked]: true });
+    const handleClick = (clicked) => setIsClicked({ ...isClicked, [clicked]: !isClicked[clicked] });
+
+    // const handleClick = (clicked) => setIsClicked({ ...initialState, [clicked]: true })
     // resize
     useEffect(() => {
         const handleResize = () => setScreenSize(window.innerWidth);
@@ -47,6 +52,14 @@ export const ContextProvider = ({ children }) => {
         screenSize <= 900 ? setMobile(true) : setMobile(false);
     }, [screenSize])
 
+    // reset
+    
+
+    useEffect(() => {
+        if (!mobile) {
+            setIsClicked({ ...initialState, navCategory: false });
+        }
+    }, [mobile, setClick])
     return (
         // eslint-disable-next-line react/jsx-no-constructed-context-values
         <StateContext.Provider value={{
@@ -54,7 +67,7 @@ export const ContextProvider = ({ children }) => {
             handleClick, isClicked, initialState,
             setIsClicked, setActiveMenu,
             mobile, setMobile, click, setClick
-            , category, setCategory, link, setLink,
+            , link, setLink,
             currentColor, setCurrentColor
         }}>
             {children}
