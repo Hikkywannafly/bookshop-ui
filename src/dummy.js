@@ -1,7 +1,10 @@
 import React from 'react';
 import { BsShopWindow } from "react-icons/bs";
 import { AiOutlineShopping, AiOutlineUser, AiOutlineGroup } from "react-icons/ai";
-
+import { ImBook } from "react-icons/im";
+import { MdSpaceDashboard } from "react-icons/md";
+import { IoBagHandleSharp } from "react-icons/io5"
+import { FaUserCircle } from "react-icons/fa"
 export const CategoryListData = [
   {
     title: "Văn học",
@@ -76,7 +79,9 @@ export const links = [
     links: [
       {
         name: 'ecommerce',
-        icon: <BsShopWindow className='text-base' />,
+        path: 'auth/ecommerce',
+        icon: <MdSpaceDashboard className='text-base' />,
+
       },
     ],
   },
@@ -86,15 +91,33 @@ export const links = [
     links: [
       {
         name: 'orders',
-        icon: <AiOutlineShopping className='text-base' />,
+        path: 'auth/orders',
+        icon: <IoBagHandleSharp className='text-base' />,
+
       },
       {
         name: 'user',
-        icon: <AiOutlineUser className='text-base' />,
+        path: 'auth/user',
+        icon: <FaUserCircle className='text-base' />,
       },
       {
         name: 'product',
-        icon: <AiOutlineGroup className='text-base' />,
+        path: 'auth/product',
+        icon: <ImBook className='text-base' />,
+        tool: [
+          {
+            name: 'Product List',
+            path: 'auth/product/product-list',
+          },
+          {
+            name: 'Add Product',
+            path: 'auth/product/add-product',
+          },
+          {
+            name: 'Categories',
+            path: 'auth/product/categories',
+          }
+        ]
 
       }
     ],

@@ -34,7 +34,7 @@ const Login = () => {
             // console.log('debug', result?.user?.role === 'admin');
             if (result.status === 'success') {
                 // toast.success('Login success');
-                result?.user?.role === 'admin' ? navigate('/dashboard') : navigate('/');
+                result?.user?.role === 'admin' ? navigate('/auth/dashboard') : navigate('/');
             }
             if (result.status === 'error') {
                 toast.error('Login failed');

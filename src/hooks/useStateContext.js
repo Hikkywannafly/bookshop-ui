@@ -10,6 +10,7 @@ const initialState = {
     price: false,
     from: false,
     navCategory: false,
+    product: false,
 };
 
 export const ContextProvider = ({ children }) => {
@@ -53,7 +54,7 @@ export const ContextProvider = ({ children }) => {
     }, [screenSize])
 
     // reset
-    
+
 
     useEffect(() => {
         if (!mobile) {

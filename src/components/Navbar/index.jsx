@@ -6,7 +6,8 @@ import UnderText from '~/components/Animation/UnderText';
 import { useStateContext } from '~/hooks/useStateContext';
 import { memo } from 'react';
 const Navbar = ({ currentUserName }) => {
-    const { mobile, isClicked } = useStateContext();
+    const { mobile, isClicked  } = useStateContext();
+ 
 
     return (
         <>

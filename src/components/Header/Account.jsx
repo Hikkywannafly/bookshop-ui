@@ -1,19 +1,22 @@
 import { BiUser } from 'react-icons/bi';
 import { Menu, Transition } from "@headlessui/react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axiosInterceptor from '~/utils/axiosInterceptor';
 import { logoutUser } from '~/redux/Auth/apiRequest';
-import { useDispatch } from 'react-redux';
 import AuthButton from '~/components/Input/AuthButton';
-import { refreshToken, logoutSuccess } from '~/redux/Auth/authLoginSlice';
-import { memo } from 'react';
+
+import { memo, useEffect } from 'react';
 const Account = ({ userInfo }) => {
-    const accessToken = useSelector((state => { return state.login.accessToken }));
+    const accessToken = useSelector((state => state.login.accessToken));
     const dispatch = useDispatch();
-    const axios = axiosInterceptor(accessToken, dispatch, refreshToken, logoutSuccess);
+    const axios = axiosInterceptor(accessToken, dispatch);
     const handleLogout = async () => {
         const result = await logoutUser(axios, dispatch);
     }
+
+    useEffect(() => {
+        console.log(`test Accesstoken`, accessToken);
+    }, [accessToken])
     return (
         <>
             <div className="relative inline-block text-left z-10">
