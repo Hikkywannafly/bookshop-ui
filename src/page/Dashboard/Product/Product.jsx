@@ -12,8 +12,9 @@ import axiosInterceptor from '~/utils/axiosInterceptor';
 import Pagination from '~/components/Pagination';
 import AdminTableTitle from '~/components/Chore/AdminTableTitle';
 import LoadingSkeleton from '~/components/Animation/LoadingSkeleton';
-import Search from '~/components/Header/Search';
-import { sort } from '~/dummy';
+import Search from '~/components/Input/Search';
+import { fillter, CategoryListData } from '~/dummy';
+import Select from '~/components/Input/Select';
 const Product = () => {
     const { currentColor } = useStateContext();
     let [searchParams, setSearchParams] = useSearchParams();
@@ -45,7 +46,7 @@ const Product = () => {
 
     return (
         <>
-            <DashboardPage title="Product" category="Page">
+            <DashboardPage title="Product List" category="Product">
                 <div className="flex gap-3">
                     <Button
                         bgColor='white'
@@ -59,27 +60,29 @@ const Product = () => {
                         icon={<RiAddCircleFill />}
                         text="Thêm Mới"
                         size='sm'
+                        link='/auth/product/add-product'
                     />
                 </div>
                 <div className="flex items-center justify-between m-6 h-7 text-sm">
-                    <div className="h-3 w-full">
-                        <Search className=" shadow-lg h-10 " />
+                    <div className="h-3 max-w-[400px] w-full">
+                        <Search />
                     </div>
-                    <div className="">
-                        <div className="">
-                            Fillter
-                        </div>
-                        <select
-                            style={{ boxShadow: `rgb(0 0 0 / 5%) 0px 0px 1rem 0px` }}
-                            className=" bg-white drop-shadow-xl  bg-opacity-60  w-40
-                               text-gray-900  rounded-lg   p-1 outline-none">
-                            {sort.map((item, index) => {
-                                return <option key={index} value={item.value}>{item.name}</option>
-                            })}
-                        </select>
-
+                    <div className="flex items-center gap-3">
+                        <Select options={fillter} title='Show:' />
+                        <Select options={
+                            [
+                                { slug: 'all-category', title: 'All category' },
+                                ...CategoryListData.map(item => ({ slug: item.slug, title: item.title }))
+                            ]
+                        }
+                            title='Category:' />
+                        <Select options={
+                            CategoryListData.map((item) => {
+                                return { title: item.title, slug: item.slug }
+                            })
+                        }
+                            title='Sub Category:' />
                     </div>
-
 
 
 
@@ -185,6 +188,7 @@ const TableSkeleton = () => {
                         <LoadingSkeleton className='w-24 h-5 ' width="100%" height="20px" />
                     </div>
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">1</td>
                 <td className="px-6 w-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><BsThreeDots /></td>

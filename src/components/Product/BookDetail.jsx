@@ -30,8 +30,8 @@ const BookDetail = ({ bookdata }) => {
                         toggler={lightboxController.toggler}
                         sources={images}
                         slide={lightboxController.slide}
-                    className='w-full h-full absolute z-[1000]'
-                    
+                        className='w-full h-full absolute z-[1000]'
+
 
                     />
                     <div className='flex flex-col items-center w-[484px] mx-3 mr-8'>

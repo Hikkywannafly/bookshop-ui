@@ -107,7 +107,7 @@ export const links = [
         tool: [
           {
             name: 'Product List',
-            path: 'auth/product/product-list',
+            path: 'auth/product',
           },
           {
             name: 'Add Product',
@@ -194,4 +194,23 @@ export const sort = [
     name: `Giảm giá nhiều nhất`,
     value: `sale`,
   }
+]
+
+export const fillter = [
+  {
+    title: 10,
+    slug: 10,
+  },
+  {
+    title: 20,
+    slug: 20,
+  },
+  {
+    title: 30,
+    slug: 30,
+  },
+  {
+    title: 40,
+    slug: 40,
+  },
 ]

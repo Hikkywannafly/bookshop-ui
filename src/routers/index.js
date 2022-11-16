@@ -10,7 +10,8 @@ import Ecommerce from '~/page/Dashboard/Ecommerce';
 import Orders from '~/page/Dashboard/Orders';
 import Category from '~/page/Category/';
 import Product from '~/page/Product/';
-import ProductAuth from '~/page/Dashboard/Product/';
+import ProductAuth from '~/page/Dashboard/Product/Product';
+import AddProduct from '~/page/Dashboard/Product/AddProduct';
 const publicRoutes = [
     {
         path: '/', component: Home
@@ -61,12 +62,15 @@ const dashboardRoutes = [
     {
         path: '/auth/orders', component: Orders
     },
-    {
-        path: '/auth/product/:slug.html', component: Product
-    },
+    // {
+    //     path: '/auth/product/:slug.html', component: Product
+    // },
     {
         path: '/auth/product/', component: ProductAuth
     },
+    {
+        path: '/auth/product/add-product', component: AddProduct
+    }
 ]
 
 export { publicRoutes, authRoutes, sessionRoutes, dashboardRoutes }
