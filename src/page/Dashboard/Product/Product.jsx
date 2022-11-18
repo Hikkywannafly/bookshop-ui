@@ -83,10 +83,6 @@ const Product = () => {
                         }
                             title='Sub Category:' />
                     </div>
-
-
-
-
                 </div>
                 <div className="flex flex-col">
                     <div className="overflow-hidden sm:-mx-6 lg:-mx-8">
@@ -139,10 +135,7 @@ const Product = () => {
                                             </tr>
 
                                         )) : <TableSkeleton />
-
                                     }
-
-
                                 </tbody>
                             </table>
                             <div className="w-full flex items-center justify-center p-3 mt-3">

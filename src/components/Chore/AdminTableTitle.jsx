@@ -15,7 +15,7 @@ const AdminTableTitle = () => {
             <th scope="col" className="text-sm font-bold text-gray-700 px-6 py-4 text-right items-center">
 
                 Sold
-                <MdKeyboardArrowDown className="ml-2 inline-block text-black" font-medium />
+                <MdKeyboardArrowDown className="ml-2 inline-block text-black font-medium" />
 
 
             </th>

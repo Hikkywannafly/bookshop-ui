@@ -18,7 +18,7 @@ const Sidebar = () => {
     const normalLink = 'flex justify-between  items-center gap-5 pl-4 pt-2.5 pb-2  rounded-lg text-neutral-700 hover:bg-slate-300 m-2 text-sm hover:text-white duration-200';
 
     return (
-        <div className="p-6 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 font-medium  z-[100] text-sm bg-main-bg ">
+        <div className="p-6 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 font-medium z-[100] text-sm bg-main-bg ">
             {activeMenu && (
                 <>
                     <div className="flex justify-between items-center">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import DashboardPage from '~/components/Layout/Dashboard';
 import InputBar from '~/components/Input/Input';
 import SelectBar from '~/components/Input/SelectBar';
@@ -7,22 +7,26 @@ import CurrencyInput from '~/components/Input/CurrencyInput';
 import RichText from '~/components/Input/RichText';
 import Button from "~/components/Input/Button";
 import { useFormik } from 'formik';
+import { addProductSchema } from '~/helper/Schema/addProduct';
+
 const AddProduct = () => {
     const current = new Date();
     const date = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
-    const [subCategory, setSubCategory] = useState([{ title: 'Select sub category', slug: null }]);
-    const [slug, setSlug] = useState("example-slug");
+    const [subCategory, setSubCategory] = useState([]);
+    const [categoryValue, setCategoryValue] = useState("");
+    const [subCategoryValue, setSubCategoryValue] = useState("");
     const handleChangeSlug = (e) => {
         let value = e.target.value;
-        value = value.toLowerCase().replace(/ /g, '-');
-        const from = "àáäâèéëêễìíïîòóöôùúüûñç·/_,:;";
-        const to = "aaaaeeeeeiiiioooouuuunc------";
+        value = value.toLowerCase()
+        const from = "àáầấạắäâảẩèéëêếệẻễẽểìíỉïịîòọợớờởổỏõóöôộùúüưủûửừứựñçýỵỳỷỹ·/_,:;";
+        const to = "aaaaaaaaaaeeeeeeeeeeiiiiiiooooooooooooouuuuuuuuuuncyyyyy------";
         for (let i = 0, l = from.length; i < l; i++) {
             value = value.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
         }
-        value = value.replace(/[^a-z0-9 -]/g, '')
-        setSlug(value);
+        value = value.replace(/\W+/g, '-')
+        values.slug = value;
     }
+
     const { values, errors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
         initialValues: {
             name: '',
@@ -32,21 +36,30 @@ const AddProduct = () => {
             price: '',
             description: '',
         },
-        // validationSchema: addProduct;
+        validationSchema: addProductSchema,
         onSubmit: (values) => {
             console.log(values);
         }
     });
+    useEffect(() => {
+        values.category = categoryValue
+    }, [categoryValue]);
+    useEffect(() => {
+        values.subcategory = subCategoryValue
+    }, [subCategoryValue]);
     return (
         <>
             <DashboardPage title="Add Product" category="Product" >
                 <form className="flex flex-row gap-4" onSubmit={handleSubmit}>
                     <div className="gap-4 flex flex-col w-1/2">
-                        <InputBar placeholder='Enter product name' label='Product Name'
-                            // onChange={handleChangeSlug}
-                            // handleChange={handleChange}
-                            // onBlur={handleBlur}
-                            // value={values.first_name}
+                        <InputBar
+                            placeholder='Enter product name'
+                            label='Product Name'
+                            onChange={handleChangeSlug}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            error={errors.name && touched.name ? errors.name : false}
+                            value={values.name}
                             name="name"
                         />
 
@@ -58,17 +71,35 @@ const AddProduct = () => {
                                 ]
                             }
                             setSubCategory={setSubCategory}
+                            setValue={setCategoryValue}
+                            error={errors.category && touched.category ? errors.category : false}
 
                         />
                         <SelectBar label='sub category'
-                            options={subCategory?.map(item => ({ slug: item.slug, name: item.title })) || [{ name: 'Select sub category', slug: null }]}
+                            options={
+                                [
+                                    { slug: null, name: 'Select sub category' },
+                                    ...subCategory?.map(item => ({ slug: item.slug, name: item.title })) || []
+                                ]
+                            }
+                            setValue={setSubCategoryValue}
+                            error={errors.subcategory && touched.subcategory ? errors.subcategory : false}
                         />
                         <InputBar
                             onChange={(e) => { }}
-                            value={slug}
+                            handleChange={handleChange}
+                            handleBlur={handleBlur}
+                            error={errors.slug && touched.slug ? errors.slug : false}
+                            value={values.slug}
+                            name="slug"
                             placeholder='Enter slug name' label='Product Slug' />
 
                         <CurrencyInput
+                            handleBlur={handleBlur}
+                            handleChange={handleChange}
+                            error={errors.price && touched.price ? errors.price : false}
+                            value={values.price}
+                            name="price"
                             placeholder='Enter price' label='Product Price' />
 
                         <InputBar

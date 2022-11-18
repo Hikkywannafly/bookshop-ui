@@ -1,39 +1,45 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, memo, useMemo, useEffect } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { HiSelector } from 'react-icons/hi'
-import { useEffect } from 'react'
-
-function classNames(...classes) {
+const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ')
 }
-
-
-export default function SelectBar({ label, options, setSubCategory }) {
-
+const SelectBar = ({ label, options, setSubCategory, error, setValue }) => {
     const [selected, setSelected] = useState(options[0])
-    // useEffect(() => {
-    //     if (setSubCategory) {
-    //         setSelected(options[0])
-    //     }
+    useEffect(() => {
+        if (!setSubCategory && selected.slug === null) {
+            setSelected(options[0])
+        }
 
-    // }, [options])
+    }, [options])
+
     return (
         <Listbox value={selected}
             onChange={
                 (e) => {
                     setSelected(e);
-                    setSubCategory && setSubCategory(e.subCategory)
+                    setValue(e.slug);
+                    setSubCategory && setSubCategory(e.subCategory);
                 }
-            } >
+            }
+
+        >
             {({ open }) => (
                 <>
                     <div className='flex flex-col '>
                         <Listbox.Label className="block  capitalize text-sm font-medium text-gray-900">{label}</Listbox.Label>
                         <div className="relative mt-1 ">
-                            <Listbox.Button className="relative 
-                            duration-200
-                        w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3
-                         pr-10 text-left shadow-sm focus:border-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-800 sm:text-sm">
+                            <Listbox.Button
+                                style={error ? { borderColor: `coral` } : { borderColor: `rgb(209 213 219)` }}
+                                className={`
+                                relative
+                              mt-1
+                w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3
+                pr-3 text-left shadow-sm  focus:outline-none focus:ring-1 ${error ? 'focus:ring-[#FF7F50]' : 'focus:ring-slate-800'} sm:text-sm
+                duration-200
+                `}
+
+                            >
                                 <span className="flex items-center">
                                     <span className={` block truncate ${selected.slug === null ? ` text-gray-400 ` : null}`}>{selected.name}</span>
                                 </span>
@@ -41,7 +47,9 @@ export default function SelectBar({ label, options, setSubCategory }) {
                                     <HiSelector className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                 </span>
                             </Listbox.Button>
-
+                            {
+                                error && <span className="italic text-red-500 text-xs">{error}</span>
+                            }
                             <Transition
                                 show={open}
                                 as={Fragment}
@@ -60,6 +68,7 @@ export default function SelectBar({ label, options, setSubCategory }) {
                                                     'relative cursor-default select-none py-2 pl-3 pr-9'
                                                 )
                                             }
+                                            disabled={item.slug === null ? true : false}
                                             value={item}
                                         >
                                             {({ selected, active }) => (
@@ -82,5 +91,8 @@ export default function SelectBar({ label, options, setSubCategory }) {
                 </>
             )}
         </Listbox>
+
     )
 }
+
+export default memo(SelectBar);

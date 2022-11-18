@@ -50,7 +50,7 @@ const Header = ({ userInfo }) => {
                                         </Link>
                                     ) : (
 
-                                        < Account userInfo={userInfo} />
+                                        <Account userInfo={userInfo} />
                                     )
                                 }
                                 <div className="text-xs leading-3">Account</div>
