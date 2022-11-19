@@ -8,6 +8,7 @@ import RichText from '~/components/Input/RichText';
 import Button from "~/components/Input/Button";
 import { useFormik } from 'formik';
 import { addProductSchema } from '~/helper/Schema/addProduct';
+import ImgUpload from '~/components/Dashboard/Upload/ImgUpload';
 
 const AddProduct = () => {
     const current = new Date();
@@ -15,6 +16,8 @@ const AddProduct = () => {
     const [subCategory, setSubCategory] = useState([]);
     const [categoryValue, setCategoryValue] = useState("");
     const [subCategoryValue, setSubCategoryValue] = useState("");
+    const [description, setDescription] = useState("");
+    const [selectedImages, setSelectedImages] = useState([]);
     const handleChangeSlug = (e) => {
         let value = e.target.value;
         value = value.toLowerCase()
@@ -47,11 +50,15 @@ const AddProduct = () => {
     useEffect(() => {
         values.subcategory = subCategoryValue
     }, [subCategoryValue]);
+    useEffect(() => {
+        values.description = description
+    }, [description]);
+    // console.log(`test`, selectedImages);
     return (
         <>
             <DashboardPage title="Add Product" category="Product" >
-                <form className="flex flex-row gap-4" onSubmit={handleSubmit}>
-                    <div className="gap-4 flex flex-col w-1/2">
+                <form className="flex flex-row gap-6" onSubmit={handleSubmit}>
+                    <div className="gap-4 flex flex-col w-3/5 border p-5 rounded-md">
                         <InputBar
                             placeholder='Enter product name'
                             label='Product Name'
@@ -100,7 +107,7 @@ const AddProduct = () => {
                             error={errors.price && touched.price ? errors.price : false}
                             value={values.price}
                             name="price"
-                            placeholder='Enter price' label='Product Price' />
+                            placeholder='Enter price' label='Product Price (VNĐ)' />
 
                         <InputBar
                             value={date}
@@ -108,17 +115,31 @@ const AddProduct = () => {
                             type='date' placeholder='Enter date name' label='Product Date' />
 
                         <div className="">
-                            <label htmlFor="first_name" className="block text-sm  capitalize font-medium text-gray-900 mb-1">Decription</label>
-                            <RichText label='Description' />
+                            <label htmlFor="description" className="block text-sm  capitalize font-medium text-gray-900 mb-1">Decription</label>
+                            <RichText
+                                value={description} setValue={setDescription}
+                            />
                         </div>
 
                     </div>
-                    <div className="">
-                        <Button content={`Mua ngay `} color=' bg-slate-800 border-2 border-slate-800' />
+                    <div className="gap-4 flex flex-col w-2/5 border p-5 rounded-md items-center">
+                        <label htmlFor="description" className="block text-sm  capitalize font-medium text-gray-900 mb-1">Add images</label>
+                        <ImgUpload
+                            setSelectedImages={setSelectedImages}
+                            selectedImages={selectedImages}
+                        />
+
+                        <div className="flex gap-3 w-full">
+
+                            <Button content={`Publish Product`} color='px-2 h-8 bg-slate-800 border-2 border-slate-800' />
+
+                            <Button content={`View Demo`} color='px-2 h-8 bg-white text-black border-2 border-slate-800' />
+
+                        </div>
+
                     </div>
 
                 </form>
-
             </DashboardPage>
         </>
     );

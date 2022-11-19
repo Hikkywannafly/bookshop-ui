@@ -10,7 +10,7 @@ const BookDetail = ({ bookdata }) => {
         toggler: false,
         slide: 1
     });
-    function openLightboxOnSlide(number) {
+    const openLightboxOnSlide = (number) => {
         setLightboxController({
             toggler: !lightboxController.toggler,
             slide: number

@@ -5,6 +5,7 @@ import BookDetail from '~/components/Product/BookDetail';
 import { useSelector, useDispatch } from "react-redux";
 import { getBookDetail } from '~/redux/Product/ProductRequest';
 import { useLocation, useNavigate, } from 'react-router-dom';
+
 const Product = () => {
     const location = useLocation();
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Product = () => {
         }
 
     }
-    console.log('test bookdata', bookdata);
+
     useEffect(() => {
         let params = location.pathname.split('.html')[0];
         if (params && !location.search) {

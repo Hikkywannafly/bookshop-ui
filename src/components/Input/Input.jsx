@@ -19,7 +19,7 @@ const InputBar = ({ placeholder, label, icon, type, disabled, defaultValue, onCh
                 w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3
                 pr-3 text-left shadow-sm  focus:outline-none focus:ring-1 ${error ? 'focus:ring-[#FF7F50]' : 'focus:ring-slate-800'} sm:text-sm
                 duration-200
-                `} placeholder={placeholder} required />
+                `} placeholder={placeholder} />
                 {
                     error && <span className="italic text-red-500 text-xs">{error}</span>
                 }

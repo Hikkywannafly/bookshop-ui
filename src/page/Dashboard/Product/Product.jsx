@@ -93,9 +93,6 @@ const Product = () => {
                                 </thead>
                                 <tbody>
                                     {
-
-                                    }
-                                    {
                                         !loading ? bookData?.map((item, index) => (
                                             < tr
                                                 key={index}
@@ -139,7 +136,9 @@ const Product = () => {
                                 </tbody>
                             </table>
                             <div className="w-full flex items-center justify-center p-3 mt-3">
-                                <Pagination handleSelectPage={handleSelectPage} totalCount={pagination?.total} totalPageCount={pagination?.totalPages} currentPage={pagination?.currentPage} previous={pagination.links?.previous} next={pagination.links?.next} ></Pagination>
+                                {
+                                    !loading && <Pagination handleSelectPage={handleSelectPage} totalCount={pagination?.total} totalPageCount={pagination?.totalPages} currentPage={pagination?.currentPage} previous={pagination.links?.previous} next={pagination.links?.next} ></Pagination>
+                                }
                             </div>
                         </div>
                     </div>

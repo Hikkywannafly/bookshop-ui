@@ -27,7 +27,7 @@ const CurrencyInput = ({ value, label, onChange, error, handleBlur, handleChange
                 pr-3 text-left shadow-sm  focus:outline-none focus:ring-1 ${error ? 'focus:ring-[#FF7F50]' : 'focus:ring-slate-800'} sm:text-sm
                 duration-200
                 `}
-                    required
+
                     name={name}
                     onBlur={handleBlur}
                     autoComplete="off"

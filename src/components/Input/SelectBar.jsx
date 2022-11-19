@@ -6,12 +6,12 @@ const classNames = (...classes) => {
 }
 const SelectBar = ({ label, options, setSubCategory, error, setValue }) => {
     const [selected, setSelected] = useState(options[0])
-    useEffect(() => {
-        if (!setSubCategory && selected.slug === null) {
-            setSelected(options[0])
-        }
+    // useEffect(() => {
+    //     if (!setSubCategory ) {
+    //         setSelected(options[0])
+    //     }
 
-    }, [options])
+    // }, [options])
 
     return (
         <Listbox value={selected}
