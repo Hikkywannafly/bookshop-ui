@@ -3,7 +3,7 @@ import ImgItem from '~/components/Dashboard/Upload/ImgItem';
 import React, { useState, useEffect } from 'react'
 import FsLightbox from 'fslightbox-react';
 
-const ImgUpload = ({ setSelectedImages, selectedImages }) => {
+const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handleChange }) => {
     const [image, setImage] = useState([]);
     const [lightboxController, setLightboxController] = useState({
         toggler: false,
@@ -19,6 +19,7 @@ const ImgUpload = ({ setSelectedImages, selectedImages }) => {
     }
 
     const onSelectFile = (event) => {
+
         const selectedFiles = event.target.files;
 
         const selectedFilesArray = Array.from(selectedFiles);
@@ -39,10 +40,7 @@ const ImgUpload = ({ setSelectedImages, selectedImages }) => {
     }
     useEffect(() => {
         setImage(selectedImages.map((e) => e.url));
-        console.log(image);
     }, [selectedImages]);
-    console.log(`image`, image)
-    console.log(`asdasd`)
     return (
         <>
 
@@ -56,6 +54,8 @@ const ImgUpload = ({ setSelectedImages, selectedImages }) => {
 
             <div className="w-full flex flex-col gap-4">
                 <label htmlFor='dropzone-file'
+
+                    style={error ? { borderColor: `coral` } : { borderColor: `rgb(209 213 219)` }}
                     className=" cursor-pointer flex flex-col gap-10 justify-center items-center border-2 border-slate-300 rounded-2xl border-dashed bg-gray-50 w-full h-[250px]">
                     <img src='http://localhost:3000/img.png' className="w-32 w-32" alt="img upload" />
                     <div className="flex text-sm gap-1 text-slate-400">
@@ -67,6 +67,7 @@ const ImgUpload = ({ setSelectedImages, selectedImages }) => {
                         type="file"
                         name="images"
                         id="dropzone-file"
+                        onBlur={handleBlur}
                         onChange={onSelectFile}
                         multiple
                         accept="image/png , image/jpeg, image/webp"
@@ -81,14 +82,9 @@ const ImgUpload = ({ setSelectedImages, selectedImages }) => {
                             size={image.size} deleteHandler={deleteHandler} />
                     })
                 }
-                {/* {
-                    image?.map((e, index) => {
-                        return <img
-                            onClick={() => openLightboxOnSlide(index + 1)}
-                            key={index} src={e} alt="" />
-                    }
-                    )
-                } */}
+                {
+                    error && <span className="italic text-red-500 text-xs">{error}</span>
+                }
 
 
             </div>

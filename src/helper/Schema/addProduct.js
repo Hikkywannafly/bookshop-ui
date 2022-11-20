@@ -16,4 +16,7 @@ export const addProductSchema = Yub.object().shape({
         .required('Not allow empty'),
     subcategory: Yub.string()
         .required('Not allow empty'),
+    images: Yub.array()
+        .min(1, 'Please select at least one image')
+
 });

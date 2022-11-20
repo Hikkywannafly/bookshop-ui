@@ -9,7 +9,8 @@ import Button from "~/components/Input/Button";
 import { useFormik } from 'formik';
 import { addProductSchema } from '~/helper/Schema/addProduct';
 import ImgUpload from '~/components/Dashboard/Upload/ImgUpload';
-
+import { createBookData } from '~/redux/Admin/apiRequest';
+import { useFetchData } from '~/hooks/useFetchData';
 const AddProduct = () => {
     const current = new Date();
     const date = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
@@ -18,11 +19,12 @@ const AddProduct = () => {
     const [subCategoryValue, setSubCategoryValue] = useState("");
     const [description, setDescription] = useState("");
     const [selectedImages, setSelectedImages] = useState([]);
+    const axios = useFetchData();
     const handleChangeSlug = (e) => {
         let value = e.target.value;
         value = value.toLowerCase()
-        const from = "àáầấạắäâảẩèéëêếệẻễẽểìíỉïịîòọợớờởổỏõóöôộùúüưủûửừứựñçýỵỳỷỹ·/_,:;";
-        const to = "aaaaaaaaaaeeeeeeeeeeiiiiiiooooooooooooouuuuuuuuuuncyyyyy------";
+        const from = "àáầấạăắäâảậậẩèéëêếệẻễẽểìíỉïịîòọợớờởổỏõóöôộùúüưủûửừứựñçýỵỳỷỹ·/_,:;";
+        const to = "aaaaaaaaaaaaaeeeeeeeeeeiiiiiiooooooooooooouuuuuuuuuuncyyyyy------";
         for (let i = 0, l = from.length; i < l; i++) {
             value = value.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
         }
@@ -30,7 +32,7 @@ const AddProduct = () => {
         values.slug = value;
     }
 
-    const { values, errors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
+    const { values, errors, setErrors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
         initialValues: {
             name: '',
             slug: '',
@@ -38,22 +40,34 @@ const AddProduct = () => {
             subcategory: '',
             price: '',
             description: '',
+            images: '',
         },
         validationSchema: addProductSchema,
-        onSubmit: (values) => {
-            console.log(values);
+        onSubmit: async (values) => {
+            const result = await createBookData(axios, values);
+            console.log(`result`, result);
         }
     });
     useEffect(() => {
+        console.log(`rund`, errors)
         values.category = categoryValue
-    }, [categoryValue]);
-    useEffect(() => {
         values.subcategory = subCategoryValue
-    }, [subCategoryValue]);
-    useEffect(() => {
         values.description = description
-    }, [description]);
-    // console.log(`test`, selectedImages);
+        values.images = selectedImages.map((item) => item.url)
+        if (selectedImages.length > 0)
+            setErrors({ ...errors, images: '' })
+    }, [categoryValue, subCategoryValue, description, selectedImages, values, errors, setErrors]);
+    // useEffect(() => {
+    //     values.subcategory = subCategoryValue
+    // }, [subCategoryValue]);
+    // useEffect(() => {
+    //     values.description = description
+    // }, [description]);
+    // useEffect(() => {
+    //     values.images = selectedImages.map((item) => item.url)
+    //     if (selectedImages.length > 0) errors.images = false;
+    // }, [selectedImages]);
+
     return (
         <>
             <DashboardPage title="Add Product" category="Product" >
@@ -127,6 +141,9 @@ const AddProduct = () => {
                         <ImgUpload
                             setSelectedImages={setSelectedImages}
                             selectedImages={selectedImages}
+                            handleBlur={handleBlur}
+                            handleChange={handleChange}
+                            error={errors.images && touched.images ? errors.images : false}
                         />
 
                         <div className="flex gap-3 w-full">

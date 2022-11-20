@@ -33,3 +33,14 @@ export const getBookDataFillter = async (axiosJWT, dispatch, params) => {
         return err.response?.data;
     }
 }
+
+export const createBookData = async (axiosJWT, data) => {
+    try {
+        const res = await axiosJWT.post(`${BASE_URL}/auth-admin/create-product`, data);
+        return res.data;
+    }
+    catch (err) {
+        console.log(err)
+        return err.response?.data;
+    }
+}

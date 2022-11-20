@@ -8,24 +8,23 @@ import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useStateContext } from '~/hooks/useStateContext';
 import { BiExport } from 'react-icons/bi';
 import { BsThreeDots } from 'react-icons/bs';
-import axiosInterceptor from '~/utils/axiosInterceptor';
 import Pagination from '~/components/Pagination';
 import AdminTableTitle from '~/components/Chore/AdminTableTitle';
 import LoadingSkeleton from '~/components/Animation/LoadingSkeleton';
 import Search from '~/components/Input/Search';
 import { fillter, CategoryListData } from '~/dummy';
 import Select from '~/components/Input/Select';
+import { useFetchData } from '~/hooks/useFetchData';
 const Product = () => {
     const { currentColor } = useStateContext();
     let [searchParams, setSearchParams] = useSearchParams();
     const loading = useSelector((state) => state.admindata.isFetching);
-    const accessToken = useSelector((state => state.login.accessToken));
     const pagination = useSelector((state) => state.admindata.pagination);
     const bookData = useSelector((state) => state.admindata.data);
     const statistics = useSelector((state) => state.admindata.statistics);
     const location = useLocation();
     const dispatch = useDispatch();
-    const axios = axiosInterceptor(accessToken, dispatch);
+    const axios = useFetchData();
     const handleSelectPage = (value) => {
         searchParams.set("page", value);
         setSearchParams(searchParams);
