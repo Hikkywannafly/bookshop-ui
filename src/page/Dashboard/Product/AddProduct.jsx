@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import DashboardPage from '~/components/Layout/Dashboard';
 import InputBar from '~/components/Input/Input';
 import SelectBar from '~/components/Input/SelectBar';
-import { fillter, CategoryListData } from '~/dummy';
+import { fillter, CategoryListData, from } from '~/dummy';
 import CurrencyInput from '~/components/Input/CurrencyInput';
 import RichText from '~/components/Input/RichText';
 import Button from "~/components/Input/Button";
@@ -40,38 +40,43 @@ const AddProduct = () => {
             subcategory: '',
             price: '',
             description: '',
-            images: '',
+            quantity: '',
+            formality: '',
+            images: [null],
         },
         validationSchema: addProductSchema,
         onSubmit: async (values) => {
-            const result = await createBookData(axios, values);
+            const formData = new FormData();
+            const data = {
+                name: values.name,
+                slug: values.slug,
+                category: values.category,
+                subcategory: values.subcategory,
+                price: values.price,
+                description: description,
+            }
+            formData.append('data', JSON.stringify(data));
+            values.images.forEach((file, index) => {
+                formData.append(`images[]`, file);
+
+            });
+            const result = await createBookData(axios, formData);
             console.log(`result`, result);
         }
     });
     useEffect(() => {
-        console.log(`rund`, errors)
         values.category = categoryValue
         values.subcategory = subCategoryValue
         values.description = description
-        values.images = selectedImages.map((item) => item.url)
+        values.images = selectedImages.map((item) => item.file)
         if (selectedImages.length > 0)
             setErrors({ ...errors, images: '' })
     }, [categoryValue, subCategoryValue, description, selectedImages, values, errors, setErrors]);
-    // useEffect(() => {
-    //     values.subcategory = subCategoryValue
-    // }, [subCategoryValue]);
-    // useEffect(() => {
-    //     values.description = description
-    // }, [description]);
-    // useEffect(() => {
-    //     values.images = selectedImages.map((item) => item.url)
-    //     if (selectedImages.length > 0) errors.images = false;
-    // }, [selectedImages]);
 
     return (
         <>
             <DashboardPage title="Add Product" category="Product" >
-                <form className="flex flex-row gap-6" onSubmit={handleSubmit}>
+                <form className="flex flex-row gap-6" onSubmit={handleSubmit} encType="multipart/form-data">
                     <div className="gap-4 flex flex-col w-3/5 border p-5 rounded-md">
                         <InputBar
                             placeholder='Enter product name'
@@ -88,7 +93,7 @@ const AddProduct = () => {
                             options={
                                 [
                                     { slug: null, name: 'Select category' },
-                                    ...CategoryListData.map(item => ({ slug: item.slug, name: item.title, subCategory: item.subCategory }))
+                                    ...CategoryListData.map(item => ({ slug: item.id, name: item.title, subCategory: item.subCategory }))
                                 ]
                             }
                             setSubCategory={setSubCategory}
@@ -100,7 +105,7 @@ const AddProduct = () => {
                             options={
                                 [
                                     { slug: null, name: 'Select sub category' },
-                                    ...subCategory?.map(item => ({ slug: item.slug, name: item.title })) || []
+                                    ...subCategory?.map(item => ({ slug: item.id, name: item.title })) || []
                                 ]
                             }
                             setValue={setSubCategoryValue}
@@ -137,18 +142,125 @@ const AddProduct = () => {
 
                     </div>
                     <div className="gap-4 flex flex-col w-2/5 border p-5 rounded-md items-center">
-                        <label htmlFor="description" className="block text-sm  capitalize font-medium text-gray-900 mb-1">Add images</label>
-                        <ImgUpload
-                            setSelectedImages={setSelectedImages}
-                            selectedImages={selectedImages}
-                            handleBlur={handleBlur}
-                            handleChange={handleChange}
-                            error={errors.images && touched.images ? errors.images : false}
-                        />
+                        {/* <div className="w-full gap-4 flex flex-col">
+                            <SelectBar label='Formality'
+                                options={
+                                    [
+                                        { slug: null, name: 'Select formality' },
+                                        ...from.map(item => ({ slug: item.value, name: item.name }))
+                                    ]
+                                }
+                            />
+                            <InputBar
+                                placeholder='Enter product name'
+                                label='Product Quantity'
+                                onChange={handleChangeSlug}
+                                handleChange={handleChange}
+                                handleBlur={handleBlur}
+                                error={errors.name && touched.name ? errors.name : false}
+                                value={values.name}
+                                name="name"
+                            />
+                            <div className="flex gap-4 w-full">
+                                <InputBar
+                                    placeholder='Enter product name'
+                                    label='Publisher'
+                                    onChange={handleChangeSlug}
+                                    handleChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    error={errors.name && touched.name ? errors.name : false}
+                                    value={values.name}
+                                    name="name"
+                                />
+                                <InputBar
+                                    placeholder='Enter product name'
+                                    label='Publishing Year'
+                                    onChange={handleChangeSlug}
+                                    handleChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    error={errors.name && touched.name ? errors.name : false}
+                                    value={values.name}
+                                    name="name"
+                                />
+                            </div>
+                            <div className="flex gap-4">
+                                <InputBar
+                                    placeholder='Enter product name'
+                                    label='Author'
+                                    onChange={handleChangeSlug}
+                                    handleChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    error={errors.name && touched.name ? errors.name : false}
+                                    value={values.name}
+                                    name="name"
+                                />
+                                <InputBar
+                                    placeholder='Enter product name'
+                                    label='Language'
+                                    onChange={handleChangeSlug}
+                                    handleChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    error={errors.name && touched.name ? errors.name : false}
+                                    value={values.name}
+                                    name="name"
+                                />
+                            </div>
+
+                            <div className="flex gap-4">
+                                <InputBar
+
+                                    label='Size'
+                                    onChange={handleChangeSlug}
+                                    handleChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    error={errors.name && touched.name ? errors.name : false}
+                                    value={values.name}
+                                    name="name"
+                                />
+                                <InputBar
+
+                                    label='Weight'
+                                    onChange={handleChangeSlug}
+                                    handleChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    error={errors.name && touched.name ? errors.name : false}
+                                    value={values.name}
+                                    name="name"
+                                />
+                                <InputBar
+
+                                    label='Number of pages'
+                                    onChange={handleChangeSlug}
+                                    handleChange={handleChange}
+                                    handleBlur={handleBlur}
+                                    error={errors.name && touched.name ? errors.name : false}
+                                    value={values.name}
+                                    name="name"
+                                />
+                            </div>
+                            <SelectBar label='Supplier'
+                                options={
+                                    [
+                                        { slug: null, name: 'Select formality' },
+                                        ...from.map(item => ({ slug: item.value, name: item.name }))
+                                    ]
+                                }
+                            />
+                        </div> */}
+                        <div className="w-full">
+                            <label htmlFor="description" className="block text-sm mb-2 capitalize font-medium text-gray-900 ">Add images</label>
+                            <ImgUpload
+                                setSelectedImages={setSelectedImages}
+                                selectedImages={selectedImages}
+                                handleBlur={handleBlur}
+                                handleChange={handleChange}
+                                error={errors.images && touched.images ? errors.images : false}
+                            />
+                        </div>
+
 
                         <div className="flex gap-3 w-full">
-
-                            <Button content={`Publish Product`} color='px-2 h-8 bg-slate-800 border-2 border-slate-800' />
+                            <Button content={`Publish Product`} color='px-2 h-8 bg-slate-800  border-2 border-slate-800' />
 
                             <Button content={`View Demo`} color='px-2 h-8 bg-white text-black border-2 border-slate-800' />
 

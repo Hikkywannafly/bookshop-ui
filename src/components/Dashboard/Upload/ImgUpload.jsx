@@ -25,7 +25,7 @@ const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handl
         const selectedFilesArray = Array.from(selectedFiles);
 
         const imagesArray = selectedFilesArray.map((file) => {
-            return { url: URL.createObjectURL(file), name: file.name, size: file.size };
+            return { url: URL.createObjectURL(file), name: file.name, size: file.size, file };
         });
 
         setSelectedImages((previousImages) => previousImages.concat(imagesArray));

@@ -26,7 +26,8 @@ const axiosInterceptor = (accessToken, dispatch) => {
 
     const axiosInstance = axios.create({
         headers: {
-            'content-type': 'application/json',
+            // 'content-type': 'application/json',
+            "Content-Type": "application/json",
         }
     });
 

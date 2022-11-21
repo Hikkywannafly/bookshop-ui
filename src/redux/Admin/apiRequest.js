@@ -36,7 +36,13 @@ export const getBookDataFillter = async (axiosJWT, dispatch, params) => {
 
 export const createBookData = async (axiosJWT, data) => {
     try {
-        const res = await axiosJWT.post(`${BASE_URL}/auth-admin/create-product`, data);
+        const res = await axiosJWT.post(`${BASE_URL}/auth-admin/create-product`, data,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
         return res.data;
     }
     catch (err) {

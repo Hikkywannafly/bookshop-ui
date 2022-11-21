@@ -9,40 +9,49 @@ export const CategoryListData = [
   {
     title: "Văn học",
     slug: "van-hoc",
+    id: 1,
     subCategory: [
       {
         title: "Văn học nước ngoài",
         slug: "van-hoc-nuoc-ngoai",
+        id: 1,
       },
       {
         title: "Văn học trong nước",
         slug: "van-hoc-trong-nuoc",
+        id: 2,
       },
       {
         title: "Light Novel",
         slug: "light-novel",
+        id: 3,
       },
       {
         title: "Ngôn Tình",
         slug: "ngon-tinh",
+        id: 5,
       },
       {
         title: "Tiểu thuyết",
         slug: "tieu-thuyet",
+        id: 4,
       }
     ]
   },
   {
     title: "Kinh tế",
     slug: "kinh-te",
+    id: 3,
     subCategory: [
       {
         title: "Kinh tế nước ngoài",
         slug: "kinh-te-nuoc-ngoai",
+        id: 8,
       },
       {
         title: "Kinh tế trong nước",
         slug: "kinh-te-trong-nuoc",
+        id: 7
       }
 
     ]
@@ -50,24 +59,29 @@ export const CategoryListData = [
   {
     title: "Tâm lý - kĩ năng sống",
     slug: "tam-ly-ki-nang-song",
+    id: 2,
     subCategory: [
       {
         title: "Tâm lý",
         slug: "tam-ly",
+        id: 6,
       },
     ]
   },
   {
     title: "Sách thiếu nhi",
     slug: "sach-thieu-nhi",
+    id: 4,
   },
   {
     title: "Giáo khoa - tham khảo",
     slug: "giao-khoa-tham-khao",
+    id: 5,
   },
   {
     title: "Ngoại ngữ",
     slug: "ngoai-ngu",
+    id: 6,
   }
 
 ]

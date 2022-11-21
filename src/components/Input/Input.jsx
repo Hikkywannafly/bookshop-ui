@@ -3,7 +3,7 @@ const InputBar = ({ placeholder, label, icon, type, disabled, defaultValue, onCh
     return (
         <>
             <div>
-                <label htmlFor={name} className="block text-sm  capitalize font-medium text-gray-900">{label}</label>
+                <label htmlFor={name} className="block text-sm mb-1  capitalize font-medium text-gray-900">{label}</label>
                 <input
                     disabled={disabled ? true : false}
                     onChange={onChange ? (e) => { onChange(e); handleChange(e) } : null}
