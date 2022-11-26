@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 .skeleton {
   background-color: #eeeeee;
   border-radius: 4px;
@@ -49,9 +48,7 @@ input[type="number"]::-webkit-outer-spin-button {
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
 }
-.fslightbox-fade-out-strong {
-  animation: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  transition: visibility 0s 0.4s, opacity 0.4s ease !important;
+.ril__caption,
+.ril__toolbar {
+  background-color: transparent !important;
 }

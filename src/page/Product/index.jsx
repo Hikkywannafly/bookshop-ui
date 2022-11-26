@@ -5,7 +5,7 @@ import BookDetail from '~/components/Product/BookDetail';
 import { useSelector, useDispatch } from "react-redux";
 import { getBookDetail } from '~/redux/Product/ProductRequest';
 import { useLocation, useNavigate, } from 'react-router-dom';
-
+import BookInfo from '~/components/Product/BookInfo';
 const Product = () => {
     const location = useLocation();
     const dispatch = useDispatch();
@@ -56,12 +56,27 @@ const Product = () => {
                 <div className="flex justify-center items-center flex-col lg:flex-row lg:items-start w-full bg-white rounded-lg p-4 relative ">
                     {
                         loading ? (
-
                             <BookDetail.Loading />
-
                         ) : (
-                            <BookDetail bookdata={bookdata} />
+                            <>
+                                <BookDetail bookdata={bookdata} />
+                            </>
                         )
+
+                    }
+
+                </div>
+                <br></br>
+                <div className="flex  flex-col items-start w-full bg-white rounded-lg mb-3 p-3 relative ">
+                    {
+                        loading ? (
+                            <BookDetail.Loading />
+                        ) : (
+                            <>
+                                <BookInfo bookdata={bookdata?.book_detail} />
+                            </>
+                        )
+
                     }
 
                 </div>

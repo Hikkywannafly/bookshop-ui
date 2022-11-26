@@ -27,15 +27,28 @@ export const CategoryListData = [
         id: 3,
       },
       {
+        title: "Tiểu thuyết",
+        slug: "tieu-thuyet",
+        id: 4,
+      },
+      {
         title: "Ngôn Tình",
         slug: "ngon-tinh",
         id: 5,
       },
+
+    ]
+  },
+  {
+    title: "Tâm lý - kĩ năng sống",
+    slug: "tam-ly-ki-nang-song",
+    id: 2,
+    subCategory: [
       {
-        title: "Tiểu thuyết",
-        slug: "tieu-thuyet",
-        id: 4,
-      }
+        title: "Tâm lý",
+        slug: "tam-ly",
+        id: 6,
+      },
     ]
   },
   {
@@ -56,18 +69,7 @@ export const CategoryListData = [
 
     ]
   },
-  {
-    title: "Tâm lý - kĩ năng sống",
-    slug: "tam-ly-ki-nang-song",
-    id: 2,
-    subCategory: [
-      {
-        title: "Tâm lý",
-        slug: "tam-ly",
-        id: 6,
-      },
-    ]
-  },
+
   {
     title: "Sách thiếu nhi",
     slug: "sach-thieu-nhi",
@@ -227,4 +229,80 @@ export const fillter = [
     title: 40,
     slug: 40,
   },
+]
+
+export const suppliers = [
+  {
+    id: 1,
+    name: 'NXB Trẻ',
+  },
+  {
+    id: 2,
+    name: 'NXB Kim Đồng',
+  },
+  {
+    id: 3,
+    name: 'NXB Thanh Niên'
+  },
+  {
+    id: 4,
+    name: 'NXB Văn Học',
+  },
+  {
+    id: 5,
+    name: 'Thái Hà',
+  },
+  {
+    id: 6,
+    name: 'Nhã Nam',
+  },
+  {
+    id: 7,
+    name: 'AZ',
+  },
+  {
+    id: 8,
+    name: 'SkyBooks',
+  },
+  {
+    id: 9,
+    name: 'NXB Phụ nữ',
+  },
+  {
+    id: 10,
+    name: 'Biết Nam',
+  },
+  {
+    id: 11,
+    name: 'NXB Thế Giới',
+  },
+
+]
+export const authors = [
+  { title: 'Nguyễn Nhật Ánh', id: 1 },
+  { title: 'Nguyễn Chí Tâm', id: 2 },
+  { title: 'Nam Cao', id: 3 },
+  { title: 'Hikkywannafly', id: 4 },
+]
+export const languages = [
+  { title: 'Tiếng Việt', value: 1 },
+  { title: 'Tiếng Anh', value: 2 },
+  { title: 'Tiếng Nhật', value: 7 },
+  { title: 'Tiếng Pháp', value: 3 },
+  { title: 'Tiếng Nga', value: 4 },
+  { title: 'Tiếng Trung', value: 5 },
+  { title: 'Tiếng Hàn', value: 6 },
+]
+export const publishers = [
+  { title: 'NXB Trẻ', id: 1 },
+  { title: 'NXB Kim Đồng', id: 2 },
+  { title: 'NXB Thanh Niên', id: 3 },
+  { title: 'NXB Văn Học', id: 4 },
+  { title: 'Thái Hà', id: 5 },
+  { title: 'Nhã Nam', id: 6 },
+  { title: 'AZ', id: 7 },
+  { title: 'SkyBooks', id: 8 },
+  { title: 'NXB Phụ nữ', id: 9 },
+  { title: 'Biết Nam', id: 10 },
+  { title: 'NXB Thế Giới', id: 11 },
 ]

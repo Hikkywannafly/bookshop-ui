@@ -1,8 +1,7 @@
 import { HiOutlineUpload } from 'react-icons/hi'
 import ImgItem from '~/components/Dashboard/Upload/ImgItem';
 import React, { useState, useEffect } from 'react'
-import FsLightbox from 'fslightbox-react';
-
+import Lightbox from 'react-image-lightbox';
 const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handleChange }) => {
     const [image, setImage] = useState([]);
     const [lightboxController, setLightboxController] = useState({
@@ -10,11 +9,9 @@ const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handl
         slide: 1
     });
     const openLightboxOnSlide = (number) => {
-        console.log(`number`, number);
-        console.log(`lightboxController`, lightboxController)
         setLightboxController({
             toggler: !lightboxController.toggler,
-            slide: number
+            slide: number - 1
         });
     }
 
@@ -22,7 +19,7 @@ const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handl
 
         const selectedFiles = event.target.files;
 
-        const selectedFilesArray = Array.from(selectedFiles);
+        const selectedFilesArray = Array.from(selectedFiles).reverse();
 
         const imagesArray = selectedFilesArray.map((file) => {
             return { url: URL.createObjectURL(file), name: file.name, size: file.size, file };
@@ -44,12 +41,29 @@ const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handl
     return (
         <>
 
-            <FsLightbox
-                toggler={lightboxController.toggler}
-                sources={image}
-                slide={lightboxController.slide}
-                className='w-full h-full absolute z-[1000]'
-            />
+
+            {lightboxController.toggler && (
+                <Lightbox
+                    mainSrc={image[lightboxController.slide]}
+                    nextSrc={image[(lightboxController.slide + 1) % image.length]}
+                    prevSrc={image[(lightboxController.slide + image.length - 1) % image.length]}
+                    onCloseRequest={() => setLightboxController({ toggler: false, slide: 1 })}
+                    onMovePrevRequest={() =>
+                        setLightboxController({
+                            toggler: lightboxController.toggler,
+                            slide: (lightboxController.slide + image.length - 1) % image.length,
+                        })
+                    }
+                    imageTitle={`${lightboxController.slide + 1} / ${image.length}`}
+                    onMoveNextRequest={() =>
+                        setLightboxController({
+                            toggler: lightboxController.toggler,
+                            slide: (lightboxController.slide + 1) % image.length,
+                        })
+
+                    }
+                />
+            )}
 
 
             <div className="w-full flex flex-col gap-4">

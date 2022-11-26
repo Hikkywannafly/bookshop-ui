@@ -7,6 +7,7 @@ import { useStateContext } from '~/hooks/useStateContext';
 import Nav from '~/components/Dashboard/Nav';
 import RequireAuth from './page/Auth/RequireAuth';
 import HeaderHome from './components/HeaderHome';
+import 'react-image-lightbox/style.css';
 function App() {
   const { activeMenu } = useStateContext();
   // useEffect(() => {

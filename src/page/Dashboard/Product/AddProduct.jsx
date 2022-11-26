@@ -1,85 +1,125 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardPage from '~/components/Layout/Dashboard';
-import InputBar from '~/components/Input/Input';
-import SelectBar from '~/components/Input/SelectBar';
-import { fillter, CategoryListData, from } from '~/dummy';
-import CurrencyInput from '~/components/Input/CurrencyInput';
-import RichText from '~/components/Input/RichText';
-import Button from "~/components/Input/Button";
+import { fillter, CategoryListData, from, suppliers, languages, publishers, authors } from '~/dummy';
 import { useFormik } from 'formik';
 import { addProductSchema } from '~/helper/Schema/addProduct';
 import ImgUpload from '~/components/Dashboard/Upload/ImgUpload';
 import { createBookData } from '~/redux/Admin/apiRequest';
 import { useFetchData } from '~/hooks/useFetchData';
+import { ButtonLoading, CustomizedSnackbars } from '~/components/Button';
+import { SelectUI, TextFields, AutoCompelete, InputAdornments, CurrencyInput, RichText, InputBar, InputNumber } from '~/components/Input';
+const initialSelect = {
+    category: '',
+    subCategory: '',
+    formality: '',
+    language: '',
+    publisher: '',
+    author: '',
+    publicDate: '',
+    decription: '',
+    suppliers: '',
+}
 const AddProduct = () => {
     const current = new Date();
     const date = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
-    const [subCategory, setSubCategory] = useState([]);
-    const [categoryValue, setCategoryValue] = useState("");
-    const [subCategoryValue, setSubCategoryValue] = useState("");
-    const [description, setDescription] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [snackbar, setSnackbar] = useState({
+        open: false,
+        message: '',
+        severity: ''
+    });
+    const [selected, setSelected] = useState(initialSelect);
     const [selectedImages, setSelectedImages] = useState([]);
     const axios = useFetchData();
     const handleChangeSlug = (e) => {
         let value = e.target.value;
         value = value.toLowerCase()
-        const from = "àáầấạăắäâảậậẩèéëêếệẻễẽểìíỉïịîòọợớờởổỏõóöôộùúüưủûửừứựñçýỵỳỷỹ·/_,:;";
-        const to = "aaaaaaaaaaaaaeeeeeeeeeeiiiiiiooooooooooooouuuuuuuuuuncyyyyy------";
+        const from = "àáầấạăắäâảậặậẩèéëêếềệẻễẽểìíỉïịîòọợớơờởổỏõóöôốộùữúüưủûửừứựñçýỵỳỷỹ·/_,:;";
+        const to = "aaaaaaaaaaaaaaeeeeeeeeeeeiiiiiiooooooooooooooouuuuuuuuuuuncyyyyy------";
         for (let i = 0, l = from.length; i < l; i++) {
             value = value.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
         }
         value = value.replace(/\W+/g, '-')
         values.slug = value;
     }
-
     const { values, errors, setErrors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
         initialValues: {
             name: '',
             slug: '',
             category: '',
-            subcategory: '',
+            subCategory: '',
             price: '',
-            description: '',
+            decription: '',
             quantity: '',
             formality: '',
+            suppliers: '',
+            publisher: '',
+            author: '',
+            publicDate: '',
+            // size: '',
+            // weight: '',
+            pages: '',
+            language: '',
             images: [null],
         },
         validationSchema: addProductSchema,
         onSubmit: async (values) => {
+            setLoading(true);
             const formData = new FormData();
-            const data = {
-                name: values.name,
-                slug: values.slug,
-                category: values.category,
-                subcategory: values.subcategory,
-                price: values.price,
-                description: description,
-            }
-            formData.append('data', JSON.stringify(data));
+            formData.append('data', JSON.stringify(values));
             values.images.forEach((file, index) => {
                 formData.append(`images[]`, file);
-
             });
             const result = await createBookData(axios, formData);
-            console.log(`result`, result);
+            if (result.status === `success`) {
+                setSnackbar({
+                    open: true,
+                    message: 'Thêm sản phẩm thành công',
+                    severity: 'success'
+                });
+            }
+            if (result.status === `error`) {
+                console.log(result);
+                setSnackbar({
+                    open: true,
+                    message: result.message,
+                    severity: 'error'
+                });
+            }
+            setLoading(false);
+
         }
     });
     useEffect(() => {
-        values.category = categoryValue
-        values.subcategory = subCategoryValue
-        values.description = description
         values.images = selectedImages.map((item) => item.file)
         if (selectedImages.length > 0)
             setErrors({ ...errors, images: '' })
-    }, [categoryValue, subCategoryValue, description, selectedImages, values, errors, setErrors]);
+    }, [selectedImages, values, errors, setErrors]);
+
+    useEffect(() => {
+        Object.keys(selected).forEach((key) => {
+            values[key] = selected[key];
+            if (selected[key] !== '') {
+                setErrors({ ...errors, [key]: '' })
+            }
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selected]);
+    useEffect(() => {
+        if (snackbar.open) {
+            setTimeout(() => {
+                setSnackbar({ ...snackbar, open: false })
+            }, [6000]);
+        }
+    }, [snackbar.open]);
 
     return (
         <>
             <DashboardPage title="Add Product" category="Product" >
+                <CustomizedSnackbars message={snackbar.message} severity={snackbar.severity} opened={snackbar.open} />
                 <form className="flex flex-row gap-6" onSubmit={handleSubmit} encType="multipart/form-data">
                     <div className="gap-4 flex flex-col w-3/5 border p-5 rounded-md">
-                        <InputBar
-                            placeholder='Enter product name'
+                        <TextFields
                             label='Product Name'
                             onChange={handleChangeSlug}
                             handleChange={handleChange}
@@ -88,165 +128,131 @@ const AddProduct = () => {
                             value={values.name}
                             name="name"
                         />
-
-                        <SelectBar label='category'
-                            options={
-                                [
-                                    { slug: null, name: 'Select category' },
-                                    ...CategoryListData.map(item => ({ slug: item.id, name: item.title, subCategory: item.subCategory }))
-                                ]
-                            }
-                            setSubCategory={setSubCategory}
-                            setValue={setCategoryValue}
-                            error={errors.category && touched.category ? errors.category : false}
-
-                        />
-                        <SelectBar label='sub category'
-                            options={
-                                [
-                                    { slug: null, name: 'Select sub category' },
-                                    ...subCategory?.map(item => ({ slug: item.id, name: item.title })) || []
-                                ]
-                            }
-                            setValue={setSubCategoryValue}
-                            error={errors.subcategory && touched.subcategory ? errors.subcategory : false}
-                        />
-                        <InputBar
-                            onChange={(e) => { }}
+                        <TextFields
+                            label='Product Slug'
+                            onChange={handleChangeSlug}
                             handleChange={handleChange}
                             handleBlur={handleBlur}
                             error={errors.slug && touched.slug ? errors.slug : false}
                             value={values.slug}
                             name="slug"
-                            placeholder='Enter slug name' label='Product Slug' />
+                        />
+                        <SelectUI
+                            label='Category' name='category' selected={selected} setSelected={setSelected}
+                            error={errors.category && touched.category ? errors.category : false}
+                            options={
+                                CategoryListData.map(item => ({ value: item.id, label: item.title, subCategory: item.subCategory }))
+                            }
+                        />
+                        <SelectUI
+                            label='Sub Category'
+                            name='subCategory'
+                            selected={selected}
+                            setSelected={setSelected}
+                            error={errors.subCategory && touched.subCategory ? errors.subCategory : false}
+                            options={
+                                CategoryListData?.find((item) => item.id === selected?.category)?.subCategory?.map(
+                                    (item) => ({ value: item.id, label: item.title })
+                                ) || []
+                            }
+                        />
+                        <SelectUI
+                            label='Supplier' name='suppliers' selected={selected} setSelected={setSelected}
+                            error={errors.suppliers && touched.suppliers ? errors.suppliers : false}
+                            options={
+                                suppliers.map((item) => ({ value: item.id, label: item.name }))
+                            }
+                        />
 
+                        <InputNumber
+                            label='Product Quanlity' handleChange={handleChange} handleBlur={handleBlur} value={values.quantity}
+                            error={errors.quantity && touched.quantity ? errors.quantity : false}
+                            name="quantity"
+                        />
                         <CurrencyInput
-                            handleBlur={handleBlur}
-                            handleChange={handleChange}
-                            error={errors.price && touched.price ? errors.price : false}
                             value={values.price}
-                            name="price"
-                            placeholder='Enter price' label='Product Price (VNĐ)' />
+                            error={errors.price && touched.price ? errors.price : false}
+                            handleChange={handleChange}
+                        />
 
                         <InputBar
                             value={date}
                             onChange={(e) => { }}
                             type='date' placeholder='Enter date name' label='Product Date' />
-
                         <div className="">
                             <label htmlFor="description" className="block text-sm  capitalize font-medium text-gray-900 mb-1">Decription</label>
                             <RichText
-                                value={description} setValue={setDescription}
+                                selected={selected}
+                                setSelected={setSelected}
                             />
                         </div>
 
                     </div>
                     <div className="gap-4 flex flex-col w-2/5 border p-5 rounded-md items-center">
-                        {/* <div className="w-full gap-4 flex flex-col">
-                            <SelectBar label='Formality'
+                        <div className="w-full gap-4 flex flex-col ">
+
+
+                            <SelectUI
+                                label='formality' name='formality' selected={selected} setSelected={setSelected}
+                                error={errors.formality && touched.formality ? errors.formality : false}
                                 options={
-                                    [
-                                        { slug: null, name: 'Select formality' },
-                                        ...from.map(item => ({ slug: item.value, name: item.name }))
-                                    ]
+                                    from.map((item) => ({ value: item.value, label: item.name }))
                                 }
                             />
-                            <InputBar
-                                placeholder='Enter product name'
-                                label='Product Quantity'
-                                onChange={handleChangeSlug}
-                                handleChange={handleChange}
-                                handleBlur={handleBlur}
-                                error={errors.name && touched.name ? errors.name : false}
-                                value={values.name}
-                                name="name"
+
+
+                            <AutoCompelete
+                                label='Language'
+                                name='language'
+                                selected={selected}
+                                setSelected={setSelected}
+                                error={errors.language && touched.language ? errors.language : false}
+                                options={languages}
+
+                            />
+
+
+                            <AutoCompelete
+                                label='Publisher'
+                                name='publisher'
+                                selected={selected}
+                                setSelected={setSelected}
+                                error={errors.publisher && touched.publisher ? errors.publisher : false}
+                                options={publishers}
+                            />
+                            <AutoCompelete
+                                label='Author'
+                                selected={selected}
+                                setSelected={setSelected}
+                                error={errors.author && touched.author ? errors.author : false}
+                                name='author'
+                                options={authors}
                             />
                             <div className="flex gap-4 w-full">
-                                <InputBar
-                                    placeholder='Enter product name'
-                                    label='Publisher'
-                                    onChange={handleChangeSlug}
+                                <div className="w-full">
+                                    <InputNumber
+                                        label='Public year' handleChange={handleChange} handleBlur={handleBlur} value={values.publicDate}
+                                        error={errors.publicDate && touched.publicDate ? errors.publicDate : false}
+                                        name="publicDate"
+                                    />
+                                </div>
+
+                                {/* <InputNumber
+                                label='Page Number' handleChange={handleChange} handleBlur={handleBlur} value={values.quantity}
+                                error={errors.quantity && touched.quantity ? errors.quantity : false}
+                                name="pageNumber"
+                            /> */}
+                                <InputAdornments
+                                    value={values.pages}
+                                    error={errors.pages && touched.pages ? errors.pages : false}
                                     handleChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    error={errors.name && touched.name ? errors.name : false}
-                                    value={values.name}
-                                    name="name"
-                                />
-                                <InputBar
-                                    placeholder='Enter product name'
-                                    label='Publishing Year'
-                                    onChange={handleChangeSlug}
-                                    handleChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    error={errors.name && touched.name ? errors.name : false}
-                                    value={values.name}
-                                    name="name"
-                                />
-                            </div>
-                            <div className="flex gap-4">
-                                <InputBar
-                                    placeholder='Enter product name'
-                                    label='Author'
-                                    onChange={handleChangeSlug}
-                                    handleChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    error={errors.name && touched.name ? errors.name : false}
-                                    value={values.name}
-                                    name="name"
-                                />
-                                <InputBar
-                                    placeholder='Enter product name'
-                                    label='Language'
-                                    onChange={handleChangeSlug}
-                                    handleChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    error={errors.name && touched.name ? errors.name : false}
-                                    value={values.name}
-                                    name="name"
+                                    name="pages"
                                 />
                             </div>
 
-                            <div className="flex gap-4">
-                                <InputBar
+                        </div>
 
-                                    label='Size'
-                                    onChange={handleChangeSlug}
-                                    handleChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    error={errors.name && touched.name ? errors.name : false}
-                                    value={values.name}
-                                    name="name"
-                                />
-                                <InputBar
 
-                                    label='Weight'
-                                    onChange={handleChangeSlug}
-                                    handleChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    error={errors.name && touched.name ? errors.name : false}
-                                    value={values.name}
-                                    name="name"
-                                />
-                                <InputBar
-
-                                    label='Number of pages'
-                                    onChange={handleChangeSlug}
-                                    handleChange={handleChange}
-                                    handleBlur={handleBlur}
-                                    error={errors.name && touched.name ? errors.name : false}
-                                    value={values.name}
-                                    name="name"
-                                />
-                            </div>
-                            <SelectBar label='Supplier'
-                                options={
-                                    [
-                                        { slug: null, name: 'Select formality' },
-                                        ...from.map(item => ({ slug: item.value, name: item.name }))
-                                    ]
-                                }
-                            />
-                        </div> */}
                         <div className="w-full">
                             <label htmlFor="description" className="block text-sm mb-2 capitalize font-medium text-gray-900 ">Add images</label>
                             <ImgUpload
@@ -259,10 +265,17 @@ const AddProduct = () => {
                         </div>
 
 
-                        <div className="flex gap-3 w-full">
-                            <Button content={`Publish Product`} color='px-2 h-8 bg-slate-800  border-2 border-slate-800' />
+                        <div className="flex justify-end gap-3 w-full mt-3">
 
-                            <Button content={`View Demo`} color='px-2 h-8 bg-white text-black border-2 border-slate-800' />
+                            <ButtonLoading
+                                label='Publish Product'
+                                type='submit'
+                                loading={loading}
+                            />
+
+                            {/* <Button content={`Publish Product`} color='px-2 h-8 bg-slate-800  border-2 border-slate-800' />
+
+                            <Button content={`View Demo`} color='px-2 h-8 bg-white text-black border-2 border-slate-800' /> */}
 
                         </div>
 

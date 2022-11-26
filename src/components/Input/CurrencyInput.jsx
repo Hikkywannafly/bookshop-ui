@@ -1,47 +1,80 @@
-import React, { useState, memo } from 'react'
-const CurrencyInput = ({ value, label, onChange, error, handleBlur, handleChange, name }) => {
-    const [currency, setCurrency] = useState("");
-    const handleChangeCurrency = (e) => {
-        setCurrency(e);
-    }
-    const handleMark = (value) => {
-        value = value.replace(/,/g, '');
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        return value;
-    }
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import { NumericFormat } from 'react-number-format';
+import Box from '@mui/material/Box';
+
+import TextField from '@mui/material/TextField';
+
+
+const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
+    const { onChange, ...other } = props;
 
     return (
-        <>
-            <div>
-                <label htmlFor={name} className="block text-sm  capitalize font-medium text-gray-900">{label}</label>
-                <input
-                    id={name}
-                    style={error ? { borderColor: `coral` } : { borderColor: `rgb(209 213 219)` }}
-                    onChange={(e) => {
-                        handleChange(e)
-                    }}
-                    type='text'
-                    className={`
-                 mt-1
-                w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3
-                pr-3 text-left shadow-sm  focus:outline-none focus:ring-1 ${error ? 'focus:ring-[#FF7F50]' : 'focus:ring-slate-800'} sm:text-sm
-                duration-200
-                `}
+        <NumericFormat
+            {...other}
+            getInputRef={ref}
+            onValueChange={(values) => {
+                onChange({
+                    target: {
+                        name: props.name,
+                        value: values.value,
+                    },
+                });
+            }}
+            thousandSeparator
+            valueIsNumericString
+            suffix=' đ'
+        />
+    );
+});
 
-                    name={name}
-                    onBlur={handleBlur}
-                    autoComplete="off"
-                    value={handleMark(value)}
-                    placeholder="0 VNĐ"
+NumberFormatCustom.propTypes = {
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+};
 
-                >
-                </input>
-                {
-                    error && <span className="italic text-red-500 text-xs">{error}</span>
-                }
-            </div>
-        </>
+export default function CurrencyInput({ error, handleChange }) {
+    const [values, setValues] = React.useState({
+        numberformat: '0',
+    });
+
+    const handleChangeInput = (event) => {
+        handleChange(event);
+        setValues({
+            ...values,
+            [event.target.name]: (event.target.value),
+        });
+    };
+
+    return (
+        <Box >
+            <label className="block text-sm capitalize mb-2 font-medium text-gray-900">Product Price</label>
+            <TextField
+                size="small"
+                error={error ? true : false}
+                helperText={error}
+                sx={{
+                    display: 'inline-block',
+                    '& .MuiInputBase-input': {
+                        fontSize: 15,
+                        fontFamily: 'Fira Sans',
+                        fontWeight: 500,
+                        color: 'royalblue',
+                    },
+                    '& input': {
+                        fontSize: 14,
+                    },
+                }}
+                fullWidth
+                value={values.numberformat}
+                onChange={handleChangeInput}
+                name="price"
+                id="formatted-numberformat-input"
+                InputProps={{
+                    inputComponent: NumberFormatCustom,
+                }}
+
+            />
+        </Box>
     );
 }
-
-export default memo(CurrencyInput);

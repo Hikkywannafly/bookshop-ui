@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
-import FsLightbox from 'fslightbox-react';
+
 import { useEffect } from "react";
 import Button from "../Input/Button";
 import { FiShoppingCart } from 'react-icons/fi'
 import BookDetailSkeleton from './BookDetailSkeleton';
+import Lightbox from 'react-image-lightbox';
 const BookDetail = ({ bookdata }) => {
     const [images, setImages] = useState([]);
+
     const [lightboxController, setLightboxController] = useState({
         toggler: false,
         slide: 1
     });
+
+
     const openLightboxOnSlide = (number) => {
         setLightboxController({
             toggler: !lightboxController.toggler,
@@ -26,28 +30,48 @@ const BookDetail = ({ bookdata }) => {
         <>
             {bookdata &&
                 <>
-                    <FsLightbox
-                        toggler={lightboxController.toggler}
-                        sources={images}
-                        slide={lightboxController.slide}
-                        className='w-full h-full absolute z-[1000]'
+                    {lightboxController.toggler && (
+                        <Lightbox
+                            mainSrc={images[lightboxController.slide]}
+                            nextSrc={images[(lightboxController.slide + 1) % images.length]}
+                            prevSrc={images[(lightboxController.slide + images.length - 1) % images.length]}
+                            onCloseRequest={() => setLightboxController({ toggler: false, slide: 1 })}
+                            onMovePrevRequest={() =>
+                                setLightboxController({
+                                    toggler: lightboxController.toggler,
+                                    slide: (lightboxController.slide + images.length - 1) % images.length,
+                                })
+
+                            }
+                            imageTitle={`${lightboxController.slide + 1} / ${images.length}`}
+                            onMoveNextRequest={() =>
+                                setLightboxController({
+                                    toggler: lightboxController.toggler,
+                                    slide: (lightboxController.slide + 1) % images.length,
+                                })
+
+                            }
+                        />
+                    )}
 
 
-                    />
                     <div className='flex flex-col items-center w-[484px] mx-3 mr-8'>
                         <div className=" flex items-center">
                             <div className="w-[76px] hidden lg:block lg:flex flex-col gap-3 ">
+
                                 {
                                     images?.filter((item, index) => index < 4).map((item, index) => {
                                         return (
                                             <img key={index}
-                                                onClick={() => openLightboxOnSlide(index + 1)}
+                                                onClick={() => openLightboxOnSlide(index)}
                                                 className='w-[76px] h-[76px] hover:border hover:animate-pulse cursor-pointer rounded-lg border-orange-300 duration-200 '
-                                                src={item} alt='test '></img>
+                                                src={item} alt={index}></img>
                                         )
 
                                     })
                                 }
+
+
                                 {
                                     images?.length > 4 && <div
                                         onClick={() => openLightboxOnSlide(5)}
@@ -58,11 +82,16 @@ const BookDetail = ({ bookdata }) => {
 
                                 }
                             </div>
+
+
                             <div className="h-[400px] w-[400px] flex justify-center items-center">
+
                                 <img
-                                    onClick={() => openLightboxOnSlide(1)}
+                                    onClick={() => openLightboxOnSlide(0)}
                                     className=' cursor-pointer  max-h-[392px] max-w-[100%] h-full w-full' src={`${bookdata?.default_image}`} alt='test '></img>
+
                             </div>
+
                         </div>
                         <br />
                         <div className="hidden lg:block lg:flex lg:flex-row gap-3 w-full">
@@ -71,10 +100,10 @@ const BookDetail = ({ bookdata }) => {
                         </div>
                     </div>
                     <div className="w-full">
-                        <div className="text-lg tracking-wide font-medium border-b border-gray-100 py-4 pr-4">
+                        <div className="text-lg tracking-wide font-medium border-gray-100 py-4 pr-4">
                             <h1>{bookdata?.name} </h1>
                         </div>
-                        <div className=" border-b border-gray-100 py-4 pr-4 flex justify-between  ">
+                        <div className="  border-gray-100 py-4 pr-4 flex justify-between  ">
                             <div className="">
                                 <h1 className="mb-3">Nhà xuất bản: <span className="font-medium ">{bookdata?.book_detail?.publisher} </span> </h1>
 
@@ -83,13 +112,13 @@ const BookDetail = ({ bookdata }) => {
                             <div className="">
                                 <h1 className="mb-3">Tác giả: <span className="font-medium"> {bookdata?.book_detail?.author} </span></h1>
 
-                                <h1>Hình thức bìa: <span className="font-medium">{bookdata?.formality?.name} </span></h1>
+                                <h1>Hình thức bìa: <span className="font-medium capitalize ">{bookdata?.formality?.name} </span></h1>
                             </div>
 
 
                         </div>
 
-                        <div className=" border-b border-gray-100 py-4 pr-4  flex w-full justify-start items-center mt-2.5 mb-2">
+                        <div className="   border-gray-100 py-4 pr-4  flex w-full justify-start items-center mt-2.5 mb-2">
                             {
                                 Array(Math.ceil(bookdata.rating.rating || 0))
                                     .fill(0)
@@ -109,7 +138,7 @@ const BookDetail = ({ bookdata }) => {
 
                             < span className="bg-blue-100 text-blue-800  font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 items-center">{Math.ceil(bookdata?.rating?.rating || 0)}.0</span>
                         </div>
-                        <div className=" border-b border-gray-100  py-4 pr-4  flex w-full justify-start items-center mt-2.5 mb-2 gap-5 ">
+                        <div className="   border-gray-100  py-4 pr-4  flex w-full justify-start items-center mt-2.5 mb-2 gap-5 ">
                             <span className=" font-medium text-3xl text-rose-600 ">{Math.ceil(bookdata.price - (bookdata.price * bookdata.discount) / 100).toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })}</span>
                             {bookdata.discount !== 0 &&
                                 <span className="  text-xl text-gray-600  line-through "> {bookdata.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
@@ -123,7 +152,7 @@ const BookDetail = ({ bookdata }) => {
                                 )
                             }
                         </div>
-                        <div className="font-medium border-b border-gray-100 py-4 pr-4 flex items-center gap-3">
+                        <div className="font-medium   border-gray-100 py-4 pr-4 flex items-center gap-3">
                             <h1>Số lượng sản phẩm: </h1>
                             <div className="custom-number-input h-10 w-32">
                                 <div className="flex flex-row h-10 w-full rounded-lg  bg-transparent mt-1">
@@ -137,7 +166,6 @@ const BookDetail = ({ bookdata }) => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </>
             }

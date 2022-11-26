@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const RichText = ({ value, setValue }) => {
-    return <ReactQuill theme="snow" className='rounded-md' value={value} onChange={setValue} />
+const RichText = ({ selected, setSelected }) => {
+    const handleChange = (event) => {
+        setSelected({ ...selected, decription: event });
+    }
+    return <ReactQuill theme="snow" className='rounded-md' value={selected.decription} onChange={handleChange} />
 }
 
 export default RichText;
