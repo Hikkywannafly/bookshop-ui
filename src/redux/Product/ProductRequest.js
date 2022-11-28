@@ -49,7 +49,6 @@ export const getBookDetail = async (params, dispatch) => {
     return await getAxios.get(`${BASE_URL}${params}`)
         .then(res => {
             dispatch(getBookDetailSuccess(res.data));
-            console.log(` test bookDeital `, res.data.book);
             return res.data;
         })
         .catch(err => {

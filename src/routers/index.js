@@ -12,6 +12,7 @@ import Category from '~/page/Category/';
 import Product from '~/page/Product/';
 import ProductAuth from '~/page/Dashboard/Product/Product';
 import AddProduct from '~/page/Dashboard/Product/AddProduct';
+import Cart from '~/page/Cart'
 const publicRoutes = [
     {
         path: '/', component: Home
@@ -28,7 +29,9 @@ const publicRoutes = [
     {
         path: '/product/:slug.html', component: Product
     },
-
+    {
+        path: '/cart', component: Cart
+    },
 
 ]
 const authRoutes = [
@@ -41,6 +44,7 @@ const authRoutes = [
     {
         path: '/forgot-password', component: FogotPassword
     },
+
 ]
 
 const sessionRoutes = [
@@ -70,7 +74,8 @@ const dashboardRoutes = [
     },
     {
         path: '/auth/product/add-product', component: AddProduct
-    }
+    },
+
 ]
 
 export { publicRoutes, authRoutes, sessionRoutes, dashboardRoutes }

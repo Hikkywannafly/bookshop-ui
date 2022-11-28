@@ -39,18 +39,13 @@ const Category = () => {
                                             </div>
                                         )
                                     }
-
                                 </div>
                             </div>
                         </button>
                     </div>
-
-
-                </span >
+                </span>
                 <span
                     className="capitalize ml-2 hover:block  text-white">All Categories</span>
-
-
                 {
                     !mobile && (
 
@@ -61,26 +56,16 @@ const Category = () => {
                                 <div className="flex items-center mx-4 my-1 px-1 py-3  ">
                                     <span className="ml-6 text-gray-500  font-bold uppercase">Danh mục sản phẩm</span>
                                 </div>
-
                                 {
                                     CategoryListData.map((item, index) => (
                                         <CategoryList handleNavigate={() => handleCategoryClick(item.slug)} key={item.title} name={item.title} />
                                     ))
                                 }
                             </div>
-
-                            <div className="flex ">
-                                <div className="">
-
-                                </div>
-                            </div>
                         </div>
-
                     )
                 }
-
-            </div >
-
+            </div>
         </>
     );
 }

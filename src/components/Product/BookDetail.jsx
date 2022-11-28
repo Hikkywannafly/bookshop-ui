@@ -1,19 +1,41 @@
-import React, { useState } from 'react'
-
-import { useEffect } from "react";
-import Button from "../Input/Button";
+import React, { useState, useEffect } from 'react'
+import { InputCounter, Button } from '../Input';
+import { ModelDialog } from '../Button';
 import { FiShoppingCart } from 'react-icons/fi'
 import BookDetailSkeleton from './BookDetailSkeleton';
 import Lightbox from 'react-image-lightbox';
+import { useFetchData } from '~/hooks/useFetchData';
+import { useDispatch } from 'react-redux';
+import { addToCart, updateTotal } from '~/redux/Cart/apiRequest';
+import toast, { Toaster } from 'react-hot-toast';
 const BookDetail = ({ bookdata }) => {
     const [images, setImages] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(1);
+    const dispatch = useDispatch();
+    const axios = useFetchData();
+    const handleAddToCart = async (id, value) => {
+        toast.promise(
+            addToCart(axios, { book_id: id, quantity: value })
+            , {
+                loading: 'Loading ...',
+                success: (data) => {
+                    if (data.status !== 'success') throw new Error(data.message);
+                    setOpen(true);
+                    updateTotal(dispatch, value, id);
+                    return 'Thêm vào giỏ hàng thành công';
+                },
+                error: (err) => {
+                    console.log(err);
+                    return err.message;
+                }
+            });
+    }
 
     const [lightboxController, setLightboxController] = useState({
         toggler: false,
         slide: 1
     });
-
-
     const openLightboxOnSlide = (number) => {
         setLightboxController({
             toggler: !lightboxController.toggler,
@@ -28,6 +50,7 @@ const BookDetail = ({ bookdata }) => {
     }, [bookdata])
     return (
         <>
+            <ModelDialog open={open} setOpen={setOpen} />
             {bookdata &&
                 <>
                     {lightboxController.toggler && (
@@ -53,8 +76,6 @@ const BookDetail = ({ bookdata }) => {
                             }
                         />
                     )}
-
-
                     <div className='flex flex-col items-center w-[484px] mx-3 mr-8'>
                         <div className=" flex items-center">
                             <div className="w-[76px] hidden lg:block lg:flex flex-col gap-3 ">
@@ -63,17 +84,16 @@ const BookDetail = ({ bookdata }) => {
                                     images?.filter((item, index) => index < 4).map((item, index) => {
                                         return (
                                             <img key={index}
+                                                loading='lazy'
                                                 onClick={() => openLightboxOnSlide(index)}
                                                 className='w-[76px] h-[76px] hover:border hover:animate-pulse cursor-pointer rounded-lg border-orange-300 duration-200 '
                                                 src={item} alt={index}></img>
                                         )
-
                                     })
                                 }
-
-
                                 {
                                     images?.length > 4 && <div
+
                                         onClick={() => openLightboxOnSlide(5)}
                                         className='w-[76px] h-[76px] bg-gray-200 hover:border text-lg
                                         border-orange-300 duration-200  rounded-lg flex items-center cursor-pointer justify-center'>
@@ -88,14 +108,21 @@ const BookDetail = ({ bookdata }) => {
 
                                 <img
                                     onClick={() => openLightboxOnSlide(0)}
-                                    className=' cursor-pointer  max-h-[392px] max-w-[100%] h-full w-full' src={`${bookdata?.default_image}`} alt='test '></img>
+                                    loading='lazy'
+                                    className=' cursor-pointer  max-h-[392px]  h-full ' src={`${bookdata?.default_image}`} alt='test '></img>
 
                             </div>
 
                         </div>
                         <br />
                         <div className="hidden lg:block lg:flex lg:flex-row gap-3 w-full">
-                            <Button content={`Thêm vào giỏ `} icon={<FiShoppingCart className="text-lg" />} color='bg-gray-200 text-black border-slate-800 border-2  ' />
+                            <Button content={`Thêm vào giỏ `}
+                                icon={<FiShoppingCart className="text-lg" />}
+                                color='bg-gray-200 text-black border-slate-800 border-2  '
+                                onClick={() => handleAddToCart(bookdata?.id, value)}
+                            />
+
+
                             <Button content={`Mua ngay `} color=' bg-slate-800 border-2 border-slate-800' />
                         </div>
                     </div>
@@ -118,7 +145,7 @@ const BookDetail = ({ bookdata }) => {
 
                         </div>
 
-                        <div className="   border-gray-100 py-4 pr-4  flex w-full justify-start items-center mt-2.5 mb-2">
+                        <div className=" border-gray-100 py-4 pr-4  flex w-full justify-start items-center mt-2.5 mb-2">
                             {
                                 Array(Math.ceil(bookdata.rating.rating || 0))
                                     .fill(0)
@@ -136,12 +163,12 @@ const BookDetail = ({ bookdata }) => {
                             }
 
 
-                            < span className="bg-blue-100 text-blue-800  font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 items-center">{Math.ceil(bookdata?.rating?.rating || 0)}.0</span>
+                            <span className="bg-blue-100 text-blue-800  font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 items-center">{Math.ceil(bookdata?.rating?.rating || 0)}.0</span>
                         </div>
-                        <div className="   border-gray-100  py-4 pr-4  flex w-full justify-start items-center mt-2.5 mb-2 gap-5 ">
+                        <div className="border-gray-100  py-4 pr-4  flex w-full justify-start items-center mt-2.5 mb-2 gap-5 ">
                             <span className=" font-medium text-3xl text-rose-600 ">{Math.ceil(bookdata.price - (bookdata.price * bookdata.discount) / 100).toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })}</span>
                             {bookdata.discount !== 0 &&
-                                <span className="  text-xl text-gray-600  line-through "> {bookdata.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
+                                <span className="text-xl text-gray-600  line-through "> {bookdata.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
                             }
                             {
                                 bookdata.discount !== 0 && (
@@ -154,17 +181,13 @@ const BookDetail = ({ bookdata }) => {
                         </div>
                         <div className="font-medium   border-gray-100 py-4 pr-4 flex items-center gap-3">
                             <h1>Số lượng sản phẩm: </h1>
-                            <div className="custom-number-input h-10 w-32">
-                                <div className="flex flex-row h-10 w-full rounded-lg  bg-transparent mt-1">
-                                    <button className=" bg-gray-100 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none">
-                                        <span className="m-auto text-2xl font-thin">-</span>
-                                    </button>
-                                    <input type="number" className="outline-none focus:outline-none text-center w-full bg-gray-100 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700 " name="custom-input-number" value="0"></input>
-                                    <button className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer">
-                                        <span className="m-auto text-2xl font-thin">+</span>
-                                    </button>
-                                </div>
-                            </div>
+                            <InputCounter
+                                height='h-10'
+                                width='w-32'
+                                value={value}
+                                setValue={setValue}
+                            />
+
                         </div>
                     </div>
                 </>

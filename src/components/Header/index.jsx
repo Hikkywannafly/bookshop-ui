@@ -29,9 +29,10 @@ const Header = ({ userInfo }) => {
                             <Wishlist />
 
                             <div className="cursor-pointer text-center text-gray-700  transition relative flex flex-col justify-center items-center">
-                                <Cart />
-                                <div className="text-xs leading-3">Cart</div>
-
+                                <Link to="/cart">
+                                    <Cart />
+                                    <div className="text-xs leading-3">Cart</div>
+                                </Link>
                             </div>
 
                             <div className="cursor-pointer text-center text-gray-700 transition relative flex flex-col justify-center items-center">
@@ -41,7 +42,8 @@ const Header = ({ userInfo }) => {
                                             <div className="relative inline-block text-left">
                                                 <span className="rounded-md shadow-sm">
                                                     <div className="inline-flex justify-center w-full 
-                                  px-1 py-1 text-sm font-medium leading-5
+                                                    my-1
+                                  px-1 py-1  text-sm font-medium leading-5
                                      text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
                                                         <BiUser className="text-xl" />
                                                     </div>
@@ -49,8 +51,9 @@ const Header = ({ userInfo }) => {
                                             </div>
                                         </Link>
                                     ) : (
-
-                                        <Account userInfo={userInfo} />
+                                        <>
+                                            <Account userInfo={userInfo} />
+                                        </>
                                     )
                                 }
                                 <div className="text-xs leading-3">Account</div>

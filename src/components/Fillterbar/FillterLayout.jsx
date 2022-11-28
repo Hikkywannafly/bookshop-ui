@@ -7,7 +7,7 @@ const FillterLayout = (props) => {
     const { isClicked, handleClick } = useStateContext();
     return (
         <>
-            <div className="border-b pb-3 ">
+            <div className="border-b last:border-none pb-3 ">
                 <div className="flex justify-between mb-1.5 ">
                     <div className="flex gap-1.5 items-center ">
                         {/* <span className="w-[2.5px] h-3 bg-slate-800"></span> */}
@@ -41,7 +41,7 @@ const Loading = () => {
     return (
         <div className="border-b pb-3 ">
             <LoadingSkeleton className="h-5 mb-1.5 w-full">
-            </LoadingSkeleton >
+            </LoadingSkeleton>
         </div>
     )
 

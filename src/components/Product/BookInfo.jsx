@@ -1,11 +1,6 @@
 import React, { useState } from 'react'
 
-import { useEffect } from "react";
-
-
 const BookInfo = ({ bookdata }) => {
-
-    console.log(bookdata)
     return (
         <>
             {bookdata &&
@@ -16,14 +11,14 @@ const BookInfo = ({ bookdata }) => {
 
                         <label className='text-lg font-medium mb-4'>Thông tin sản phẩm</label>
                         <div className="flex flex-col w-1/2 justify-start text-[15px]">
-                            <table class=" ">
+                            <table className=" ">
                                 <tbody>
                                     {
                                         Object.keys(bookdata).map((key, index) => {
                                             if (key === `id` || key === `description` || key === `created_at` || key === `updated_at`)
-                                                return <></>;
+                                                return null;
                                             return (
-                                                <tr key={index} className='flex flex-row justify-between'>
+                                                <tr key={index + "dd"} className='flex flex-row justify-between'>
                                                     <td className='w-1/2 capitalize pr-2 py-2 text-gray-500  '>{key.split('_').join(' ')}</td>
                                                     <td className='w-1/2 pr-2 py-2'>{bookdata[key]}</td>
                                                 </tr>

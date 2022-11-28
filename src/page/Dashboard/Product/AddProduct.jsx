@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DashboardPage from '~/components/Layout/Dashboard';
-import { fillter, CategoryListData, from, suppliers, languages, publishers, authors } from '~/dummy';
+import { CategoryListData, from, suppliers, languages, publishers, authors } from '~/dummy';
 import { useFormik } from 'formik';
 import { addProductSchema } from '~/helper/Schema/addProduct';
 import ImgUpload from '~/components/Dashboard/Upload/ImgUpload';

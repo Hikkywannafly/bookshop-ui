@@ -3,6 +3,7 @@ import React from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { sort } from '~/dummy';
 import Pagination from '../Pagination';
+import { SelectUI, SelectBar } from '../Input';
 const Product = (props) => {
     const { loading, bookData, pagination, handleSort, handleSelectPage, fillter, handleDeleteFilter, } = props;
     return (<>
@@ -32,17 +33,13 @@ const Product = (props) => {
                             }
                         </div>}
                     <div className="flex items-center gap-4 mb-2">
-                        <h1> Sort by :</h1>
-                        <select
-                            onChange={handleSort}
-                            style={{ boxShadow: `rgb(0 0 0 / 5%) 0px 0px 1rem 0px` }}
-                            className=" bg-white drop-shadow-xl  bg-opacity-60  w-40
-                               text-gray-900  rounded-lg   p-1 outline-none">
-                            {sort.map((item, index) => {
-                                return <option key={index} value={item.value}>{item.name}</option>
-                            })}
-                        </select>
-
+                        <div className="">
+                            <h1 className="mt-2"> Sort by :</h1>
+                        </div>
+                        <SelectBar
+                            options={sort.map((item, index) => { return { value: item.value, name: item.name } })}
+                            handleSort={handleSort}
+                        />
                     </div>
                 </div>
                 {

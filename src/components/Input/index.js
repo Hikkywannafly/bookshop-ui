@@ -7,3 +7,5 @@ export { default as Button } from './Button';
 export { default as CurrencyInput } from './CurrencyInput';
 export { default as InputBar } from './Input';
 export { default as InputNumber } from './InputNumber';
+export { default as SelectBar } from './SelectBar';
+export { default as InputCounter } from './InputCounter';

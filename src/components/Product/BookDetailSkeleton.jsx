@@ -14,7 +14,7 @@ const BookDetailSkeleton = () => {
                     }
 
                 </div>
-                <div className="h-[360px] w-[300px] flex justify-center items-center m-3">
+                <div className="h-[388px] w-[300px] flex justify-center items-center m-3">
                     <LoadingSkeleton className='max-h-[392px] max-w-[100%] h-full w-full'></LoadingSkeleton>
                 </div>
             </div>

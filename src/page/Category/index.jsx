@@ -21,7 +21,7 @@ const Category = () => {
         navigate(`/${slug}.html`);
     }
     const handleSort = async (value) => {
-        searchParams.set("sort", value.target.value);
+        searchParams.set("sort", value);
         setSearchParams(searchParams, 'replaceIn');
     }
     const handleSelect = (value) => {

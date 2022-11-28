@@ -14,19 +14,20 @@ const Account = ({ userInfo }) => {
         const result = await logoutUser(axios, dispatch);
     }
 
-    useEffect(() => {
-        console.log(`test Accesstoken`, accessToken);
-    }, [accessToken])
     return (
         <>
             <div className="relative inline-block text-left z-10">
                 <Menu>
                     {({ open }) => (
                         <>
-                            <span className="rounded-md shadow-sm">
+                            <span className="rounded-md shadow-2xl">
                                 <Menu.Button className="inline-flex justify-center w-full 
-                                px-1 py-1 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
-                                    <BiUser className="text-xl" />
+                                text-sm px-1 py-1 font-medium leading-5 text-gray-700 transition  duration-150 ease-in-out bg-white border border-gray-300 rounded-full hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
+                                    <img className='w-[26px] h-[26px] rounded-full'
+                                        // loading='lazy'
+                                        aria-hidden="true"
+                                        src={userInfo.image_address ? userInfo.image_address : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}
+                                        alt='user' />
                                 </Menu.Button>
                             </span>
 
@@ -48,7 +49,7 @@ const Account = ({ userInfo }) => {
                                             src={userInfo.image_address ? userInfo.image_address : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}
                                             alt='user' />
                                         <div className="">
-                                            <p className="text-sm leading-5">Signed in as</p>
+                                            <p className="text-sm leading-5">Tài khoản đăng nhập</p>
                                             <p className="text-sm font-medium leading-5 text-gray-900 truncate">
                                                 {userInfo.name.length > 17 ? userInfo.name.slice(0, 17) + ' ...' : userInfo.name}
                                             </p>
@@ -67,7 +68,7 @@ const Account = ({ userInfo }) => {
                                                         : "text-gray-700"
                                                         } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                                 >
-                                                    Account settings
+                                                    Thông tin tài khoản
                                                 </a>
                                             )}
                                         </Menu.Item>
@@ -80,7 +81,7 @@ const Account = ({ userInfo }) => {
                                                         : "text-gray-700"
                                                         } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                                 >
-                                                    Support
+                                                    Lịch sử mua hàng
                                                 </a>
                                             )}
                                         </Menu.Item>
@@ -100,7 +101,7 @@ const Account = ({ userInfo }) => {
                                                         : "text-gray-700"
                                                         } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                                 >
-                                                    License
+                                                    Sản phẩm yêu thích
                                                 </a>
                                             )}
                                         </Menu.Item>
@@ -117,7 +118,7 @@ const Account = ({ userInfo }) => {
                                                         : "text-gray-700"
                                                         } flex justify-between w-full px-4 py-1 text-sm leading-5 text-left  `}
                                                 >
-                                                    <AuthButton name="Log Out" size='sm' />
+                                                    <AuthButton name="Đăng xuất" size='sm' />
                                                 </div>
 
                                             )}

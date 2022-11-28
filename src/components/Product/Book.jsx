@@ -20,7 +20,9 @@ const Book = (props) => {
 
                 )
             }
-            <img className="p-3 rounded-t-lg max-h-[166px] xl:max-h-[210px] md:max-w-[210px]  2xl:max-w-[235px] inline-block" src={img} alt="Product" />
+            <img className="p-3 rounded-t-lg max-h-[166px] xl:max-h-[210px] md:max-w-[210px]  2xl:max-w-[235px] inline-block"
+                loading='lazy'
+                src={img} alt="Product" />
             <div className="px-4 pb-2">
                 <div className=" max-h-[38px] min-h-[38px] lg:min-w-[181px] lg:max-w-[182px]  w-full h-full font-medium tracking-tight text-gray-900 text-ellipsis overflow-hidden">
                     <h5 className="h-full">
@@ -46,7 +48,7 @@ const Book = (props) => {
                     }
 
 
-                    < span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2 pt-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 items-center">{Math.ceil(rating)}.0</span>
+                    <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2 pt-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3 items-center">{Math.ceil(rating)}.0</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-start md:justify-between md:text-base">
                     <span className=" font-medium text-rose-600 ">{Math.ceil(price - (price * discount) / 100).toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })}</span>

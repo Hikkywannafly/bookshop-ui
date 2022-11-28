@@ -4,7 +4,7 @@ import { HiSelector } from 'react-icons/hi'
 const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ')
 }
-const SelectBar = ({ label, options, setSubCategory, error, setValue }) => {
+const SelectBar = ({ label, options, error, handleSort }) => {
     const [selected, setSelected] = useState(options[0])
 
     return (
@@ -12,37 +12,34 @@ const SelectBar = ({ label, options, setSubCategory, error, setValue }) => {
             onChange={
                 (e) => {
                     setSelected(e);
-                    setValue(e.slug);
-                    setSubCategory && setSubCategory(e.subCategory);
+                    handleSort(e.value);
                 }
             }
         >
             {({ open }) => (
                 <>
-                    <div className='flex flex-col '>
-                        <Listbox.Label className="block  capitalize text-sm font-medium text-gray-900">{label}</Listbox.Label>
+                    <div className='flex flex-col justify-center  w-[180px] '>
+                        <Listbox.Label className="block capitalize text-sm font-medium text-gray-900">{label}</Listbox.Label>
                         <div className="relative mt-1 ">
                             <Listbox.Button
                                 style={error ? { borderColor: `coral` } : { borderColor: `rgb(209 213 219)` }}
                                 className={`
                                 relative
                               mt-1
-                w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3
+                              
+                w-full cursor-default rounded-md border border-gray-300 bg-white py-[3px] pl-3
                 pr-3 text-left shadow-sm  focus:outline-none focus:ring-1 ${error ? 'focus:ring-[#FF7F50]' : 'focus:ring-slate-800'} sm:text-sm
                 duration-200
                 `}
-
                             >
                                 <span className="flex items-center">
-                                    <span className={` block truncate ${selected.slug === null ? ` text-gray-400 ` : null}`}>{selected.name}</span>
+                                    <span className={` block truncate ${selected.value === null ? ` text-gray-400 ` : null}`}>{selected.name}</span>
                                 </span>
                                 <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                                     <HiSelector className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                 </span>
                             </Listbox.Button>
-                            {
-                                error && <span className="italic text-red-500 text-xs">{error}</span>
-                            }
+
                             <Transition
                                 show={open}
                                 as={Fragment}
@@ -58,10 +55,10 @@ const SelectBar = ({ label, options, setSubCategory, error, setValue }) => {
                                             className={({ active }) =>
                                                 classNames(
                                                     active ? 'text-white bg-slate-800' : 'text-gray-900',
-                                                    'relative cursor-default select-none py-2 pl-3 pr-9'
+                                                    'relative cursor-default select-none py-1 pl-1 pr-3'
                                                 )
                                             }
-                                            disabled={item.slug === null ? true : false}
+                                            disabled={item.value === null ? true : false}
                                             value={item}
                                         >
                                             {({ selected, active }) => (
