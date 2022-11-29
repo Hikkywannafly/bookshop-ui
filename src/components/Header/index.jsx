@@ -29,7 +29,7 @@ const Header = ({ userInfo }) => {
                             <Wishlist />
 
                             <div className="cursor-pointer text-center text-gray-700  transition relative flex flex-col justify-center items-center">
-                                <Link to="/cart">
+                                <Link to="/checkout/cart">
                                     <Cart />
                                     <div className="text-xs leading-3">Cart</div>
                                 </Link>

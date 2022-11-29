@@ -8,7 +8,8 @@ import Nav from '~/components/Dashboard/Nav';
 import RequireAuth from './page/Auth/RequireAuth';
 import HeaderHome from './components/HeaderHome';
 import 'react-image-lightbox/style.css';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
+import FooterPage from '~/components/FooterPage';
 function App() {
   const { activeMenu } = useStateContext();
   // useEffect(() => {
@@ -40,6 +41,7 @@ function App() {
                     <HeaderHome />
                     <div className="text-sm"> <Toaster /></div>
                     <route.component />
+                    <FooterPage />
                   </div>
                 } />
               );

@@ -2,7 +2,6 @@ import { BiSearch } from 'react-icons/bi';
 const Search = () => {
     return (
         <>
-
             <div className="w-full">
                 <div className="relative">
                     <button type="submit" className="absolute left-1 bottom-[2px] text-sm font-medium
@@ -14,7 +13,6 @@ const Search = () => {
                          p-1.5 block  w-full z-20 text-sm text-gray-900  rounded-lg  
                           duration-150`} placeholder="Search your book" required>
                     </input>
-
                 </div>
             </div>
 

@@ -30,7 +30,7 @@ const publicRoutes = [
         path: '/product/:slug.html', component: Product
     },
     {
-        path: '/cart', component: Cart
+        path: '/checkout/cart', component: Cart
     },
 
 ]

@@ -4,6 +4,7 @@ import { useFetchData } from '~/hooks/useFetchData';
 import { getCartData } from '~/redux/Cart/apiRequest';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '~/components/Input';
 import React from 'react';
 const Cart = () => {
@@ -16,11 +17,15 @@ const Cart = () => {
         save: 0
     });
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const axios = useFetchData();
     const isAuthenticated = useSelector((state) => state.login.currentUser);
     useEffect(() => {
         if (isAuthenticated) {
             getCartData(axios, dispatch);
+        }
+        else {
+            navigate('/login');
         }
     }, []);
     useEffect(() => {

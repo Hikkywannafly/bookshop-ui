@@ -20,9 +20,6 @@ const Login = () => {
     const navigate = useNavigate();
     const loading = useSelector((state) => state.login.isFetching);
     const isAuthenticated = useSelector((state) => state.login.currentUser);
-    // const handleChange = (e) => {
-    //     setData({ ...data, [e.target.name]: e.target.value })
-    // }
     const { values, errors, handleChange, handleBlur, touched, handleSubmit } = useFormik({
         initialValues: {
             email: '',

@@ -101,7 +101,7 @@ const Fillterbar = (props) => {
                         ))
                     }
                 </FillterLayout>
-            </div >
+            </div>
         </>
 
     );
