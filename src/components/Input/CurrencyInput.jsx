@@ -33,11 +33,15 @@ NumberFormatCustom.propTypes = {
     onChange: PropTypes.func.isRequired,
 };
 
-export default function CurrencyInput({ error, handleChange }) {
+export default function CurrencyInput({ error, handleChange, value }) {
     const [values, setValues] = React.useState({
-        numberformat: '0',
+        numberformat: `${value}`,
     });
-
+    React.useEffect(() => {
+        setValues({
+            numberformat: `${value}`,
+        });
+    }, [value]);
     const handleChangeInput = (event) => {
         handleChange(event);
         setValues({

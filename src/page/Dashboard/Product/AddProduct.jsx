@@ -8,6 +8,7 @@ import { createBookData } from '~/redux/Admin/apiRequest';
 import { useFetchData } from '~/hooks/useFetchData';
 import { ButtonLoading, CustomizedSnackbars } from '~/components/Button';
 import { SelectUI, TextFields, AutoCompelete, InputAdornments, CurrencyInput, RichText, InputBar, InputNumber } from '~/components/Input';
+import toast from 'react-hot-toast';
 const initialSelect = {
     category: '',
     subCategory: '',
@@ -21,7 +22,7 @@ const initialSelect = {
 }
 const AddProduct = () => {
     const current = new Date();
-    const date = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`;
+    const date = `${current.getFullYear()}-0${current.getDate()}-${current.getMonth() + 1}`;
     const [loading, setLoading] = useState(false);
     const [snackbar, setSnackbar] = useState({
         open: false,
@@ -48,7 +49,7 @@ const AddProduct = () => {
             slug: '',
             category: '',
             subCategory: '',
-            price: '',
+            price: '0',
             decription: '',
             quantity: '',
             formality: '',
@@ -56,8 +57,6 @@ const AddProduct = () => {
             publisher: '',
             author: '',
             publicDate: '',
-            // size: '',
-            // weight: '',
             pages: '',
             language: '',
             images: [null],
@@ -70,22 +69,28 @@ const AddProduct = () => {
             values.images.forEach((file, index) => {
                 formData.append(`images[]`, file);
             });
-            const result = await createBookData(axios, formData);
-            if (result.status === `success`) {
-                setSnackbar({
-                    open: true,
-                    message: 'Thêm sản phẩm thành công',
-                    severity: 'success'
+            toast.promise(
+                createBookData(axios, formData)
+                , {
+                    loading: 'Loading ...',
+                    success: (data) => {
+                        if (data.status !== 'success') throw new Error(data.message);
+                        setSnackbar({
+                            open: true,
+                            message: 'Thêm sản phẩm thành công',
+                            severity: 'success'
+                        });
+                        return 'Thêm sản phẩm thành công';
+                    },
+                    error: (err) => {
+                        setSnackbar({
+                            open: true,
+                            message: err.message,
+                            severity: 'error'
+                        });
+                        return err.message;
+                    }
                 });
-            }
-            if (result.status === `error`) {
-                console.log(result);
-                setSnackbar({
-                    open: true,
-                    message: result.message,
-                    severity: 'error'
-                });
-            }
             setLoading(false);
 
         }

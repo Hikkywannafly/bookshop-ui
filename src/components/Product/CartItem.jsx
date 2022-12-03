@@ -2,12 +2,14 @@ import { InputCounter } from '~/components/Input';
 import { IoClose } from 'react-icons/io5';
 import { useFetchData } from '~/hooks/useFetchData';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCartItem } from '~/redux/Cart/apiRequest';
+import { deleteCartItem, addToCart, updateItems } from '~/redux/Cart/apiRequest';
 import toast, { Toaster } from 'react-hot-toast';
 import LoadingSkeleton from "../Animation/LoadingSkeleton";
+import { useEffect, useState } from 'react';
 const CartItem = ({ id, name, price, image, quantity, discount }) => {
     const dispatch = useDispatch();
     const axios = useFetchData();
+    const [value, setValue] = useState(quantity);
     const handleRemoveItem = async (id) => {
         toast.promise(
             deleteCartItem(axios, { book_id: id }, dispatch)
@@ -23,6 +25,25 @@ const CartItem = ({ id, name, price, image, quantity, discount }) => {
                 }
             });
     }
+    const handleChangeCartItem = async (value) => {
+        toast.promise(
+            addToCart(axios, { book_id: id, quantity: value }, dispatch)
+            , {
+                loading: 'Loading ...',
+                success: (data) => {
+                    if (data.status !== 'success') throw new Error(data.message);
+                    updateItems(dispatch, value, id);
+                    return 'Cập nhật thành công';
+                },
+                error: (err) => {
+                    console.log(err);
+                    return err.message;
+                }
+            });
+    }
+    useEffect(() => {
+        setValue(quantity);
+    }, [quantity]);
     return (
         <>
             <div className="flex py-6 border-b last:border-none">
@@ -53,12 +74,12 @@ const CartItem = ({ id, name, price, image, quantity, discount }) => {
                         <InputCounter
                             height="h-7"
                             width="w-24"
-                            value={quantity}
-                        // setValue={setValue}
-
+                            value={value}
+                            setValue={setValue}
+                            handleChange={handleChangeCartItem}
                         />
 
-                        <p className="ml-4 text-base font-medium text-rose-600">{(price * quantity).toLocaleString('vi', { style: 'currency', currency: 'VND' })}</p>
+                        <p className="ml-4 text-base font-medium text-rose-600">{(Math.ceil(price - (price * discount) / 100) * quantity).toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })}</p>
                     </div>
                 </div>
             </div>

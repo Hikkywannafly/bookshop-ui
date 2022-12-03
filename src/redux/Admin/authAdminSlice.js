@@ -24,9 +24,6 @@ const adminSlice = createSlice({
             state.data = action.payload.book.data;
             state.pagination = action.payload.book.pagination;
             state.statistics = action.payload.statistic;
-
-            // state.suppliers = action.payload.suppliers;
-            // state.breadcrumbs = action.payload.breadcrumbs;
         },
         getBookFailure: (state, payload) => {
             state.isFetching = false;
@@ -45,7 +42,12 @@ const adminSlice = createSlice({
             state.isFetchingBookDetail = false;
             // state.error = true;
             // state.errorMessage = payload;
-        }
+        },
+        deleteBook: (state, action) => {
+            state.data = state.data.filter(book => book.id !== action.payload);
+
+        },
+
 
     }
 });
@@ -55,6 +57,7 @@ export const {
     getBookFailure,
     getBookDetailStarting,
     getBookDetailSuccess,
-    getBookDetailFailure
+    getBookDetailFailure,
+    deleteBook
 } = adminSlice.actions;
 export default adminSlice.reducer;

@@ -12,6 +12,7 @@ const Category = () => {
     const suppliers = useSelector((state) => state.bookdata.suppliers);
     const bookData = useSelector((state) => state.bookdata.data);
     const breadcrumbs = useSelector((state) => state.bookdata.breadcrumbs);
+    const [search, setSearch] = useState('');
     const [fillter, setFillter] = useState([]);
     let [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
@@ -47,6 +48,11 @@ const Category = () => {
         if (location.search) {
             getBookDataFillter(params, location.search, dispatch)
         }
+
+        if (location.search.split('&')[0].split('=')[1]?.length > 0 && location.search.split('&')[0].split('=')[0] === '?search') {
+            setSearch(location.search.split('&')[0].split('=')[1]);
+        }
+
     }, [location.pathname, dispatch, location, searchParams]);
     return (
         <>
@@ -68,8 +74,8 @@ const Category = () => {
                 </div>
                 <section className="flex flex-col lg:flex-row md gap-5 ">
                     <Fillterbar fillter={fillter} handleSelect={handleSelect} loading={loading} suppliers={suppliers} handleCategoryToggle={handleCategoryToggle} locationname={location.pathname} />
-                    <Product handleDeleteFilter={handleDeleteFilter} fillter={fillter} handleSelectPage={handleSelectPage} loading={loading} pagination={pagination} bookData={bookData} handleSort={handleSort} />
-                </section >
+                    <Product search={search} handleDeleteFilter={handleDeleteFilter} fillter={fillter} handleSelectPage={handleSelectPage} loading={loading} pagination={pagination} bookData={bookData} handleSort={handleSort} />
+                </section>
             </div>
         </>
     );

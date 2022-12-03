@@ -1,4 +1,3 @@
-import { BiUser } from 'react-icons/bi';
 import { Menu, Transition } from "@headlessui/react";
 import { useSelector, useDispatch } from 'react-redux';
 import axiosInterceptor from '~/utils/axiosInterceptor';
@@ -13,6 +12,15 @@ const Account = ({ userInfo }) => {
     const handleLogout = async () => {
         const result = await logoutUser(axios, dispatch);
     }
+    useEffect(() => {
+        if (userInfo.image_address) {
+            document.getElementById('avatar').src = userInfo.image_address;
+        }
+        else {
+            document.getElementById('avatar').src = 'https://i.imgur.com/6VBx3io.png';
+            // 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+        }
+    }, [userInfo]);
 
     return (
         <>
@@ -25,8 +33,8 @@ const Account = ({ userInfo }) => {
                                 text-sm px-1 py-1 font-medium leading-5 text-gray-700 transition  duration-150 ease-in-out bg-white border border-gray-300 rounded-full hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
                                     <img className='w-[26px] h-[26px] rounded-full'
                                         // loading='lazy'
+                                        id='avatar'
                                         aria-hidden="true"
-                                        src={userInfo.image_address ? userInfo.image_address : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}
                                         alt='user' />
                                 </Menu.Button>
                             </span>

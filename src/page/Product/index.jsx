@@ -19,9 +19,9 @@ const Product = () => {
         }
 
     }
-
     useEffect(() => {
         let params = location.pathname.split('.html')[0];
+        console.log(params);
         if (params && !location.search) {
             handleGetbookDetail(params)
         }

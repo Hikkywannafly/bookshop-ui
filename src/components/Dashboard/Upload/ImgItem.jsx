@@ -18,7 +18,7 @@ const ImgItem = ({ image, name, size, deleteHandler, openLightboxOnSlide, index 
                 className="flex gap-4">
                 <img src={image} className="w-10 h-10" alt="img upload" />
                 <div className="flex flex-col gap-1">
-                    <p className="text-sm text-blue-500 truncate ">{name.length > 50 ? name.slice(0, 30) + ' ...' : name} </p>
+                    <p className="text-sm text-blue-500 truncate ">{name?.length > 50 ? name?.slice(0, 30) + ' ...' : (name || '')} </p>
                     <p className="text-xs text-gray-400"> {convertSize(size)}</p>
                 </div>
             </div>

@@ -12,6 +12,7 @@ import Category from '~/page/Category/';
 import Product from '~/page/Product/';
 import ProductAuth from '~/page/Dashboard/Product/Product';
 import AddProduct from '~/page/Dashboard/Product/AddProduct';
+import EditProduct from '~/page/Dashboard/Product/EditProduct';
 import Cart from '~/page/Cart'
 const publicRoutes = [
     {
@@ -66,15 +67,15 @@ const dashboardRoutes = [
     {
         path: '/auth/orders', component: Orders
     },
-    // {
-    //     path: '/auth/product/:slug.html', component: Product
-    // },
     {
         path: '/auth/product/', component: ProductAuth
     },
     {
         path: '/auth/product/add-product', component: AddProduct
     },
+    {
+        path: '/auth/product/:slug', component: EditProduct
+    }
 
 ]
 

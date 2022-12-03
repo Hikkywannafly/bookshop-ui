@@ -7,6 +7,7 @@ const Book = (props) => {
     const handleClick = () => {
         navigate(`/product/${slug}.html`);
     }
+
     return (<>
 
         <div

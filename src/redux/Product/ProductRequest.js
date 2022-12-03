@@ -55,5 +55,4 @@ export const getBookDetail = async (params, dispatch) => {
             dispatch(getBookDetailFailure(err.response.data));
             return err.response.data;
         });
-
 }

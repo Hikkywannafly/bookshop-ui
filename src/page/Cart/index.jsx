@@ -33,7 +33,7 @@ const Cart = () => {
             let total = 0;
             let save = 0;
             cartItems.forEach((item) => {
-                total += item.book.price * item.quantity;
+                total += (item.book.price - item.book.price * (item.book.discount / 100)) * item.quantity;
                 save += item.book.price * item.quantity * (item.book.discount / 100);
             });
             setMoney({

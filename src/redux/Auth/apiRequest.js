@@ -2,7 +2,7 @@ import BASE_URL from "~/config/index";
 import { getAxios } from "~/utils/getAxios";
 import { loginStart, loginSuccess, loginFailure, logoutSuccess, logoutFailure, logoutStart } from './authLoginSlice';
 import { registerStart, registerSuccess, registerFailure, registerEnd } from './authRegisterSlice';
-
+import { updateLogOut } from '../Cart/authCartSlice';
 export const loginUser = async (user, dispatch) => {
     dispatch(loginStart());
     return await getAxios.post(`${BASE_URL}/auth/login`, user)
@@ -35,6 +35,7 @@ export const logoutUser = async (axiosJWT, dispatch) => {
     try {
         const res = axiosJWT.post(`${BASE_URL}/auth/logout`);
         dispatch(logoutSuccess(res.data));
+        dispatch(updateLogOut());
         return res.data;
     }
     catch (err) {

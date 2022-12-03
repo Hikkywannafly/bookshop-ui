@@ -28,19 +28,27 @@ const cartSlice = createSlice({
             state.errorMessage = payload;
         },
         updateCartTotal: (state, action) => {
-            console.log(`debugg 1`, action.payload);
             const isExist = state.cartItems.find(item => item.book.id === action.payload.id);
             if (!isExist) {
                 state.total += 1;
             }
         },
         updateCartItems: (state, action) => {
-            console.log(`debugg 2`, action.payload);
             const isExist = state.cartItems.find(item => item.book.id === action.payload.book_id);
             if (isExist) {
                 state.total -= 1;
             }
             state.cartItems = state.cartItems.filter(item => item.book.id !== action.payload.book_id);
+        },
+        updateLogOut: (state) => {
+            state.cartItems = [];
+            state.total = 0;
+        },
+        updateCartItemsAfterChagne: (state, action) => {
+            // update quantity
+            console.log(`debugg 1`, action.payload);
+            const isExist = state.cartItems.find(item => item.book.id === action.payload.id);
+            isExist.quantity += action.payload.value;
         }
 
     }
@@ -50,6 +58,8 @@ export const {
     getCartSuccess,
     getCartFailure,
     updateCartTotal,
-    updateCartItems
+    updateCartItems,
+    updateLogOut,
+    updateCartItemsAfterChagne
 } = cartSlice.actions;
 export default cartSlice.reducer;

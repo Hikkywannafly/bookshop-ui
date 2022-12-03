@@ -6,7 +6,9 @@ import {
     getCartSuccess,
     getCartFailure,
     updateCartTotal,
-    updateCartItems
+    updateCartItems,
+    updateCartItemsAfterChagne
+
 } from './authCartSlice';
 
 // get cart
@@ -15,7 +17,6 @@ export const getCartData = async (axiosJWT, dispatch) => {
     return await axiosJWT.get(`${BASE_URL}/auth/cart`)
         .then(res => {
             dispatch(getCartSuccess(res.data));
-            console.log(`debugg 1`, res.data);
             return res.data;
         })
         .catch(err => {
@@ -35,12 +36,18 @@ export const addToCart = async (axiosJWT, params) => {
 }
 // update total cart
 export const updateTotal = async (dispatch, value, id) => {
-
     dispatch(updateCartTotal({
         value,
         id
     }));
 }
+export const updateItems = async (dispatch, value, id) => {
+    dispatch(updateCartItemsAfterChagne({
+        value,
+        id
+    }));
+}
+
 // update cart
 export const updateCart = async (params, dispatch) => {
     dispatch(getCartStarting());

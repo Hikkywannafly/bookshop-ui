@@ -5,19 +5,31 @@ import { sort } from '~/dummy';
 import Pagination from '../Pagination';
 import { SelectUI, SelectBar } from '../Input';
 const Product = (props) => {
-    const { loading, bookData, pagination, handleSort, handleSelectPage, fillter, handleDeleteFilter, } = props;
+    const { loading, bookData, pagination, handleSort, handleSelectPage, fillter, handleDeleteFilter, search } = props;
     return (<>
         <div
             style={{ zIndex: 0 }}
             className="bg-white w-full  shadow-sm p-3 rounded-lg drop-shadow-sm flex flex-col justify-start ">
             <div className="m-2">
                 <div className="border-b pb-3 flex flex-col gap-4 mb-4 ">
-                    {Object.keys(fillter).length !== 0 &&
-                        < div className="flex gap-3 items-center">
-                            <h1> Fillter by :</h1>
 
+
+                    {search.length > 0 ? <div className="flex gap-3 items-center">
+                        <h1 className="font-medium"> Kết quả tìm kiếm cho :</h1>
+                        <div className="flex gap-2 items-center">
+                            <h1 className="font-medium"> {search} </h1>
+                        </div>
+                    </div> : null}
+
+                    {Object.keys(fillter).length !== 0 &&
+                        <div className="flex gap-3 items-center">
+                            <h1> Fillter by :</h1>
                             {
                                 Object.entries(fillter).map(([key, value]) => {
+                                    if (key === 'search') {
+                                        return null;
+
+                                    };
                                     return (
                                         <div
                                             key={key}
@@ -61,7 +73,9 @@ const Product = (props) => {
                     }
                     {
                         !loading && bookData?.length !== 0 && bookData?.map((book, index) => {
-                            return <Book key={book?.name} name={book?.name} img={book?.default_image} price={book?.price} discount={book?.discount} slug={book?.slug} rating={book?.rating}></Book>
+                            return <Book key={book?.name} name={book?.name} img={book?.default_image} price={book?.price} discount={book?.discount} slug={book?.slug} rating={
+                                Array.isArray(book?.rating) ? (book?.rating[0]?.rating || null) : book?.rating
+                            }></Book>
                         })
                     }
 

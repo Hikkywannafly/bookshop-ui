@@ -17,9 +17,13 @@ const theme = createTheme({
 
 const filter = createFilterOptions();
 
-export default function AutoCompelete({ label, error, handleBlur, options, name, selected, setSelected }) {
-    const [value, setValue] = React.useState(null);
-
+export default function AutoCompelete({ label, error, handleBlur, options, name, selected, setSelected, values }) {
+    const [value, setValue] = React.useState('');
+    React.useEffect(() => {
+        if (values) {
+            setValue(values);
+        }
+    }, [values]);
     return (
         <ThemeProvider theme={theme}>
             <Stack>

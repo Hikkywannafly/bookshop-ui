@@ -51,7 +51,7 @@ function App() {
             {sessionRoutes.map((route, index) => {
               return <Route key={index} path={route.path} element={
                 <div className="flex flex-col w-full">
-                  < route.component />
+                  <route.component />
                 </div>
               } />;
             })}
@@ -60,7 +60,7 @@ function App() {
             {authRoutes.map((route, index) => {
               return <Route key={index} path={route.path} element={
                 <div className="flex flex-col w-full">
-                  < route.component />
+                  <route.component />
                 </div>
               } />;
             })}
@@ -79,7 +79,8 @@ function App() {
                         <Nav />
                       </div>
                       <div className=''>
-                        < route.component />
+                        <div className="text-sm"> <Toaster /></div>
+                        <route.component />
                       </div>
                     </div>
                   </>

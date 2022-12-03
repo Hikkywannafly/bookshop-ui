@@ -2,12 +2,15 @@ import { HiOutlineUpload } from 'react-icons/hi'
 import ImgItem from '~/components/Dashboard/Upload/ImgItem';
 import React, { useState, useEffect } from 'react'
 import Lightbox from 'react-image-lightbox';
-const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handleChange }) => {
+const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, defaultValue }) => {
     const [image, setImage] = useState([]);
     const [lightboxController, setLightboxController] = useState({
         toggler: false,
         slide: 1
     });
+
+
+
     const openLightboxOnSlide = (number) => {
         setLightboxController({
             toggler: !lightboxController.toggler,
@@ -40,8 +43,6 @@ const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handl
     }, [selectedImages]);
     return (
         <>
-
-
             {lightboxController.toggler && (
                 <Lightbox
                     mainSrc={image[lightboxController.slide]}
@@ -60,12 +61,9 @@ const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handl
                             toggler: lightboxController.toggler,
                             slide: (lightboxController.slide + 1) % image.length,
                         })
-
                     }
                 />
             )}
-
-
             <div className="w-full flex flex-col gap-4">
                 <label htmlFor='dropzone-file'
 
@@ -99,8 +97,6 @@ const ImgUpload = ({ setSelectedImages, selectedImages, error, handleBlur, handl
                 {
                     error && <span className="italic text-red-500 text-xs">{error}</span>
                 }
-
-
             </div>
         </>
     );

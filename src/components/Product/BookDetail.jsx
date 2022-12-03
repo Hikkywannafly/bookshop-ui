@@ -86,7 +86,7 @@ const BookDetail = ({ bookdata }) => {
                                             <img key={index}
                                                 loading='lazy'
                                                 onClick={() => openLightboxOnSlide(index)}
-                                                className='w-[76px] h-[76px] hover:border hover:animate-pulse cursor-pointer rounded-lg border-orange-300 duration-200 '
+                                                className=' h-[76px] hover:border object-fill hover:animate-pulse cursor-pointer rounded-lg border-orange-300 duration-200 '
                                                 src={item} alt={index}></img>
                                         )
                                     })

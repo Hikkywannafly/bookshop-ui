@@ -4,13 +4,16 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 import { RiLoader2Fill } from 'react-icons/ri'
 import { useEffect, useState } from 'react';
 import BASE_URL from "~/config/index";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getAxios } from "~/utils/getAxios";
+import { BiCategoryAlt } from 'react-icons/bi'
 const SearchBar = ({ className }) => {
     const [liveSearch, setLiveSearch] = useState(false);
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState('');
+    const [history, setHistory] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
         setLoading(true);
         if (search.length > 2
@@ -33,9 +36,34 @@ const SearchBar = ({ className }) => {
     }, [search])
     useEffect(() => {
         liveSearch ? document.body.style.overflow = 'hidden' : document.body.style.overflow = 'scroll'
-        document.body.style.overflow = "hidden";
-
     }, [liveSearch])
+    const handleSearch = (value) => {
+        let searchHistory = localStorage.getItem('searchHistory');
+        if (searchHistory) {
+            searchHistory = JSON.parse(searchHistory);
+            if (searchHistory.includes(value.toLowerCase()) === false) {
+                searchHistory.push(value.toLowerCase());
+            }
+            setHistory(searchHistory);
+            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        }
+        else {
+            localStorage.setItem('searchHistory', JSON.stringify([value.toLowerCase()]));
+        }
+    }
+    useEffect(() => {
+        let searchHistory = localStorage.getItem('searchHistory');
+        if (searchHistory) {
+            searchHistory = JSON.parse(searchHistory);
+            setHistory(searchHistory);
+        }
+    }, [])
+
+    const handleSearchNavigate = (search) => {
+        navigate(`/all-category.html?search=${search}`);
+        handleSearch(search);
+        setLiveSearch(false);
+    }
     return (
         < >
             <div className="w-full">
@@ -47,12 +75,25 @@ const SearchBar = ({ className }) => {
                         onChange={(e) => {
                             setSearch(e.target.value)
                         }}
-                        type="search" id="search-dropdown" className={` border pl-5 focus:outline-none p-2 block  w-full z-20 text-sm text-gray-900  rounded-lg  duration-150  ${className}`} placeholder="Search your book" required>
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handleSearchNavigate(e.target.value)
+                            }
+                        }}
+                        type="search" id="search-dropdown" className={` border pl-5 focus:outline-none p-2 block  w-full z-20 text-sm text-gray-900  rounded-lg  duration-150  ${className}`
+                        } placeholder="Search your book" required>
                     </input>
                     <button type="submit" className="text-white absolute right-2.5 bottom-[7px] lg:bottom-[7px] text-sm font-medium  bg-[#2e2d2d]
                     rounded-lg px-3 py-1.5  focus:shadow-outline-blue focus:outline-none">
                         {
-                            loading ? <RiLoader2Fill className="animate-spin" /> : <BiSearch />
+                            loading ? <RiLoader2Fill className="animate-spin" /> : <BiSearch
+                                onClick={(e) => {
+                                    if (search.length > 2) {
+                                        handleSearchNavigate(search)
+                                    }
+                                }}
+
+                            />
                         }
                     </button>
                 </div>
@@ -87,11 +128,15 @@ const SearchBar = ({ className }) => {
                                                 </div>
                                                 <div className="flex-1 ml-4">
                                                     <p className="text-gray-900 text-ellipsis ">{item.name}</p>
-                                                    <p className="text-gray-500">34.000 đ</p>
+                                                    <span className=" text-rose-600 ">{Math.ceil(item.price - (item.price * item.discount) / 100).toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })}</span>
                                                 </div>
                                             </Link>
                                             {index > 5 ? (
-                                                <div className=""> Xem thêm</div>
+                                                <div
+                                                    onClick={() => {
+                                                        handleSearchNavigate(search)
+                                                    }}
+                                                    className="text-blue-600 w-full flex cursor-pointer justify-center items-center"> Xem thêm</div>
 
                                             ) : null}
                                         </div>
@@ -109,24 +154,80 @@ const SearchBar = ({ className }) => {
 
                                 </div>
 
-                                <div className="">
+                                <div className=" border-b">
                                     <div className="flex items-center justify-between px-4 py-2 ">
                                         <div className="font-medium flex gap-3 items-center">
                                             <TbRotateClockwise2 />
                                             Lịch sử tìm kiếm
                                         </div>
-                                        <div className="text-rose-500 cursor-pointer">
+                                        <div
+                                            onClick={() => {
+                                                localStorage.removeItem('searchHistory');
+                                                setHistory([]);
+                                            }}
+                                            className="text-rose-500 cursor-pointer">
                                             Xóa tất cả
                                         </div>
                                     </div>
 
                                     <div className="flex flex-wrap pb-2 px-3 gap-3 ">
-                                        <div
-                                            style={{ backgroundColor: ` rgba(247, 148, 20, 0.1)` }}
-                                            className=" px-1 p-0.5 rounded-md text-orange-500 flex items-center gap-2 capitalize">
-                                            heelo
-                                            <AiFillCloseCircle
-                                                className='cursor-pointer text-sm' />
+
+                                        {
+                                            history?.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    style={{ backgroundColor: ` rgba(247, 148, 20, 0.1)` }}
+                                                    className=" px-1 p-0.5 rounded-md text-orange-500 flex items-center gap-2 ">
+                                                    {item}
+                                                    <AiFillCloseCircle
+                                                        onClick={() => {
+                                                            let searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+                                                            searchHistory = searchHistory.filter((i) => i !== item);
+                                                            localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                                                            setHistory(searchHistory);
+                                                        }}
+                                                        className='cursor-pointer text-sm' />
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                                <div className="">
+                                    <div className="flex items-center justify-between px-4 py-2 ">
+                                        <div className="font-medium flex gap-3 items-center">
+                                            <BiCategoryAlt />
+                                            Danh mục nổi bật
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-wrap justify-between pb-2 px-3 gap-3 ">
+
+                                        <div className="w-28 hover:shadow-md rounded-md p-1 items-center">
+                                            <div className="h-28 w-max flex-shrink-0 overflow-hidden   ">
+                                                <img src='https://cdn0.fahasa.com/media/catalog/product/8/9/8936186545627_2.jpg' alt="" className="h-full w-full object-cover object-center" />
+                                            </div>
+                                            <h1> Light Novel nới nhất</h1>
+                                        </div>
+
+                                        <div className="w-28 hover:shadow-md rounded-md p-1">
+                                            <div className="h-28 w-max flex-shrink-0 overflow-hidden   ">
+                                                <img src='https://cdn0.fahasa.com/media/catalog/product/8/9/8936186545627_2.jpg' alt="" className="h-full w-full object-cover object-center" />
+                                            </div>
+                                            <h1> Light Novel nới nhất</h1>
+                                        </div>
+
+                                        <div className="w-28 hover:shadow-md rounded-md p-1">
+                                            <div className="h-28 w-max flex-shrink-0 overflow-hidden   ">
+                                                <img src='https://cdn0.fahasa.com/media/catalog/product/8/9/8936186545627_2.jpg' alt="" className="h-full w-full object-cover object-center" />
+                                            </div>
+                                            <h1> Light Novel nới nhất</h1>
+                                        </div>
+
+                                        <div className="w-28 hover:shadow-md rounded-md p-1">
+                                            <div className="h-28 w-max flex-shrink-0 overflow-hidden   ">
+                                                <img src='https://cdn0.fahasa.com/media/catalog/product/8/9/8936186545627_2.jpg' alt="" className="h-full w-full object-cover object-center" />
+                                            </div>
+                                            <h1> Light Novel nới nhất</h1>
                                         </div>
                                     </div>
                                 </div>
