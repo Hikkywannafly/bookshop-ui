@@ -132,6 +132,8 @@ const AddProduct = () => {
                             error={errors.name && touched.name ? errors.name : false}
                             value={values.name}
                             name="name"
+
+                            
                         />
                         <TextFields
                             label='Product Slug'

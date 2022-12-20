@@ -32,8 +32,9 @@ const Account = ({ userInfo }) => {
                                 <Menu.Button className="inline-flex justify-center w-full 
                                 text-sm px-1 py-1 font-medium leading-5 text-gray-700 transition  duration-150 ease-in-out bg-white border border-gray-300 rounded-full hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800">
                                     <img className='w-[26px] h-[26px] rounded-full'
-                                        // loading='lazy'
+                                        loading='lazy'
                                         id='avatar'
+                                        referrerPolicy="no-referrer"
                                         aria-hidden="true"
                                         alt='user' />
                                 </Menu.Button>

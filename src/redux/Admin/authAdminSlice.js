@@ -8,7 +8,10 @@ const initialState = {
     bookDetail: null,
     isFetchingBookDetail: false,
     statistics: null,
-    // breadcrumbs: null
+    orderData: null,
+    orderDetailData: null,
+    isFetchingOrder: false,
+    orderPagination: null,
 }
 
 const adminSlice = createSlice({
@@ -45,10 +48,22 @@ const adminSlice = createSlice({
         },
         deleteBook: (state, action) => {
             state.data = state.data.filter(book => book.id !== action.payload);
+        },
+        getOrderStarting: (state) => {
+            state.isFetchingOrder = true;
+            state.orderData = null;
+        },
+        getOrderSuccess: (state, action) => {
+            state.isFetchingOrder = false;
+            state.orderData = action.payload.orders.data;
+
+            state.orderPagination = action.payload.orders.pagination;
 
         },
-
-
+        getOrderDetailSuccess: (state, action) => {
+            state.isFetchingOrder = false;
+            state.orderDetailData = action.payload.order;
+        }
     }
 });
 export const {
@@ -58,6 +73,10 @@ export const {
     getBookDetailStarting,
     getBookDetailSuccess,
     getBookDetailFailure,
-    deleteBook
+    deleteBook,
+    getOrderStarting,
+    getOrderSuccess,
+    getOrderDetailSuccess
+
 } = adminSlice.actions;
 export default adminSlice.reducer;

@@ -11,6 +11,8 @@ export default function ButtonLoading({ label, loading, type, ...props }) {
                 loading={loading}
                 sx={{
                     fontFamily: 'Fira Sans',
+                    fontSize: 14,
+                    textTransform: 'none',
 
                 }}
                 variant="outlined">

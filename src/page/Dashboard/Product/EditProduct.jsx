@@ -315,7 +315,7 @@ const EditProduct = () => {
                                     handleChange={handleChange}
                                 />
                                 {
-                                    bookdata.default_image && bookdata.images ?
+                                    bookdata?.default_image && bookdata?.images ?
                                     <OldItem
                                     value={
                                         [

@@ -1,4 +1,3 @@
-import Breadcrumb from '~/components/Breadcrumb';
 import CartItem from '~/components/Product/CartItem';
 import { useFetchData } from '~/hooks/useFetchData';
 import { getCartData } from '~/redux/Cart/apiRequest';
@@ -28,6 +27,14 @@ const Cart = () => {
             navigate('/login');
         }
     }, []);
+    const handleCheckout = () => {
+        navigate('/checkout/payment');
+    }
+    const handleBackHome = () => {
+
+        navigate('/all-category.html');
+    }
+
     useEffect(() => {
         if (cartItems) {
             let total = 0;
@@ -55,9 +62,9 @@ const Cart = () => {
                     </div>
                     {
                         total > 0 ? (
-                            <div className="gap-5 flex w-full ">
+                            <div className="gap-5 flex w-full  ">
                                 <div className="w-full">
-                                    <div className="bg-white p-2 rounded-lg mt-3 font-medium">
+                                    <div className="bg-white p-2 rounded-lg mt-3 font-medium shadow-sm drop-shadow-sm">
                                         <div className="flex ">
                                             <div className="ml-4 w-28 flex-shrink-0 overflow-hidden rounded-md  ">
                                                 Sản phẩm
@@ -70,22 +77,21 @@ const Cart = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="items" className="bg-white p-3 rounded-lg my-4">
+                                    <div id="items" className="bg-white p-3 rounded-lg my-4 shadow-sm drop-shadow-sm">
                                         {
                                             !loading && cartItems ? (
                                                 cartItems?.map((item, index) => (
-                                                    <CartItem key={index} id={item.book_id} name={item.book.name} discount={item.book.discount} quantity={item.quantity} price={item.book.price} image={item.book.default_image} />
+                                                    <CartItem key={index} id={item.book_id} name={item.book.name} discount={item.book.discount} quantity={item.quantity} price={item.book.price} image={item.book.default_image} error={item?.error} />
                                                 ))
                                             ) : (
-                                                < CartItem.Loading />
+                                                <CartItem.Loading />
                                             )
                                         }
 
                                     </div>
                                 </div>
                                 <div className="h-full mt-3 w-[330px]">
-                                    <div className={` top-0  w-[330px] bg-white flex  flex-col gap-4 rounded-lg p-4`}>
-
+                                    <div className={` top-0  w-[330px] bg-white flex  flex-col gap-4 rounded-lg p-4 shadow-sm drop-shadow-sm`}>
                                         <div className="flex justify-between pb-3 border-b my-2">
                                             <p>Thành tiền</p>
                                             <span className=" ">{money.total.toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })}</span>
@@ -98,29 +104,34 @@ const Cart = () => {
                                         <div className="flex justify-end">
                                             Tiết kiệm được &nbsp; <span className="font-medium text-green-600">{money.save.toLocaleString('vi-VI', { style: 'currency', currency: 'VND' })} </span>
                                         </div>
-                                        <Button content={`Thanh toán ngay `} color=' bg-slate-800 border-2 border-slate-800' />
+                                        <Button content={`Thanh toán ngay `} color=' bg-slate-800 border-2 border-slate-800'
+                                            onClick={handleCheckout}
+                                        />
                                         <Button content={`Tiếp tục mua sắm `}
-
+                                            onClick={handleBackHome}
                                             color='bg-gray-200 text-black border-slate-800 border-2  '
                                         />
-
                                     </div>
                                 </div>
                             </div>
                         )
                             : (
-                                <div className="bg-white  rounded-lg mt-3 font-medium flex justify-center items-center flex-col gap-4 p-10" >
-                                    <img src="https://cdn0.fahasa.com/skin//frontend/ma_vanese/fahasa/images/checkout_cart/ico_emptycart.svg" className="w-60 h-60" alt="" />
-                                    <div className="w-[280px]">
-                                        <Button content={`Tiếp tục mua sắm `} color=' bg-slate-800 border-2 border-slate-800' />
+                                !loading ? (
+                                    <div className="bg-white  rounded-lg mt-3 font-medium flex justify-center items-center flex-col gap-4 p-10" >
+                                        <img src="https://cdn0.fahasa.com/skin//frontend/ma_vanese/fahasa/images/checkout_cart/ico_emptycart.svg" className="w-60 h-60" alt="" />
+                                        <div className="w-[280px]">
+                                            <Button content={`Tiếp tục mua sắm `}
+                                                onClick={handleBackHome}
+                                                color=' bg-slate-800 border-2 border-slate-800' />
+                                        </div>
                                     </div>
-                                </div>
+                                ) :
+                                    (
+                                        <CartItem.Loading />
+                                    )
                             )
                     }
-
                 </div>
-
-
             </div>
         </>
     );

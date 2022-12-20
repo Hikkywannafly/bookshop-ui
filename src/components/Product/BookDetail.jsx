@@ -50,7 +50,11 @@ const BookDetail = ({ bookdata }) => {
     }, [bookdata])
     return (
         <>
-            <ModelDialog open={open} setOpen={setOpen} />
+            <ModelDialog open={open} setOpen={setOpen}
+                content={`Sản phẩm đã được thêm thành công vào giỏ hàng của bạn.`}
+                returnButton={`Tiếp tục mua hàng`}
+                button={`Thanh toán`}
+            />
             {bookdata &&
                 <>
                     {lightboxController.toggler && (

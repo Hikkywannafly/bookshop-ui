@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-
+import { useNavigate } from 'react-router-dom';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -19,8 +19,8 @@ const style = {
     textTransform: 'none',
 };
 
-export default function ModelDialog({ open, setOpen }) {
-
+export default function ModelDialog({ open, setOpen, content, button, returnButton }) {
+    const navigate = useNavigate();
     const handleOpen = () => {
         setOpen(true);
     };
@@ -37,23 +37,26 @@ export default function ModelDialog({ open, setOpen }) {
                 aria-describedby="parent-modal-description"
 
             >
-                <Box sx={{ ...style, width: 300 }}>
+                <Box sx={{ ...style, width: 400 }}>
                     <div className="flex justify-center flex-col gap-2">
-                        <h2 className="items-center px-2">Sản phẩm đã được thêm thành công vào giỏ hàng của bạn.</h2>
+                        <h2 className="items-center px-2">{content}</h2>
                         <div className="flex gap-4 justify-between">
                             <Button
-                                onClick={handleClose}
+                                onClick={() => {
+                                    navigate('/all-category.html');
+                                }}
+
                                 sx={{
                                     textTransform: 'none',
                                     fontFamily: 'Fira Sans',
-                                }}>Tiếp tục mua hàng</Button>
+                                }}>{returnButton}</Button>
 
                             <Button
                                 sx={{
                                     textTransform: 'none',
                                     fontFamily: 'Fira Sans',
                                 }}
-                            >Thanh toán </Button>
+                            >{button} </Button>
                         </div>
 
                     </div>

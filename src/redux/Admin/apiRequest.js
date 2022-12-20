@@ -3,7 +3,9 @@ import BASE_URL from "~/config/index";
 import { getAxios } from "~/utils/getAxios";
 import {
     getBookStarting, getBookSuccess, getBookFailure,
-    getBookDetailStarting, getBookDetailSuccess, getBookDetailFailure, deleteBook
+    getBookDetailStarting, getBookDetailSuccess, getBookDetailFailure, deleteBook, getOrderStarting,
+    getOrderSuccess,
+    getOrderDetailSuccess,
 } from './authAdminSlice'
 export const getBookDataAuth = async (axiosJWT, dispatch) => {
     dispatch(getBookStarting());
@@ -90,6 +92,53 @@ export const deleteBookData = async (axiosJWT, id, dispatch) => {
     }
     catch (err) {
         console.log(err)
+        return err.response?.data;
+    }
+}
+
+export const getOrderData = async (axiosJWT, dispatch) => {
+    dispatch(getOrderStarting());
+    try {
+        const res = await axiosJWT.get(`${BASE_URL}/auth-admin/read-order`);
+        dispatch(getOrderSuccess(res.data));
+        return res.data;
+    }
+    catch (err) {
+        return err.response?.data;
+    }
+}
+
+export const getOrderDetail = async (axiosJWT, dispatch, params) => {
+    dispatch(getOrderStarting());
+    try {
+        const res = await axiosJWT.get(`${BASE_URL}/auth-admin/read-order-detail/${params}`);
+        dispatch(getOrderDetailSuccess(res.data));
+        console.log(`test api`, res.data);
+        return res.data;
+    }
+    catch (err) {
+        return err.response?.data;
+    }
+}
+export const getOrderFillter = async (axiosJWT, dispatch, params) => {
+    try {
+        const res = await axiosJWT.get(`${BASE_URL}/auth-admin/read-order${params}`);
+        return res.data;
+    }
+    catch (err) {
+        console.log(err)
+        return err.response?.data;
+    }
+}
+
+export const getOrderData2 = async (axiosJWT, dispatch) => {
+
+    try {
+        const res = await axiosJWT.get(`${BASE_URL}/auth-admin/read-order`);
+        dispatch(getOrderSuccess(res.data));
+        return res.data;
+    }
+    catch (err) {
         return err.response?.data;
     }
 }

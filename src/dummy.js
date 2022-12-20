@@ -306,3 +306,62 @@ export const publishers = [
   { title: 'Biết Nam', id: 10 },
   { title: 'NXB Thế Giới', id: 11 },
 ]
+
+export const status = [
+  {
+    id: 0,
+    name: 'Đang chờ',
+    color: 'bg-yellow-100',
+    text: 'text-yellow-700',
+  },
+  {
+    id: 3,
+    name: 'Đã duyệt',
+    color: 'bg-green-100',
+    text: 'text-green-700',
+  },
+  {
+    id: 4,
+    name: 'Hoàn thành',
+    color: 'bg-blue-100',
+    text: 'text-blue-700',
+  },
+  {
+    id: 5,
+    name: 'Đang giao hàng',
+    color: 'bg-orange-100',
+    text: 'text-orange-700',
+  },
+  {
+    id: 7,
+    name: 'Đã hủy',
+    color: 'bg-red-100',
+    text: 'text-red-700',
+  },
+];
+export const statusOrder = [
+  {
+    name: "Tất cả",
+    value: "all"
+  },
+  {
+    name: "Đã duyệt",
+    value: "approved"
+  },
+  {
+    name: "Đang chờ",
+    value: "pending"
+  },
+  {
+    name: "Đã hủy",
+    value: "canceled"
+  },
+  {
+    name: "Đang giao hàng",
+    value: "shipping"
+  },
+  {
+    name: "Hoàn thành",
+    value: "completed"
+  },
+]

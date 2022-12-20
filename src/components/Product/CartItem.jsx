@@ -6,7 +6,7 @@ import { deleteCartItem, addToCart, updateItems } from '~/redux/Cart/apiRequest'
 import toast, { Toaster } from 'react-hot-toast';
 import LoadingSkeleton from "../Animation/LoadingSkeleton";
 import { useEffect, useState } from 'react';
-const CartItem = ({ id, name, price, image, quantity, discount }) => {
+const CartItem = ({ id, name, price, image, quantity, discount, error }) => {
     const dispatch = useDispatch();
     const axios = useFetchData();
     const [value, setValue] = useState(quantity);
@@ -37,6 +37,7 @@ const CartItem = ({ id, name, price, image, quantity, discount }) => {
                 },
                 error: (err) => {
                     console.log(err);
+                    setValue(quantity);
                     return err.message;
                 }
             });
@@ -69,6 +70,10 @@ const CartItem = ({ id, name, price, image, quantity, discount }) => {
                                 discount > 0 && (<p className="text-sm text-gray-500 line-through ">{price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</p>)
                             }
                         </div>
+                        {
+                            error && <div className="text-sm text-red-600 font-medium">* {error}</div>
+                        }
+
                     </div>
                     <div className="flex flex-1 items-end justify-between text-sm">
                         <InputCounter

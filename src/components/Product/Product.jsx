@@ -12,8 +12,6 @@ const Product = (props) => {
             className="bg-white w-full  shadow-sm p-3 rounded-lg drop-shadow-sm flex flex-col justify-start ">
             <div className="m-2">
                 <div className="border-b pb-3 flex flex-col gap-4 mb-4 ">
-
-
                     {search.length > 0 ? <div className="flex gap-3 items-center">
                         <h1 className="font-medium"> Kết quả tìm kiếm cho :</h1>
                         <div className="flex gap-2 items-center">
@@ -44,15 +42,21 @@ const Product = (props) => {
                                 })
                             }
                         </div>}
-                    <div className="flex items-center gap-4 mb-2">
-                        <div className="">
-                            <h1 className="mt-2"> Sort by :</h1>
+                    <div className="flex justify-between">
+                        <div className="flex items-center gap-4">
+                            <div className="">
+                                <h1 className="mt-2"> Sort by :</h1>
+                            </div>
+                            <SelectBar
+                                options={sort.map((item, index) => { return { value: item.value, name: item.name } })}
+                                handleSort={handleSort}
+                            />
                         </div>
-                        <SelectBar
-                            options={sort.map((item, index) => { return { value: item.value, name: item.name } })}
-                            handleSort={handleSort}
-                        />
+                        <div className="mt-2">
+                            Hiển thị {pagination?.count} của {pagination?.total} kết quả
+                        </div>
                     </div>
+
                 </div>
                 {
 
@@ -61,7 +65,7 @@ const Product = (props) => {
                         <div className="flex flex-col items-center justify-center w-full">
                             <img className="w-20" src='https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg//assets/a60759ad1dabe909c46a817ecbf71878.png' alt='Not Found'></img>
 
-                            <h1 className="font-medium ">  Không tìm thấy sản phẩm nào cả</h1>
+                            <h1 className="font-medium "> Không tìm thấy sản phẩm nào cả</h1>
                             <h1 className="text-gray-400 ">  Vui lòng thử lại !!</h1>
                         </div>
                     )

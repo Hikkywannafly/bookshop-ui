@@ -9,3 +9,5 @@ export { default as InputBar } from './Input';
 export { default as InputNumber } from './InputNumber';
 export { default as SelectBar } from './SelectBar';
 export { default as InputCounter } from './InputCounter';
+export { default as SlectProvinces } from './SelectProvinces';
+export { default as TextField2 } from './TextField2';

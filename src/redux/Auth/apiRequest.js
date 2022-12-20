@@ -70,6 +70,25 @@ export const LoginWithGoogle = async (user, dispatch) => {
             dispatch(loginFailure(err.response.data));
             return err.response.data;
         });
-
 }
 
+export const getAccount = async (axiosJWT) => {
+    try {
+        const res = await axiosJWT.get(`${BASE_URL}/auth/get-account`);
+        return res.data;
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+// order
+export const fetchOrder = async (axiosJWT, data) => {
+    try {
+        const res = await axiosJWT.post(`${BASE_URL}/auth/order`, data);
+        console.log('fetchOrder', res.data);
+        return res.data;
+    }
+    catch (err) {
+        console.log(err);
+    }
+}

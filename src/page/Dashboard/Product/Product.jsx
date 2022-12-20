@@ -12,7 +12,7 @@ import Pagination from '~/components/Pagination';
 import toast from 'react-hot-toast';
 import AdminTableTitle from '~/components/Chore/AdminTableTitle';
 import LoadingSkeleton from '~/components/Animation/LoadingSkeleton';
-import Search from '~/components/Input/Search';
+import SearchSuggestion from '~/components/Search';
 import { fillter, CategoryListData } from '~/dummy';
 import Select from '~/components/Input/Select';
 import { useFetchData } from '~/hooks/useFetchData';
@@ -93,7 +93,7 @@ const Product = () => {
                 </div>
                 <div className="flex items-center justify-between m-6 h-7 text-sm">
                     <div className="h-3 max-w-[400px] w-full">
-                        <Search />
+                        <SearchSuggestion />
                     </div>
                     <div className="flex items-center gap-3">
                         <Select options={fillter} title='Show:' />
@@ -167,10 +167,17 @@ const Product = () => {
                                     }
                                 </tbody>
                             </table>
-                            <div className="w-full flex items-center justify-center p-3 mt-3">
+                            <div className="w-full flex items-center justify-center p-3 mt-3 relative ">
+
+
                                 {
-                                    !loading && <Pagination handleSelectPage={handleSelectPage} totalCount={pagination?.total} totalPageCount={pagination?.totalPages} currentPage={pagination?.currentPage} previous={pagination.links?.previous} next={pagination.links?.next} ></Pagination>
+                                    !loading &&
+                                    bookData?.length > 0 &&
+                                    <Pagination handleSelectPage={handleSelectPage} totalCount={pagination?.total} totalPageCount={pagination?.totalPages} currentPage={pagination?.currentPage} previous={pagination.links?.previous} next={pagination.links?.next} ></Pagination>
                                 }
+                                <div className="justify-start text-sm absolute left-0 text-slate-800  ">
+                                    Hiển thị {pagination?.count} của {pagination?.total} kết quả
+                                </div>
                             </div>
                         </div>
                     </div>

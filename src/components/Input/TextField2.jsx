@@ -12,7 +12,7 @@ const theme = createTheme({
     },
 });
 
-export default function TextFields({ label, error, handleBlur, handleChange, name, value, onChange, placeholder }) {
+export default function TextField2({ label, error, handleBlur, name, value, onChange, placeholder }) {
     return (
         <ThemeProvider theme={theme}>
             <Box
@@ -32,7 +32,6 @@ export default function TextFields({ label, error, handleBlur, handleChange, nam
                     }}
                     onChange={onChange ? (e) => {
                         onChange(e);
-                        handleChange && handleChange(e);
                     } : null}
                     onBlur={handleBlur}
                     value={value}

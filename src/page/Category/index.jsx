@@ -74,7 +74,9 @@ const Category = () => {
                 </div>
                 <section className="flex flex-col lg:flex-row md gap-5 ">
                     <Fillterbar fillter={fillter} handleSelect={handleSelect} loading={loading} suppliers={suppliers} handleCategoryToggle={handleCategoryToggle} locationname={location.pathname} />
-                    <Product search={search} handleDeleteFilter={handleDeleteFilter} fillter={fillter} handleSelectPage={handleSelectPage} loading={loading} pagination={pagination} bookData={bookData} handleSort={handleSort} />
+                    <Product search={search} handleDeleteFilter={handleDeleteFilter} fillter={fillter}
+                        handleSelectPage={handleSelectPage} loading={loading} 
+                        pagination={pagination} bookData={bookData} handleSort={handleSort} />
                 </section>
             </div>
         </>

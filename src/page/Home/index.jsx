@@ -4,7 +4,7 @@ console.log(` reredner`)
 const Home = () => {
     return (
         <>
-            dsadas
+           
         </>
     );
 }

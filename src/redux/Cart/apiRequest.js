@@ -17,6 +17,7 @@ export const getCartData = async (axiosJWT, dispatch) => {
     return await axiosJWT.get(`${BASE_URL}/auth/cart`)
         .then(res => {
             dispatch(getCartSuccess(res.data));
+            console.log(`debugg`, res.data);
             return res.data;
         })
         .catch(err => {

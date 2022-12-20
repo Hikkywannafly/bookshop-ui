@@ -7,13 +7,15 @@ import VerifycationEmail from '~/page/Auth/VerifycationEmail';
 import VerifyUrl from '~/page/Auth/VerifyUrl';
 import Dashboard from '~/page/Dashboard/';
 import Ecommerce from '~/page/Dashboard/Ecommerce';
-import Orders from '~/page/Dashboard/Orders';
+import Orders from '~/page/Dashboard/Order/Orders';
 import Category from '~/page/Category/';
 import Product from '~/page/Product/';
 import ProductAuth from '~/page/Dashboard/Product/Product';
 import AddProduct from '~/page/Dashboard/Product/AddProduct';
 import EditProduct from '~/page/Dashboard/Product/EditProduct';
-import Cart from '~/page/Cart'
+import Cart from '~/page/Cart';
+import OrderDetail from '~/page/Dashboard/Order/OrderDetail';
+import Payment from '~/page/Payment';
 const publicRoutes = [
     {
         path: '/', component: Home
@@ -32,6 +34,9 @@ const publicRoutes = [
     },
     {
         path: '/checkout/cart', component: Cart
+    },
+    {
+        path: '/checkout/payment', component: Payment
     },
 
 ]
@@ -75,7 +80,10 @@ const dashboardRoutes = [
     },
     {
         path: '/auth/product/:slug', component: EditProduct
-    }
+    },
+    {
+        path: '/auth/orders/:slug', component: OrderDetail
+    },
 
 ]
 
