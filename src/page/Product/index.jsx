@@ -1,11 +1,11 @@
 import { useStateContext } from '~/hooks/useStateContext';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallBack, useRef } from 'react';
 import Breadcrumb from '~/components/Breadcrumb';
-import BookDetail from '~/components/Product/BookDetail';
 import { useSelector, useDispatch } from "react-redux";
 import { getBookDetail } from '~/redux/Product/ProductRequest';
 import { useLocation, useNavigate, } from 'react-router-dom';
-import BookInfo from '~/components/Product/BookInfo';
+import { BookDetail, BookInfo, BookRating } from '~/components/Product';
+
 const Product = () => {
     const location = useLocation();
     const dispatch = useDispatch();
@@ -77,6 +77,15 @@ const Product = () => {
                             </>
                         )
 
+                    }
+
+                </div>
+                <br></br>
+                <div className="flex  flex-col items-start w-full bg-white rounded-lg mb-3 p-3 relative ">
+                    {
+                        !loading && bookdata?.id !== null ? (
+                            <BookRating book_id={bookdata?.id} />
+                        ) : <BookRating.Loading />
                     }
 
                 </div>

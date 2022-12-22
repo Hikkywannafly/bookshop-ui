@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import SearchSuggestion from '~/components/Search';
 import { useFetchData } from '~/hooks/useFetchData';
 import Pagination from '~/components/Pagination';
-import { getOrderData, getOrderData2 } from '~/redux/Admin/apiRequest';
+import { getOrderData, getOrderData2, getOrderFillter } from '~/redux/Admin/apiRequest';
 import { statusOrder, status } from '~/dummy';
 const Orders = () => {
     const location = useLocation();
@@ -21,8 +21,8 @@ const Orders = () => {
     const handleGetOrderData = async () => {
         await getOrderData(axios, dispatch);
     }
-    const handleGetOrderData2 = async () => {
-        await getOrderData2(axios, dispatch);
+    const handleGetOrderData2 = async (params) => {
+        await getOrderFillter(axios, dispatch, params);
     }
     const handleSelectPage = (value) => {
         searchParams.set("page", value);
@@ -30,6 +30,10 @@ const Orders = () => {
     }
     const handleNavigate = (e) => {
         navigate(`/auth/orders/${e}`)
+    }
+    const handleChangeStatus = (e) => {
+        console.log(`degg`, e)
+        handleGetOrderData2(`?status=${e}`)
     }
     useEffect(() => {
         const params = location.pathname;
@@ -39,7 +43,6 @@ const Orders = () => {
         if (location.search) {
             // getBookDataFillter(axios, dispatch, location.search)
         }
-        //    call api when database update
 
     }, [location.pathname]);
 
@@ -59,8 +62,9 @@ const Orders = () => {
                         statusOrder.map((item, index) => (
                             <li
                                 key={index}
+                                onClick={() => handleChangeStatus(item.id)}
                                 className="nav-item flex-auto text-center" role="presentation">
-                                <a href="#tabs-homeFill" className={`nav-link w-full block font-medium text-xs leading-tight
+                                <a href={`http://localhost:3000/auth/orders?status=${item.id}`} className={`nav-link w-full block font-medium text-xs leading-tight
                         uppercase border-x-0 border-t-0 border-b-2 border-transparent px-6 py-3 my-2 hover:border-transparent hover:bg-gray-100 focus:border-transparent ${index === 0 ? "active" : null}`}
                                     id="tabs-home-tabFill" data-bs-toggle="pill" data-bs-target="#tabs-homeFill" role="tab" aria-controls="tabs-homeFill" aria-selected="true">
                                     {item.name}
@@ -95,7 +99,7 @@ const Orders = () => {
                                                             e.id === item.status ?
                                                                 (
                                                                     <div key={index} className="">
-                                                                        <span className={`px-2 w-20 items-center justify-center  inline-flex text-xs leading-5 font-semibold rounded-md ${e.color} ${e.text} `}>
+                                                                        <span className={`px-2.5  items-center justify-center  inline-flex text-xs leading-5 font-semibold rounded-md ${e.color} ${e.text} `}>
                                                                             {e.name}
                                                                         </span>
                                                                     </div>

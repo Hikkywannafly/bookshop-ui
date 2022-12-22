@@ -92,3 +92,23 @@ export const fetchOrder = async (axiosJWT, data) => {
         console.log(err);
     }
 }
+// rating
+export const fetchRating = async (axiosJWT, params) => {
+    try {
+        const res = await axiosJWT.get(`${BASE_URL}/auth/read-rating?book_id=${params}`);
+        return res.data;
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+export const handleRatingApi = async (axiosJWT, data) => {
+    try {
+        const res = await axiosJWT.post(`${BASE_URL}/auth/post-rating`, data);
+        return res.data;
+    }
+    catch (err) {
+        console.log(err);
+    }
+}

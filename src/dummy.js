@@ -9,6 +9,7 @@ export const CategoryListData = [
   {
     title: "Văn học",
     slug: "van-hoc",
+    image: "https://cdn0.fahasa.com/media/catalog/product/n/h/nhungnguoihangxom-600.jpg",
     id: 1,
     subCategory: [
       {
@@ -42,6 +43,7 @@ export const CategoryListData = [
   {
     title: "Tâm lý - kĩ năng sống",
     slug: "tam-ly-ki-nang-song",
+    image: "https://cdn0.fahasa.com/media/catalog/product/i/m/image_226524.jpg",
     id: 2,
     subCategory: [
       {
@@ -54,6 +56,7 @@ export const CategoryListData = [
   {
     title: "Kinh tế",
     slug: "kinh-te",
+    image: "https://cdn0.fahasa.com/media/catalog/product/n/x/nxbtre_full_27202022_112029.jpg",
     id: 3,
     subCategory: [
       {
@@ -73,16 +76,19 @@ export const CategoryListData = [
   {
     title: "Sách thiếu nhi",
     slug: "sach-thieu-nhi",
+    image: "https://cdn0.fahasa.com/media/catalog/product/t/h/th_ng-tin-s_ch---spy-room-4bia-ao-4_2.jpg",
     id: 4,
   },
   {
     title: "Giáo khoa - tham khảo",
     slug: "giao-khoa-tham-khao",
+    image: "https://cdn0.fahasa.com/media/catalog/product/n/h/nhungnguoihangxom-biacung-600.jpg",
     id: 5,
   },
   {
     title: "Ngoại ngữ",
     slug: "ngoai-ngu",
+    image: "https://cdn0.fahasa.com/media/catalog/product/9/7/9781474915557.jpg",
     id: 6,
   }
 
@@ -315,25 +321,25 @@ export const status = [
     text: 'text-yellow-700',
   },
   {
-    id: 3,
+    id: 1,
     name: 'Đã duyệt',
     color: 'bg-green-100',
     text: 'text-green-700',
   },
   {
-    id: 4,
-    name: 'Hoàn thành',
-    color: 'bg-blue-100',
-    text: 'text-blue-700',
-  },
-  {
-    id: 5,
+    id: 2,
     name: 'Đang giao hàng',
     color: 'bg-orange-100',
     text: 'text-orange-700',
   },
   {
-    id: 7,
+    id: 3,
+    name: 'Hoàn thành',
+    color: 'bg-blue-100',
+    text: 'text-blue-700',
+  },
+  {
+    id: 4,
     name: 'Đã hủy',
     color: 'bg-red-100',
     text: 'text-red-700',
@@ -342,25 +348,31 @@ export const status = [
 export const statusOrder = [
   {
     name: "Tất cả",
-    value: "all"
+    value: "all",
+    id: 0,
   },
   {
+    id: 1,
     name: "Đã duyệt",
     value: "approved"
   },
   {
+    id: null,
     name: "Đang chờ",
     value: "pending"
   },
   {
+    id: 4,
     name: "Đã hủy",
     value: "canceled"
   },
   {
+    id: 2,
     name: "Đang giao hàng",
     value: "shipping"
   },
   {
+    id: 3,
     name: "Hoàn thành",
     value: "completed"
   },

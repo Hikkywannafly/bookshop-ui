@@ -1,17 +1,20 @@
 import DashboardPage from '~/components/Layout/Dashboard';
-import react, { useEffect, useState } from 'react';
+import react, { useEffect, useState, useMemo } from 'react';
 import { useLocation, useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { useFetchData } from '~/hooks/useFetchData';
 import Pagination from '~/components/Pagination';
-import { getOrderDetail } from '~/redux/Admin/apiRequest';
+import { getOrderDetail, updateStatusOrder } from '~/redux/Admin/apiRequest';
 import { FaFileExport } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 import { status } from '~/dummy';
 import axios1 from 'axios';
 const OrderDetail = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const axios = useFetchData();
+    const [id, setId] = useState('');
+    const [reason, setReason] = useState('');
     const [address, setAddress] = useState({
         user: {
             w: '',
@@ -29,16 +32,39 @@ const OrderDetail = () => {
         shipping: 0,
         save: 0
     });
+
     const data = useSelector((state) => state.admindata.orderDetailData);
     const dispatch = useDispatch();
+    const handleChangeStatus = async (e, error) => {
+        toast.promise(
+            updateStatusOrder(axios, { id: e, order_id: data?.id, total: error }, dispatch)
+            , {
+                loading: 'Đang chạy ...',
+                success: (data) => {
+                    if (data.status !== 'success') throw new Error(data.message);
+                    getOrderDetail(axios, dispatch, id);
+                    return 'Cập nhật thành công';
+                },
+                error: (err) => {
+                    return err.message;
+                }
+            });
+
+    }
     useEffect(() => {
         let params = location.pathname.split('/auth/orders/')[1];
+        setId(params);
         getOrderDetail(axios, dispatch, params);
     }, []);
+
+
+    //  optimize with useCallBack
+
     const getNameAddress = async (symp, code) => {
         const res = await axios1.get(`https://provinces.open-api.vn/api/${symp}/${code}`);
         return res.data.name;
     }
+
     useEffect(() => {
         if (data) {
             setNameAddress(data);
@@ -62,7 +88,7 @@ const OrderDetail = () => {
     }
 
     useEffect(() => {
-        if (data.order_items) {
+        if (data?.order_items) {
             let total = 0;
             let save = 0;
             data?.order_items?.forEach((item) => {
@@ -76,17 +102,26 @@ const OrderDetail = () => {
             });
         }
     }, [data]);
-    console.log(data);
+    // console.log(data);
     return (
         <DashboardPage title="Order Detail" category="Order">
 
             <div className="flex gap-4 mb-4">
                 {/* accpect cancel */}
-                <button type="button" className="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Duyệt đơn</button>
-                {/* <button type="button" className="inline-block px-4 py-2 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out">Vận chuyển </button> */}
-                <button type="button" className="inline-block px-4 py-1.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">Hủy đơn</button>
+                {
+                    data?.status === 0 && <button
+                        onClick={() => handleChangeStatus(1, null)}
+                        type="button" className="inline-block px-4 py-1.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Duyệt đơn</button>
+                }
+                {
+                    data?.status === 1 && <button
+                        onClick={() => handleChangeStatus(2, null)}
+                        type="button" className="inline-block px-4 py-2 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out">Vận chuyển </button>
+                }
 
-                <button type="button" class="inline-block px-4 py-1.5 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out flex">
+                <button type="button" className="inline-block px-4 py-1.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Hủy đơn</button>
+
+                <button type="button" className="inline-block px-4 py-1.5 border-2 border-blue-400 text-blue-400 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out flex">
                     <FaFileExport className="mr-2 items-center mt-0.5" />
                     Xuất hóa đơn
                 </button>
@@ -289,7 +324,62 @@ const OrderDetail = () => {
                     </div>
                 </div>
 
+                <div className="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="exampleModalCenter" tabIndex="-1" aria-labelledby="exampleModalCenterTitle" aria-modal="true" role="dialog">
+                    <div className="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
+                        <div className="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none text-current">
+                            <div className="modal-header flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200 rounded-t-md">
+                                <h5 className="text-xl font-medium leading-normal text-gray-800" id="exampleModalScrollableLabel">
+                                    Thông tin hủy đơn
+                                </h5>
+                                <button type="button"
+                                    className="btn-close box-content w-4 h-4 p-1 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body relative p-4">
+                                <p>Lý do hủy đơn</p>
 
+                                <textarea
+                                    className="
+                                form-control
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+      "
+                                    onChange={(e) => {
+                                        setReason(e.target.value)
+                                    }}
+                                    id="exampleFormControlTextarea1"
+                                    rows="3"
+                                    placeholder="Your message"
+                                ></textarea>
+                            </div>
+                            <div
+                                className="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md">
+                                <button type="button"
+                                    className="inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out"
+                                    data-bs-dismiss="modal">
+                                    Đóng
+                                </button>
+                                <button type="button"
+                                    onClick={() => handleChangeStatus(4, reason)}
+                                    className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
+                                    Lưu thay đổi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </DashboardPage>
 

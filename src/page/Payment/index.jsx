@@ -369,7 +369,7 @@ const Payment = () => {
                 </div>
 
             </div>
-            <div className=" border-t shadow-2xl drop-shadow-xl w-full inset-x-0 bottom-0 bg-white p-4 fixed">
+            <div className=" z-[999] border-t shadow-2xl drop-shadow-xl w-full inset-x-0 bottom-0 bg-white p-4 fixed">
                 <div className="container items-center w-full gap-2 lg:max-w-[1300px]">
                     <div className="flex justify-between pb-3 my-2 font-medium">
                         <p className='italic'>Tạm tính</p>

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axiosInterceptor from '~/utils/axiosInterceptor';
 import { logoutUser } from '~/redux/Auth/apiRequest';
 import AuthButton from '~/components/Input/AuthButton';
-
+import { Link } from 'react-router-dom';
 import { memo, useEffect } from 'react';
 const Account = ({ userInfo }) => {
     const accessToken = useSelector((state => state.login.accessToken));
@@ -12,6 +12,7 @@ const Account = ({ userInfo }) => {
     const handleLogout = async () => {
         const result = await logoutUser(axios, dispatch);
     }
+
     useEffect(() => {
         if (userInfo.image_address) {
             document.getElementById('avatar').src = userInfo.image_address;
@@ -83,15 +84,15 @@ const Account = ({ userInfo }) => {
                                         </Menu.Item>
                                         <Menu.Item>
                                             {({ active }) => (
-                                                <a
-                                                    href="#support"
+                                                <Link
+                                                    to={'/user/purchase'}
                                                     className={`${active
                                                         ? "bg-gray-100 text-gray-900"
                                                         : "text-gray-700"
                                                         } flex justify-between w-full px-4 py-2 text-sm leading-5 text-left`}
                                                 >
                                                     Lịch sử mua hàng
-                                                </a>
+                                                </Link>
                                             )}
                                         </Menu.Item>
                                         <Menu.Item

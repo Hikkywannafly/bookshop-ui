@@ -16,6 +16,7 @@ import EditProduct from '~/page/Dashboard/Product/EditProduct';
 import Cart from '~/page/Cart';
 import OrderDetail from '~/page/Dashboard/Order/OrderDetail';
 import Payment from '~/page/Payment';
+import Purchase from '~/page/User/Purchase';
 const publicRoutes = [
     {
         path: '/', component: Home
@@ -38,6 +39,9 @@ const publicRoutes = [
     {
         path: '/checkout/payment', component: Payment
     },
+    {
+        path: '/user/purchase', component: Purchase
+    }
 
 ]
 const authRoutes = [

@@ -113,7 +113,6 @@ export const getOrderDetail = async (axiosJWT, dispatch, params) => {
     try {
         const res = await axiosJWT.get(`${BASE_URL}/auth-admin/read-order-detail/${params}`);
         dispatch(getOrderDetailSuccess(res.data));
-        console.log(`test api`, res.data);
         return res.data;
     }
     catch (err) {
@@ -121,8 +120,11 @@ export const getOrderDetail = async (axiosJWT, dispatch, params) => {
     }
 }
 export const getOrderFillter = async (axiosJWT, dispatch, params) => {
+    dispatch(getOrderStarting());
     try {
         const res = await axiosJWT.get(`${BASE_URL}/auth-admin/read-order${params}`);
+        dispatch(getOrderSuccess(res.data));
+        console.log(`test api`, res.data);
         return res.data;
     }
     catch (err) {
@@ -136,6 +138,17 @@ export const getOrderData2 = async (axiosJWT, dispatch) => {
     try {
         const res = await axiosJWT.get(`${BASE_URL}/auth-admin/read-order`);
         dispatch(getOrderSuccess(res.data));
+        return res.data;
+    }
+    catch (err) {
+        return err.response?.data;
+    }
+}
+
+export const updateStatusOrder = async (axiosJWT, params, dispatch) => {
+    try {
+        const res = await axiosJWT.post(`${BASE_URL}/auth-admin/update-status-order`, params);
+        console.log(`test api 1`, res.data);
         return res.data;
     }
     catch (err) {
